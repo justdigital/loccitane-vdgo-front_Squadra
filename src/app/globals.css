@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  font-size: 16px;
+  color: var(--foreground);
+  background: var(--background);
+  /* font-family: Arial, Helvetica, sans-serif; */
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* input[type="text"],
+input[type="email"],
+input[type="number"] {
+  background-color: white;
+  border: 1px solid rgba(200, 197, 197, 1)
+
+  &::placeholder {
+    color: rgba(200, 197, 197, 1);
+  }
+} */
+
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+  font-family: var(--font-loccitane-sans);
+  background-color: white;
+  border: 1px solid rgba(200, 197, 197, 0.3) !important;
+  color: rgba(34, 0, 0, 1);
+  font-size: 0.87rem;
+  display: block;
+}
+input[type="text"][disabled],
+input[type="email"][disabled],
+input[type="number"][disabled] {
+  background-color: rgba(200, 197, 197, 0.1);
+}
+
+label {
+  color: rgba(200, 197, 197, 0.8) !important;
+}
+label[data-shrink="true"] {
+  color: rgba(15, 15, 15, 1) !important;
+}
+.MuiFormControl-root {
+  position: relative;
+}
+p.Mui-error {
+  position: absolute;
+  width: calc(100% - 20px);
+  text-align: right;
+  font-size: 0.68rem;
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 0px;
+}

@@ -1,0 +1,23 @@
+.button {
+  font-size: 0.93rem;
+  font-weight: 600;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &.primary {
+    background-color: $locci-red;
+    color: #ffffff;
+  }
+
+  &:hover {
+    background-color: #cc0000; /* Cor vermelha escurecida no hover */
+  }
+
+  &:disabled {
+    cursor: not-allowed; /* Cursor não permitido */
+    opacity: 0.6; /* Opacidade reduzida */
+  }
+}

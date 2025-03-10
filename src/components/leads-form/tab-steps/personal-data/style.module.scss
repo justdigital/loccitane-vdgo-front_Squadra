@@ -1,0 +1,29 @@
+form {
+  // margin-top: 20px;
+
+  .input {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    font-family: var(--font-loccitane-sans);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  a.checkbox-label {
+    text-decoration: underline;
+  }
+
+  .checkbox-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgba(85, 46, 13, 1);
+    margin-left: 10px;
+  }
+
+  .submit-button {
+    margin-top: 10px;
+  }
+}
