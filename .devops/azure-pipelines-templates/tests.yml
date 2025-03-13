@@ -1,0 +1,76 @@
+steps:
+- checkout: self
+
+- script: |
+    dotnet nuget locals all --clear
+  displayName: 'Dotnet nuget clear'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Dotnet restore'
+  inputs:
+    command: 'restore'
+    projects: '**/*.sln'
+    feedsToUse: 'select'
+    vstsFeed: '$(publishVstsFeed)'
+
+- task: SonarQubePrepare@5
+  displayName: 'SonarQube Prepare'
+  inputs:
+    SonarQube: $(SonarQube)
+    scannerMode: 'MSBuild'
+    projectKey: '$(Build.Repository.Name)-$(Build.SourceBranchName)'
+    projectName: '$(Build.Repository.Name)-$(Build.SourceBranchName)'
+    extraProperties: |
+      sonar.cs.opencover.reportsPaths=$(Agent.TempDirectory)/**/coverage.opencover.xml
+      sonar.cs.vstest.reportsPaths=$(Agent.TempDirectory)/*.trx
+      sonar.verbose=true
+
+- script: |
+    FILTERED_PARAMS=$(echo $SONARQUBE_SCANNER_PARAMS | sed 's/"sonar.branch.name":"[^"]*"\,//g')
+    echo "##vso[task.setvariable variable=SONARQUBE_SCANNER_PARAMS]$FILTERED_PARAMS"
+  displayName: Filter out non-CE sonar parameters
+
+- task: DotNetCoreCLI@2
+  displayName: 'Dotnet build'
+  inputs:
+    command: 'build'
+    projects: '**/*.sln'
+  
+- script: |
+    for project in $(find test -type f -name '*.csproj'); do
+          project_name=$(basename "$project" .csproj)
+          echo "Running tests for $project_name"
+          dotnet test $project \
+            --logger trx \
+            --results-directory $(Agent.TempDirectory) \
+            --configuration $(buildConfiguration) \
+            "/p:CollectCoverage=true" \
+            "/p:CoverletOutputFormat=\"cobertura,opencover\"" \
+            "/p:CoverletOutput=$(Agent.TempDirectory)/$project_name/"
+    done
+    ls -Rilhas $(Agent.TempDirectory)
+  displayName: 'Dotnet unit tests coverage - Dynamic'
+
+- task: PublishTestResults@2
+  inputs:
+    testRunTitle: '$(Build.Repository.Name)-$(Build.SourceBranchName)'
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '$(Agent.TempDirectory)/*.trx'
+    searchFolder: '$(Agent.TempDirectory)'
+    mergeTestResults: true
+    failTaskOnFailedTests: false
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage'
+  inputs:
+    codeCoverageTool: 'Cobertura'
+    summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.opencover.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)'
+
+- task: SonarQubeAnalyze@5
+  displayName: 'SonarQube code analyze'
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
+  displayName: 'Publish Quality Gate Result'

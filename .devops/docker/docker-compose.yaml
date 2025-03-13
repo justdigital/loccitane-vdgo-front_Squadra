@@ -1,0 +1,11 @@
+services:
+  loccitane-vdgo-front:
+    image: locaccine:latest
+    container_name: loccitane-vdgo-front
+    restart: always
+    #user: root
+    ports:
+      - "8080:8080"
+    environment:
+      - TZ=America/Sao_Paulo
+    #command: ["sh", "-c", ""]
