@@ -18,10 +18,10 @@ variables:
 
 stages:
 - stage: CI
-  displayName: 'API building'
+  displayName: 'Next.js building'
   jobs:
   - job: Build
-    displayName: 'Build and Package API'
+    displayName: 'Build and Package FRONT'
     pool:
       vmImage: $(poolVmImage)
     condition: |
@@ -36,7 +36,7 @@ stages:
   dependsOn: CI
   jobs:
   - job: Deploy
-    displayName: "Deploy API"
+    displayName: "Deploy FRONT"
     pool:
       vmImage: $(poolVmImage)
     condition: |
