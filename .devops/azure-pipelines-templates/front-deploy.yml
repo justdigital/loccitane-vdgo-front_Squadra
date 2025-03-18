@@ -12,7 +12,8 @@ steps:
     env:
       NEXT_PUBLIC_DRUPAL_BASE_URL: $(env_NEXT_PUBLIC_DRUPAL_BASE_URL)
       NEXT_IMAGE_DOMAIN: $(env_NEXT_IMAGE_DOMAIN)
-      GTM_CODE: $(env_GTM_CODE)
+      NEXT_GTM_CODE: $(env_NEXT_GTM_CODE)
+      NEXT_API_BASE_URL: $(env_NEXT_API_BASE_URL)
     livenessProbe:
       tcpSocket:
         port: 3000
