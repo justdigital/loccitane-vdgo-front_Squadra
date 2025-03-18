@@ -2,25 +2,29 @@ steps:
 - checkout: self
 
 - task: Docker@2
-  displayName: 'Build and push image'
+  displayName: 'Build Docker Image'
   inputs:
     containerRegistry: $(containerRegistry)
     repository: '$(Build.SourceBranchName)/$(Build.Repository.Name)'
-    command: 'buildAndPush'
+    command: 'build'
     Dockerfile: '.devops/docker/Dockerfile'
     buildContext: '.'
     arguments: >-
-      --build-arg NEXT_PUBLIC_DRUPAL_BASE_URL=$(NEXT_PUBLIC_DRUPAL_BASE_URL)
-      --build-arg NEXT_IMAGE_DOMAIN=$(NEXT_IMAGE_DOMAIN)
-      --build-arg NEXT_GTM_CODE=$(NEXT_GTM_CODE)
-      --build-arg NEXT_API_BASE_URL=$(NEXT_API_BASE_URL)
+      --build-arg NEXT_PUBLIC_DRUPAL_BASE_URL=$(env_NEXT_PUBLIC_DRUPAL_BASE_URL)
+      --build-arg NEXT_IMAGE_DOMAIN=$(env_NEXT_IMAGE_DOMAIN)
+      --build-arg NEXT_GTM_CODE=$(env_NEXT_GTM_CODE)
+      --build-arg NEXT_API_BASE_URL=$(env_NEXT_API_BASE_URL)
     tags: |
       $(Build.BuildId)
-    env:
-      NEXT_PUBLIC_DRUPAL_BASE_URL: $(env_NEXT_PUBLIC_DRUPAL_BASE_URL)
-      NEXT_IMAGE_DOMAIN: $(env_NEXT_IMAGE_DOMAIN)
-      NEXT_GTM_CODE: $(env_NEXT_GTM_CODE)
-      NEXT_API_BASE_URL: $(env_NEXT_API_BASE_URL)
+
+- task: Docker@2
+  displayName: 'Push Docker Image'
+  inputs:
+    containerRegistry: $(containerRegistry)
+    repository: '$(Build.SourceBranchName)/$(Build.Repository.Name)'
+    command: 'push'
+    tags: |
+      $(Build.BuildId)
 
 - task: CopyFiles@2
   inputs:
