@@ -1,0 +1,26 @@
+steps:
+- checkout: self
+
+- task: Docker@2
+  displayName: 'Build and push image' 
+  inputs:
+    containerRegistry: $(containerRegistry)
+    repository: '$(Build.SourceBranchName)/$(Build.Repository.Name)'
+    command: 'buildAndPush'
+    Dockerfile: '.devops/docker/Dockerfile'
+    buildContext: '.'
+    tags: |
+      $(Build.BuildId)
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '.devops/helm'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@1
+  displayName: "Publish Helm Chart"
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    artifact: 'helm'
+    publishLocation: 'pipeline'
