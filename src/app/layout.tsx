@@ -27,12 +27,12 @@ export default function RootLayout({
     <html lang="pt_BR">
       <head></head>
       <body
-        data-teste={process.env.API_BASE_URL}
+        data-teste={process.env.NEXT_API_BASE_URL}
         className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} antialiased`}
       >
         {children}
       </body>
-      <GoogleTagManager gtmId={process.env.GTM_CODE || ''} />
+      <GoogleTagManager gtmId={process.env.NEXT_GTM_CODE || ''} />
     </html>
   );
 }

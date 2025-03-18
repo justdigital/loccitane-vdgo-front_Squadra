@@ -5,12 +5,14 @@ import type { DrupalNode } from "next-drupal"
 export async function fetchDrupalData(endpoint?: string) {
   try {
     const nodes = await drupal.getResourceCollection<DrupalNode[]>(
-      "node--page",
+      "node--landing_page",
       {
         params: {
           "filter[status]": 1,
-          "fields[node--page]": "title,path,uid,created,field_sections,field_items",
-          include: "uid,field_sections,field_sections.field_items",
+          // "filter[id]": '0c913858-d49a-4ca7-b79d-449ee81cf561',
+          // "filter[path.alias]": endpoint,
+          // "fields[node--landing_page]": "field_section, field_image",
+          // include: "type, id",
           // sort: "-created",
         },
         next: {

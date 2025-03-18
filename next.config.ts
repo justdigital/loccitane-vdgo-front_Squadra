@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     additionalData: `$locci-red: #C02031;`,
   },
   env: {
-    API_BASE_URL: process.env.API_BASE_URL,
+    NEXT_API_BASE_URL: process.env.NEXT_API_BASE_URL,
   },
   eslint: {
     // Ignora erros de ESLint durante o build
