@@ -1,11 +1,13 @@
 "use client";
 import React, { useEffect } from 'react';
 import css from './style.module.scss';
-import { TextField } from '@mui/material';
+import { FormControl, Input, InputLabel, TextField } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
 import Button from '@/components/commons/button';
 import { IFormInputs } from '../..';
 import { fetchAddressByCep } from '@/services/fetch-cep';
+import MaskedInput from '@/components/commons/masked-input';
+import FormTextField from '@/components/commons/form-inputs/text-field';
 
 const StepAddress = () => {
 
@@ -13,44 +15,47 @@ const StepAddress = () => {
     control,
     watch,
     setValue,
-    formState
+    getFieldState,
   } = useFormContext<IFormInputs>();
 
+  const cepPattern = /^[0-9]{5}-[0-9]{3}$/;
   const cep = watch('cep');
 
-  const checkBoxColorStyle = {
-    '&.Mui-checked': {
-      color: '#51CF66',
-    },
-  };
-
   const fetchAddressDataByCep = async (cep: string) => {
-    const data = await fetchAddressByCep(cep);
-    const fullAddress = `<strong>${data.logradouro}</strong>, ${data.bairro}\n${data.localidade} - ${data.uf}`;
-    setValue('address', fullAddress);
+    try {
+      const data = await fetchAddressByCep(cep);
+      if (data.erro) {
+        setValue('address', '');
+        throw new Error('CEP não encontrado');
+      }
+      // const fullAddress = `<strong>${data.logradouro}</strong>, ${data.bairro}\n${data.localidade} - ${data.uf}`;
+      const fullAddress = `${data.logradouro}, ${data.bairro}\n${data.localidade} - ${data.uf}`;
+      setValue('address', fullAddress);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
+    if (!cep || !cep.match(cepPattern))
+      return;
+
     fetchAddressDataByCep(cep);
-  }, [cep]);
+  }, [cep, getFieldState]);
   
   return (
     <>
       <Controller
         name="cep"
         control={control}
-        rules={{ required: true }}
-        render={({ field }) => 
-          <TextField
-            {...field}
-            error
-            helperText=""
-            className={`${css['input']}`} 
-            fullWidth
-            label="CEP"
+        rules={{ required: 'Digite o CEP', pattern: {value: cepPattern, message: 'CEP inválido'} }}
+        render={({ field, fieldState }) =>
+          <FormTextField
+            field={field}
+            fieldState={fieldState}
+            label="CEP" 
             placeholder='00000-000'
-            variant="outlined"
-            size='small'
+            mask="00000-000"
           />
         }
       />
@@ -58,36 +63,34 @@ const StepAddress = () => {
       <Controller
         name="address"
         control={control}
-        rules={{ required: true }}
-        render={({ field }) =>
-          <div contentEditable {...field} dangerouslySetInnerHTML={{ __html: field.value }}></div>
-          // <TextField
-          //   {...field}
-          //   className={`${css['input']}`} 
-          //   fullWidth
-          //   label="Endereço" 
-          //   variant="outlined" 
-          //   size='small' 
-          //   multiline
-          //   rows={2}
-          // />
+        rules={{ required: 'Endereço é obrigatório'}}
+        render={({ field, fieldState }) =>
+          <FormTextField
+            field={field}
+            fieldState={fieldState}
+            label="Endereço" 
+            multiline
+            rows={2}
+          />
+          // <div
+          //   contentEditable
+          //   dangerouslySetInnerHTML={{ __html: field.value }}>
+          
+          // </div>
         }
       />
 
-      <div className="flex gap-x-4">
+      <div className="flex gap-x-4 mt-5">
         <div className="w-2/5">
           <Controller
             name="addressNumber"
             control={control}
-            rules={{ required: true }}
-            render={({ field }) => 
-              <TextField
-                {...field}
-                className={`${css['input']}`} 
-                fullWidth
+            rules={{ required: 'Número é obrigatório' }}
+            render={({ field, fieldState }) =>
+              <FormTextField
+                field={field}
+                fieldState={fieldState}
                 label="Número" 
-                variant="outlined" 
-                size='small' 
               />
             }
           />
@@ -96,15 +99,11 @@ const StepAddress = () => {
           <Controller
             name="addressAdditionalInfo"
             control={control}
-            rules={{ required: true }}
-            render={({ field }) => 
-              <TextField
-                {...field}
-                className={`${css['input']}`}
-                fullWidth
+            render={({ field, fieldState }) =>
+              <FormTextField
+                field={field}
+                fieldState={fieldState}
                 label="Complemento" 
-                variant="outlined" 
-                size='small'
               />
             }
           />
@@ -114,15 +113,11 @@ const StepAddress = () => {
       <Controller
         name="addressReference"
         control={control}
-        rules={{ required: true }}
-        render={({ field }) => 
-          <TextField
-            {...field}
-            className={`${css['input']}`} 
-            fullWidth
+        render={({ field, fieldState }) =>
+          <FormTextField
+            field={field}
+            fieldState={fieldState}
             label="Referência" 
-            variant="outlined" 
-            size='small' 
           />
         }
       />

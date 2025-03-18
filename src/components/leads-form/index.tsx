@@ -5,30 +5,9 @@ import { Tabs, Tab } from '@mui/material';
 import StepPersonalData from './tab-steps/personal-data';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import StepAddress from './tab-steps/addresss';
+import { IFormInputs } from '@/utils/form.util';
 
-export interface IFormInputs {
-  fullName: string;
-  documentNumber: string;
-  cellphoneNumber: string;
-  birthdate: string;
-  authorizeExposeCellNumbers: boolean;
-  receiveInfo: boolean;
-  acceptTerms: boolean;
-
-  email: string;
-  emailConfirmation: string;
-  isIndication: boolean;
-  resellerCode: string;
-  gender: '1' | '2' | '3';
-
-  cep: string;
-  address: string;
-  addressNumber: boolean;
-  addressAdditionalInfo: string;
-  addressReference: string;
-}
-
-const CustomTabPanel = ({ children, value, index }) => {
+const CustomTabPanel = ({ children, value, index }: { children: React.ReactNode, value: number, index: number }) => {
   return (
     <div hidden={index !== value}>
       {children}
@@ -38,17 +17,17 @@ const CustomTabPanel = ({ children, value, index }) => {
 
 const LeadsForm = () => {
 
-  const methods = useForm<IFormInputs>();
+  const methods = useForm<IFormInputs>({mode: "onChange", reValidateMode: "onChange"});
   const {
     handleSubmit,
-    getValues,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm<IFormInputs>()
+  } = methods;
   const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data)
 
   const [tab, setTab] = useState(1);
+
+  const gotoNextStep = () => {
+    setTab(tab + 1);
+  }
   
   return (
     <div className={`${css['form-box']} flex-1 bg-white`}>
@@ -101,10 +80,10 @@ const LeadsForm = () => {
 
             <div className={`${css['form']} mt-10`}>
               <CustomTabPanel value={tab} index={1}>
-                <StepPersonalData />
+                <StepPersonalData gotoNextStep={gotoNextStep} />
               </CustomTabPanel>
               <CustomTabPanel value={tab} index={2}>
-                <StepAddress />
+                <StepAddress gotoNextStep={gotoNextStep} />
               </CustomTabPanel>
               <CustomTabPanel value={tab} index={3}>
                 Item Three

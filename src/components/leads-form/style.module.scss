@@ -14,6 +14,14 @@
   main {
     width: 85%;
     margin: 25px auto 0;
+
+    :global(.MuiFormControl-root) {
+      margin: 20px 0 0;
+      
+      &:first-child {
+        margin-top: 0;
+      }
+    }
   }
 }
 

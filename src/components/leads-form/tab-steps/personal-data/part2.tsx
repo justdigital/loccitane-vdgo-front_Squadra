@@ -1,19 +1,38 @@
 "use client";
-import React from 'react';
+import React, { useMemo } from 'react';
 import css from './style.module.scss';
 import { Checkbox, FormControl, FormControlLabel, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
 import Button from '@/components/commons/button';
-import { IFormInputs } from '../..';
+import FormTextField from '@/components/commons/form-inputs/text-field';
+import { IFormInputs, validateStep } from '@/utils/form.util';
+import { checkEmailIsUnavailable } from '@/services/backend-comunication';
 
-const StepPersonalPart2 = () => {
+interface Part2Props {
+  gotoPart: (part: 1 | 2) => void;
+  gotoNextStep: () => void;
+}
+
+const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep}) => {
+
+  const {
+  } = useFormContext<IFormInputs>();
 
   const {
     control,
     watch,
+    getFieldState
   } = useFormContext<IFormInputs>()
 
-  const isIndication = watch("isIndication")
+  const watchedFields = watch();
+  const isIndication = watch("isIndication");
+
+  const activeSubmitButton = useMemo(() => validateStep('personalData2', getFieldState), [getFieldState, watchedFields]);
+
+
+  const clickButton = () => {
+    gotoNextStep();
+  }
 
   const checkBoxColorStyle = {
     '&.Mui-checked': {
@@ -27,17 +46,23 @@ const StepPersonalPart2 = () => {
       <Controller
         name="email"
         control={control}
-        rules={{ required: true }}
-        render={({ field }) => 
-          <TextField
-            error
-            helperText="Incorrect entry."
-            className={`${css['input']}`} 
-            fullWidth
-            type='email'
+        rules={
+          { required: 'Digite seu e-mail',
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+              message: 'E-mail inválido'
+            },
+            validate: {
+              checkEmailAvailability: async (email) => (await checkEmailIsUnavailable(email)) ? false : 'O e-mail já está em uso'
+            }
+          }
+        }
+        render={({ field, fieldState }) =>
+          <FormTextField
+            field={field}
+            fieldState={fieldState}
+            type="email"
             label="E-mail"
-            variant="outlined"
-            size='small'
           />
         }
       />
@@ -45,15 +70,13 @@ const StepPersonalPart2 = () => {
       <Controller
         name="emailConfirmation"
         control={control}
-        rules={{ required: true }}
-        render={({ field }) => 
-          <TextField
-            className={`${css['input']}`} 
-            fullWidth
-            type='email'
-            label="Confirmação de e-mail" 
-            variant="outlined" 
-            size='small'
+        rules={{ required: 'Confirme o e-mail', validate: value => value === watch('email') || 'E-mails não conferem' }}
+        render={({ field, fieldState }) =>
+          <FormTextField
+            field={field}
+            fieldState={fieldState}
+            type="email"
+            label="Confirmação de e-mail"
           />
         }
       />
@@ -61,7 +84,6 @@ const StepPersonalPart2 = () => {
       <Controller
         name="isIndication"
         control={control}
-        rules={{ required: true }}
         render={({ field }) => 
           <FormControlLabel
             sx={{'marginBottom': '-10px'}}
@@ -79,24 +101,22 @@ const StepPersonalPart2 = () => {
       <Controller
         name="resellerCode"
         control={control}
-        rules={{ required: true }}
-        render={({ field }) => 
-          <TextField
-            className={`${css['input']}`} 
-            fullWidth
+        rules={{ required: watch('isIndication') && 'Digite o código do revendedor' }}
+        render={({ field, fieldState }) =>
+          <FormTextField
+            field={field}
+            fieldState={fieldState}
             disabled={!isIndication}
             label="Código" 
             placeholder='digite código do revendedor'
-            variant="outlined" 
-            size='small' 
           />
         }
       />
 
       <Controller
-        name="resellerCode"
+        name="gender"
         control={control}
-        rules={{ required: true }}
+        rules={{ required: 'Selecione o gênero' }}
         render={({ field }) => 
           <FormControl fullWidth size='small'>
             <InputLabel id="gender-select">Gênero</InputLabel>
@@ -114,7 +134,7 @@ const StepPersonalPart2 = () => {
         }
       />
 
-      <Button label="Iniciar cadastro" buttonClasses={`w-full ${css['submit-button']}`} />
+      <Button label="Iniciar cadastro" type='button' onClick={clickButton} disabled={!activeSubmitButton} buttonClasses={`w-full ${css['submit-button']}`} />
     </>
   );
 };

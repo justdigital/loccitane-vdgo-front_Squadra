@@ -25,11 +25,11 @@ const LeadsFormHeader: React.FC<LeadsFormHeaderProps> = () => {
           <Button label="Cadastre-se agora" />
         </div>
         <div className={`basis-full flex flex-col mb-60 justify-end ${css['banner-text']}`}>
-          <p>Revenda</p>
-          <h2>brasilidade</h2>
-          <p>com lucro de 40%, chérie!</p>
+          <div>Revenda</div>
+          <div>brasilidade</div>
+          <div>com lucro de 40%, chérie!</div>
         </div>
-        <div className="hidden sm:flex basis-full relative flex-1">
+        <div className="sm:flex basis-full absolute top-0 left-0 sm:relative flex-1">
           <LeadsForm />
         </div>
       </div>

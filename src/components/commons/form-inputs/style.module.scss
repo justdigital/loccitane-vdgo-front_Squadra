@@ -1,0 +1,75 @@
+:global(label) {
+  color: rgba(200, 197, 197, 0.8) !important;
+
+  &[data-shrink="true"] {
+    color: rgba(15, 15, 15, 1) !important;
+  }
+}
+
+.input {
+  display: block;
+  width: 100%;
+  font-family: var(--font-loccitane-sans);
+  border-radius: 0;
+  background-color: white;
+  color: rgba(34, 0, 0, 1);
+  font-size: 0.87rem;
+
+  & {
+    :global([disabled]) {
+      background-color: rgba(200, 197, 197, 0.1);
+    }
+  }
+
+  &.valid {
+    position: relative;
+
+    &:after {
+      content: " ";
+      background-image: url(/assets/images/icons/check-circle.svg);
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      right: 10px;
+      top: calc(50% - 12px);
+    }
+
+    :global(fieldset) {
+      border: 1px solid #51CF66 !important;
+    }
+  }
+
+  :global(fieldset) {
+    border: 1px solid #C8C5C5 !important;
+  }
+
+  :global(.MuiInputBase-root) {
+    border-radius: 0;
+  }
+
+  :global(.MuiFormControl-root) {
+    position: relative;
+  }
+
+  :global(p.Mui-error) {
+    position: absolute;
+    width: calc(100% - 20px);
+    text-align: right;
+    font-size: 0.68rem;
+    font-weight: 500;
+    font-style: italic;
+    margin-top: 0px;
+    bottom: -20px;
+  }
+}
+
+a.checkbox-label {
+  text-decoration: underline;
+}
+
+.checkbox-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgba(85, 46, 13, 1);
+  margin-left: 10px;
+}

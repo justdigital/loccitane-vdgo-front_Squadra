@@ -12,18 +12,19 @@ form {
     }
   }
 
-  a.checkbox-label {
-    text-decoration: underline;
-  }
-
-  .checkbox-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: rgba(85, 46, 13, 1);
-    margin-left: 10px;
-  }
-
   .submit-button {
     margin-top: 10px;
   }
+}
+
+.checkboxes-box {
+  margin-bottom: 10px;
+
+  :global(label) {
+    margin-bottom: -10px;
+  }
+}
+
+.checkbox-error {
+  background-color: red;
 }

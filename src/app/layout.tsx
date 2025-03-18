@@ -27,6 +27,7 @@ export default function RootLayout({
     <html lang="pt_BR">
       <head></head>
       <body
+        data-teste={process.env.API_BASE_URL}
         className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} antialiased`}
       >
         {children}

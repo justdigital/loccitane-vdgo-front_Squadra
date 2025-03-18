@@ -11,13 +11,17 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
     "@next/third-parties": "^15.2.1",
+    "axios": "^1.8.3",
+    "imask": "^7.6.1",
     "next": "15.1.7",
+    "next-drupal": "^2.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
-    "react-input-mask": "^2.0.4"
+    "react-imask": "^7.6.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
