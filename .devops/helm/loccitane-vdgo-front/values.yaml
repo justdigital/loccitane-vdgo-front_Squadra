@@ -17,7 +17,7 @@ env:
   NEXT_IMAGE_DOMAIN: "null"
   NEXT_GTM_CODE: "null"
   NEXT_API_BASE_URL: "null"
-
+  
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
