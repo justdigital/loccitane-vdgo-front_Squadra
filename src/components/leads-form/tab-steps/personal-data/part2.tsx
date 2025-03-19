@@ -53,7 +53,7 @@ const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep}) => {
               message: 'E-mail inválido'
             },
             validate: {
-              checkEmailAvailability: async (email) => (await checkEmailIsUnavailable(email)) ? false : 'O e-mail já está em uso'
+              checkEmailAvailability: async (email) => (await checkEmailIsUnavailable(email)) ? 'O e-mail já está em uso' : true
             }
           }
         }
