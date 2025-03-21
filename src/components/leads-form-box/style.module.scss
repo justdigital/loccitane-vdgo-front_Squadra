@@ -4,10 +4,10 @@
 
 .banner-wrapper {
   min-height: calc(100vh - 118px);
-  padding: 40px 30px;
+  // padding: 40px 30px;
   background-image: var(--banner-url-mobile);
   background-size: cover;
-  background-position: bottom;
+  background-position: center;
   background-repeat: no-repeat;
 
   @media (screen(md)) {

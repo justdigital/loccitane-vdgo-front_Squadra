@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import css from './style.module.scss';
 import { Tabs, Tab } from '@mui/material';
 import StepPersonalData from './tab-steps/personal-data';

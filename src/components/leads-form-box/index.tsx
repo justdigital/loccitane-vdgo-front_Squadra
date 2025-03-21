@@ -5,7 +5,7 @@ import LeadsForm from '../leads-form';
 
 interface LeadsFormHeaderProps {}
 
-const LeadsFormHeader: React.FC<LeadsFormHeaderProps> = () => {
+const LeadsFormBox: React.FC<LeadsFormHeaderProps> = () => {
 
 
   const bannersUrls = useMemo(() => {
@@ -16,10 +16,9 @@ const LeadsFormHeader: React.FC<LeadsFormHeaderProps> = () => {
   }, []);
 
   return (
-    <div className='container'>
+    <div className={`${css['banner-wrapper']}`} style={bannersUrls as React.CSSProperties}>
       <div
-        className={`${css['banner-wrapper']} w-full h-full flex flex-col sm:items-stretch md:flex-row space-y-4 md:space-y-0 md:space-x-4`}
-        style={bannersUrls as React.CSSProperties}
+        className={`container w-full h-full flex flex-col sm:items-stretch md:flex-row space-y-4 md:space-y-0 md:space-x-4`}
       >
         <div className={`text-right sm:hidden`}>
           <Button label="Cadastre-se agora" />
@@ -37,4 +36,4 @@ const LeadsFormHeader: React.FC<LeadsFormHeaderProps> = () => {
   );
 };
 
-export default LeadsFormHeader;
+export default LeadsFormBox;
