@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { use, useCallback, useEffect, useState } from 'react';
 import css from './style.module.scss';
 import { Tabs, Tab } from '@mui/material';
 import StepPersonalData from './tab-steps/personal-data';
@@ -46,7 +46,7 @@ const LeadsForm = () => {
   const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data)
 
   const [majorTabAvailable, setMajorTabAvailable] = useState(1);
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useState(0);
 
   const headerTitle = watch('headerTitle');
   const submitButtonAction = watch('submitButtonAction');
@@ -87,6 +87,10 @@ const LeadsForm = () => {
         break;
     }
   }, [tab]);
+
+  useEffect(() => {
+    gotoNextStep();
+  }, []);
   
   return (
     <>
