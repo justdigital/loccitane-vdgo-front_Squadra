@@ -39,6 +39,33 @@
           border-left: none;
         }
 
+        &.login {
+          
+
+          .login-text {
+            color: $locci-red;
+            font-weight: 600;
+            font-size: 1rem;
+
+            @media (screen(md)) {
+              font-size: 1.25rem;
+            }
+
+            span {
+              text-decoration: underline;
+            }
+          }
+
+          svg {
+            fill: $locci-red;
+            font-size: 1.9rem;
+
+            @media (screen(md)) {
+              font-size: 2.13rem;
+            }
+          }
+        }
+
         &.chat {
           img {
             width: 24px;
