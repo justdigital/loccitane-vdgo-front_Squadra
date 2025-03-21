@@ -11,8 +11,8 @@ export async function fetchDrupalData(endpoint?: string) {
           "filter[status]": 1,
           // "filter[id]": '0c913858-d49a-4ca7-b79d-449ee81cf561',
           // "filter[path.alias]": endpoint,
-          // "fields[node--landing_page]": "field_section, field_image",
-          // include: "type, id",
+          "fields[node--landing_page]": "field_section, field_image",
+          include: "uid,field_section,field_section.field_media.field_media_video_file",
           // sort: "-created",
         },
         next: {

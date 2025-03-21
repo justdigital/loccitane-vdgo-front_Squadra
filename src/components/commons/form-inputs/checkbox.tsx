@@ -1,12 +1,12 @@
 import React from 'react';
-import { Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Checkbox, FormControlLabel } from '@mui/material';
 import css from './style.module.scss';
 
 
 interface FormCheckboxProps {
   field?: any;
+  fieldState?: any;
   label?: string;
-  error?: boolean | undefined;
   labelOnclick?: () => void;
 }
 
@@ -18,23 +18,26 @@ const checkBoxColorStyle = {
 
 const FormCheckbox: React.FC<FormCheckboxProps> = ({
   field,
+  fieldState,
   label,
-  error,
   labelOnclick,
   ...props
 }) => {
   return (
-    <FormControlLabel
-      {...props}
-      control={
-        <Checkbox
-          {...field}
-          className={{error: !!error && css['checkbox-error']}}
-          sx={checkBoxColorStyle}
-        />
-      }
-      label={!labelOnclick ? <span className={css['checkbox-label']}>{label}</span> : <a onClick={labelOnclick} className={css['checkbox-label']}>{label}</a>}
-    />
+    <Box className={`relative`}>
+      <FormControlLabel
+        {...props}
+        control={
+          <Checkbox
+            {...field}
+            checked={field.value}
+            sx={checkBoxColorStyle}
+          />
+        }
+        label={!labelOnclick ? <span className={css['checkbox-label']}>{label}</span> : <a onClick={labelOnclick} className={css['checkbox-label']}>{label}</a>}
+      />
+      {fieldState?.error && <div className={css['checkbox-error']}>{fieldState?.error?.message ?? ''}</div>}
+    </Box>
   );
 };
 

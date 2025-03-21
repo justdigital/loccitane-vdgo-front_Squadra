@@ -29,7 +29,7 @@ const LeadsFormHeader: React.FC<LeadsFormHeaderProps> = () => {
           <div>brasilidade</div>
           <div>com lucro de 40%, chérie!</div>
         </div>
-        <div className="sm:flex basis-full absolute top-0 left-0 sm:relative flex-1">
+        <div className="hidden sm:flex basis-full absolute top-0 left-0 sm:relative flex-1">
           <LeadsForm />
         </div>
       </div>

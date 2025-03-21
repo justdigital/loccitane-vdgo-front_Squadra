@@ -1,4 +1,14 @@
-.input {
+@mixin label-error {
+  position: absolute;
+  width: calc(100% - 20px);
+  font-size: 0.68rem;
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 0px;
+  bottom: -20px;
+}
+
+.input, .select {
   display: block;
   width: 100%;
   font-family: var(--font-loccitane-sans);
@@ -13,12 +23,15 @@
     }
   }
 
-  &.valid {
+  &.valid, &.invalid {
     position: relative;
+
+    &.select:after {
+      right: 25px;
+    }
 
     &:after {
       content: " ";
-      background-image: url(/assets/images/icons/check-circle.svg);
       width: 24px;
       height: 24px;
       position: absolute;
@@ -26,8 +39,24 @@
       top: calc(50% - 12px);
     }
 
-    :global(fieldset) {
-      border: 1px solid #51CF66 !important;
+    &.valid {
+      &:after {
+        background-image: url(/assets/images/icons/check-circle.svg);
+      }
+      
+      :global(fieldset) {
+        border: 1px solid #51CF66 !important;
+      }
+    }
+
+    &.invalid {
+      &:after {
+        background-image: url(/assets/images/icons/cross-circle.svg);
+      }
+
+      :global(fieldset) {
+        border: 1px solid #d32f2f !important;
+      }
     }
   }
 
@@ -40,7 +69,7 @@
   }
 
   :global(fieldset) {
-    border: 1px solid #C8C5C5 !important;
+    border: 1px solid #C8C5C5;
   }
 
   :global(.MuiInputBase-root) {
@@ -52,15 +81,15 @@
   }
 
   :global(p.Mui-error) {
-    position: absolute;
-    width: calc(100% - 20px);
     text-align: right;
-    font-size: 0.68rem;
-    font-weight: 500;
-    font-style: italic;
-    margin-top: 0px;
-    bottom: -20px;
+    @include label-error
   }
+}
+
+.checkbox-error {
+  @include label-error;
+  margin-left: 42px;
+  color: #d32f2f;
 }
 
 a.checkbox-label {

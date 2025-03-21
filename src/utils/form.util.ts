@@ -1,23 +1,41 @@
-export interface IFormInputs {
+export interface IStep1CreateUser {
   fullName: string;
   documentNumber: string;
   cellphoneNumber: string;
   birthdate: string;
   authorizeExposeCellNumbers: boolean;
-  receiveInfo: boolean;
+  acceptReceiveInfo: boolean;
   acceptTerms: boolean;
+}
 
+export interface IStep1PersonalData {
   email: string;
   emailConfirmation: string;
   isIndication: boolean;
   resellerCode: string;
   gender: '1' | '2' | '3';
+}
 
+export interface IStep2Address {
   cep: string;
   address: string;
   addressNumber: boolean;
   addressAdditionalInfo: string;
   addressReference: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+}
+
+export interface SharedInfo {
+  headerTitle: string;
+  submitButtonLabel: string;
+  submitButtonAction: () => void
+  submitButtonLoading: boolean;
+}
+
+export interface IFormInputs extends IStep1CreateUser, IStep1PersonalData, IStep2Address, SharedInfo {
+
 }
 
 const StepFieldsToValidate = {
@@ -27,7 +45,7 @@ const StepFieldsToValidate = {
     'cellphoneNumber',
     'birthdate',
     // 'authorizeExposeCellNumbers',
-    // 'receiveInfo',
+    // 'acceptReceiveInfo',
     'acceptTerms'
   ],
   'personalData2': [
@@ -49,6 +67,7 @@ const StepFieldsToValidate = {
 export const validateStep = (step: 'personalData1' | 'personalData2' | 'address', getFieldState: Function) => {
   return StepFieldsToValidate[step].every(field =>  {
     const _fieldState = getFieldState(field as keyof IFormInputs);
-    return _fieldState.isDirty && !_fieldState.invalid;
+    // console.log(field, _fieldState);
+    return !_fieldState.error;
   });
 }

@@ -5,7 +5,7 @@ import React from 'react';
 
 const LandingPage1 = () => {
 
-  fetchDrupalData('/lps-teste');
+  // fetchDrupalData('/lps-teste');
 
   return (
     <div>

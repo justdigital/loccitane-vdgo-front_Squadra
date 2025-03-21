@@ -1,36 +1,65 @@
 "use client";
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import css from './style.module.scss';
-import { Box, Checkbox, FormControlLabel } from '@mui/material';
+import { Box } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
-import Button from '@/components/commons/button';
 import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, validateStep } from '@/utils/form.util';
 import FormCheckbox from '@/components/commons/form-inputs/checkbox';
-import { checkCpfIsUnavailable } from '@/services/backend-comunication';
+import { checkCpfIsUnavailable, createUser } from '@/services/backend-comunication';
+import _ from 'lodash';
+import { useAppContext } from '@/utils/app.context';
 
 interface Part1Props {
   gotoPart: (step: 1 | 2) => void;
+  isTabActive: boolean;
 }
 
-const StepPersonalPart1: React.FC<Part1Props> = ({gotoPart}) => {
+const StepPersonalPart1: React.FC<Part1Props> = ({gotoPart, isTabActive}) => {
 
   const {
     control,
-    watch,
     getFieldState,
     handleSubmit,
+    getValues,
+    setValue,
     formState: { errors } 
   } = useFormContext<IFormInputs>();
 
-  const isStepValidated = useMemo(() => validateStep('personalData1', getFieldState), [getFieldState('documentNumber')]);
+  const {setUserFormId} = useAppContext();
 
-  const clickButton = useCallback(async () => {
-    await handleSubmit(() => {}, () => {})();
-    if (isStepValidated) {
-      gotoPart(2);
+  const sendDataToServer = async (onOk: () => void) => {
+    setValue('submitButtonLoading', true);
+
+    try {
+      const data = _.pick(getValues(), ['fullName', 'documentNumber', 'cellphoneNumber', 'birthdate', 'authorizeExposeCellNumbers', 'acceptReceiveInfo', 'acceptTerms']);
+      const uuid = await createUser(data);
+      setUserFormId(uuid);
+      onOk();
+    } catch (e) {
+      console.error('Erro ao enviar dados para o servidor:', e)
+    } finally {
+      setValue('submitButtonLoading', false);
     }
-  }, [isStepValidated]);
+  };
+  
+  const clickButton = useCallback(async () => {
+    setValue('submitButtonLoading', true);
+    await handleSubmit(() => {}, () => setValue('submitButtonLoading', false))();
+    if (validateStep('personalData1', getFieldState)) {
+      sendDataToServer(() => gotoPart(2));
+    }
+  }, [getFieldState]);
+
+  useEffect(() => {
+    if (!isTabActive) {
+      return;
+    }
+
+    setValue('submitButtonAction', clickButton);
+    setValue('submitButtonLabel', 'Iniciar cadastro');
+    setValue('headerTitle', 'O cadastro é rápido e fácil, levando menos de 5 minutos!');
+  }, [isTabActive]);
   
   return (
     <>
@@ -38,7 +67,13 @@ const StepPersonalPart1: React.FC<Part1Props> = ({gotoPart}) => {
       <Controller
         name="fullName"
         control={control}
-        rules={{ required: 'Digite o nome completo.'}}
+        rules={{
+          required: 'Digite o nome completo.',
+          pattern: {
+            value: /^(?=.*\b[a-zA-Z]{2,}\b.*\b[a-zA-Z]{2,}\b)[a-zA-Z\s]+$/,
+            message: 'Digite seu nome completo'
+          },
+        }}
         render={({ field, fieldState }) =>
           <FormTextField
             field={field}
@@ -111,7 +146,7 @@ const StepPersonalPart1: React.FC<Part1Props> = ({gotoPart}) => {
         />
 
         <Controller
-          name="receiveInfo"
+          name="acceptReceiveInfo"
           control={control}
           render={({ field }) =>
             <FormCheckbox
@@ -124,11 +159,11 @@ const StepPersonalPart1: React.FC<Part1Props> = ({gotoPart}) => {
         <Controller
           name="acceptTerms"
           control={control}
-          rules={{ required: 'dsdsdsds'}}
-          render={({ field }) =>
+          rules={{ required: 'Compo obrigatório.'}}
+          render={({ field, fieldState }) =>
             <FormCheckbox
               field={field}
-              error={!!errors.acceptTerms}
+              fieldState={fieldState}
               labelOnclick={() => console.log('open terms')}
               label="Li e aceito os  termos de uso e privacidade"
             />
@@ -136,7 +171,7 @@ const StepPersonalPart1: React.FC<Part1Props> = ({gotoPart}) => {
         />
       </Box>
 
-      <Button label="Iniciar cadastro" onClick={clickButton} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
+      {/* <Button label="Iniciar cadastro" onClick={clickButton} isLoading={isSendingData} type='button' buttonClasses={`w-full ${css['submit-button']}`} /> */}
     </>
   );
 };

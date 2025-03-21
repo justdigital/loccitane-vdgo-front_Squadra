@@ -2,6 +2,7 @@
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
+  padding-bottom: 40px;
 
   header {
     background-color: $locci-red;
@@ -12,16 +13,24 @@
   }
 
   main {
-    width: 85%;
-    margin: 25px auto 0;
+    
 
-    :global(.MuiFormControl-root) {
+    form {
+      height: 100%;
+    }
+
+    :global(.MuiFormControl-root), :global(.form-checkbox) {
       margin: 20px 0 0;
       
       &:first-child {
         margin-top: 0;
       }
     }
+  }
+
+  main, .footer-button {
+    width: 85%;
+    margin: 10px auto 0;
   }
 }
 

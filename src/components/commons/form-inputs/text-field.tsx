@@ -15,6 +15,7 @@ const FormTextField: React.FC<FormTextFieldProps & TextFieldProps> = ({
   mask,
   ...props
 }) => {
+
   return (
     <TextField
       {...field}
@@ -22,7 +23,7 @@ const FormTextField: React.FC<FormTextFieldProps & TextFieldProps> = ({
       value={field.value ?? ''}
       error={fieldState.invalid}
       helperText={fieldState.error?.message ?? ''}
-      className={`${css['input']} ${fieldState.isDirty && !fieldState.invalid ? css['valid'] : ''}`} 
+      className={`${css['input']} ${fieldState.invalid ? css['invalid'] : fieldState.isDirty && css['valid']}`} 
       fullWidth
       variant="outlined"
       size='small'
