@@ -1,16 +1,19 @@
 import Header from '@/components/header';
-import LeadsFormHeader from '@/components/leads-form-header';
-import { fetchDrupalData } from '@/services/fetch-drupal-data';
+import LeadsFormBox from '@/components/leads-form-box';
+import FetchDrupalData from '@/services/fetch-drupal-data';
 import React from 'react';
 
-const LandingPage1 = () => {
+const LandingPage1 = async () => {
 
-  // fetchDrupalData('/lps-teste');
+  // const drupalService = new FetchDrupalData('/api/node/17');
+  // const sections = drupalService.fetchData();
+
+  // console.log('sections22', sections);
 
   return (
     <div>
       <Header />
-      <LeadsFormHeader />
+      <LeadsFormBox />
     </div>
   );
 };
