@@ -4,10 +4,10 @@ import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select } from '
 import { Controller, useFormContext } from "react-hook-form";
 import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, validateStep } from '@/utils/form.util';
-import { checkEmailIsUnavailable, putPersonalData } from '@/services/backend-comunication';
+import { checkEmailIsUnavailable, putPersonalData } from '@/services/backend-comunication.service';
 import FormCheckbox from '@/components/commons/form-inputs/checkbox';
 import _ from 'lodash';
-import { useAppContext } from '@/utils/app.context';
+import { useAppContext } from '@/contexts/app.context';
 import { UUID } from 'crypto';
 import FormSelect from '@/components/commons/form-inputs/select';
 

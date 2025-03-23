@@ -8,7 +8,7 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = () => {
   return (
     <div className={`${css['header-container']}`}>
-      <div className={`container relative flex flex-row md:justify-center items-center md:items-end justify-between`}>
+      <div className={`container relative flex flex-row md:justify-center items-end justify-between`}>
         <Image src="/assets/images/mock/logo-loccitane.svg" className={css['logo-locci']} width={221} height={50} alt="Loccitane" />
 
         <div className={`${css['icon-buttons']}`}>

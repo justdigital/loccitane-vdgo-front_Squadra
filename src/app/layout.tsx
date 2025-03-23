@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import { GoogleTagManager } from '@next/third-parties/google'
 import "./globals.css";
-import { AppProvider } from "@/utils/app.context";
+import { AppProvider } from "@/contexts/app.context";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 const ralewayfont = Raleway({
   variable: "--font-raleway",
@@ -31,9 +32,11 @@ export default function RootLayout({
         data-teste={process.env.NEXT_API_BASE_URL}
         className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} antialiased`}
       >
-        <AppProvider>
-          {children}
-        </AppProvider>
+        <AppRouterCacheProvider>
+          <AppProvider>
+            {children}
+          </AppProvider>
+        </AppRouterCacheProvider>
       </body>
       <GoogleTagManager gtmId={process.env.NEXT_GTM_CODE || ''} />
     </html>

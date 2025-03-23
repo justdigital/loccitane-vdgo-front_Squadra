@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { forwardRef, RefAttributes, useCallback, useEffect, useImperativeHandle, useState } from 'react';
 import css from './style.module.scss';
 import { Tabs, Tab } from '@mui/material';
 import StepPersonalData from './tab-steps/personal-data';
@@ -7,6 +7,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import StepAddress from './tab-steps/addresss';
 import { IFormInputs } from '@/utils/form.util';
 import Button from '../commons/button';
+import CloseIcon from '@mui/icons-material/Close';
 
 const CustomTabPanel = ({ children, value, index }: { children: React.ReactNode, value: number, index: number }) => {
   return (
@@ -16,7 +17,11 @@ const CustomTabPanel = ({ children, value, index }: { children: React.ReactNode,
   );
 };
 
-const LeadsForm = () => {
+interface LeadsFormProps {
+
+}
+
+const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({}, ref) => {
 
   const methods = useForm<IFormInputs>({
     mode: "onChange",
@@ -47,6 +52,7 @@ const LeadsForm = () => {
 
   const [majorTabAvailable, setMajorTabAvailable] = useState(1);
   const [tab, setTab] = useState(0);
+  const [mobileFormVisible, setMobileFormVisible] = useState(false);
 
   const headerTitle = watch('headerTitle');
   const submitButtonAction = watch('submitButtonAction');
@@ -91,60 +97,43 @@ const LeadsForm = () => {
   useEffect(() => {
     gotoNextStep();
   }, []);
+
+
+  const changeMobileFormVisibility = (e: React.MouseEvent, visible: boolean) => {
+    // console.log('e', e)
+    setMobileFormVisible(visible);
+  }
+
+  useImperativeHandle(ref, () => ({
+    openMobileForm(e: React.MouseEvent) {
+      changeMobileFormVisibility(e, true);
+    }
+  }));
   
   return (
-    <>
+    <div className={`${css['modal-wrapper']} ${css['form-hidden']}`} data-visible={+mobileFormVisible}>
       <div className={`${css['form-box']} flex flex-col flex-1 bg-white`}>
-        <header className="text-center">
+        <header className="flex items-center text-left sm:text-center">
           {headerTitle || defaultHeader}
+          <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block sm:hidden'><CloseIcon /></a>
         </header>
         <main className='grow'>
         {tab ? (
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* tab atual: {tab} */}
               <Tabs
                 className={`${css['tabs']}`}
-                sx={{
-                  'minHeight': '0',
-                  'borderBottom': 'none',
-                  // 'padding-bottom': '10px',
-                  // 'overflow': 'auto !important',
-
-                  '.MuiTabs-scroller': {
-                    'borderBottom': '1px solid black',
-                    // 'overflow': 'auto !important',
-                    // 'overflow-x': 'auto'
-                  },
-                  '.MuiTab-root': {
-                    'padding': '10px',
-                    'minHeight': '0',
-                    'fontFamily': 'var(--font-loccitane-sans)',
-                    'fontSize': '0.875rem',
-                    'fontWeight': '700',
-                    'textTransform': 'none',
-                    'color': '#939393',
-                    'flex': '1',
-                  },
-                  '.Mui-selected': {
-                    'color': '#552E0D !important',
-                  },
-                  '.MuiTabs-indicator': {
-                    'height': '3px',
-                    'bottom': '-1px',
-                    'backgroundColor': '#C02031',
-                  },
-                }}
                 value={tab}
                 onChange={(e, i) => setTab(i)}
                 aria-label="Navegação dos passos para cadastro"
               >
                 <Tab label="Dados pessoais" value={1} />
+                {/* <Tab label="Contato" value={1} /> */}
                 <Tab label="Endereço" value={2} disabled={majorTabAvailable < 2} />
                 <Tab label="Validação" value={3} disabled={majorTabAvailable < 3} />
               </Tabs>
 
-              <div className={`mt-10`}>
+              <div className={`mt-5 sm: mt-10`}>
                 <CustomTabPanel value={tab} index={1}>
                   <StepPersonalData gotoNextStep={gotoNextStep} isTabActive={tab === 1} />
                 </CustomTabPanel>
@@ -165,8 +154,8 @@ const LeadsForm = () => {
           <Button label={submitButtonLabel || defaultSubmitButtonLabel} onClick={submitButtonAction} isLoading={submitButtonLoading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
         </div>
       </div>
-    </>
+    </div>
   );
-};
+});
 
 export default LeadsForm;

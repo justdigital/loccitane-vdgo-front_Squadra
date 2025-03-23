@@ -24,7 +24,7 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
   ...props
 }) => {
   return (
-    <Box className={`relative`}>
+    <Box className={`relative ${css['checkbox']}`}>
       <FormControlLabel
         {...props}
         control={

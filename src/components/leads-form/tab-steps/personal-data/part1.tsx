@@ -6,9 +6,9 @@ import { Controller, useFormContext } from "react-hook-form";
 import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, validateStep } from '@/utils/form.util';
 import FormCheckbox from '@/components/commons/form-inputs/checkbox';
-import { checkCpfIsUnavailable, createUser } from '@/services/backend-comunication';
+import { checkCpfIsUnavailable, createUser } from '@/services/backend-comunication.service';
 import _ from 'lodash';
-import { useAppContext } from '@/utils/app.context';
+import { useAppContext } from '@/contexts/app.context';
 
 interface Part1Props {
   gotoPart: (step: 1 | 2) => void;

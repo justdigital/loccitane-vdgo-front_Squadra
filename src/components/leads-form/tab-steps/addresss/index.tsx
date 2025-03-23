@@ -4,9 +4,9 @@ import { Controller, useFormContext } from "react-hook-form";
 import { fetchAddressByCep } from '@/services/fetch-cep';
 import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, validateStep } from '@/utils/form.util';
-import { useAppContext } from '@/utils/app.context';
+import { useAppContext } from '@/contexts/app.context';
 import _ from 'lodash';
-import { putAddressData } from '@/services/backend-comunication';
+import { putAddressData } from '@/services/backend-comunication.service';
 import { UUID } from 'crypto';
 
 interface StepAddressProps {

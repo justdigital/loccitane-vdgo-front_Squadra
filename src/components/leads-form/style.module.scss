@@ -1,21 +1,76 @@
+.modal-wrapper {
+  position: fixed;
+  width: calc(100vw - 0px);
+  top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  transition: .5s;
+
+  @media (screen(sm)) {
+    visibility: visible !important;
+    position: static;
+    width: auto;
+    height: auto;
+    display: block;
+    padding: 0;
+    background: none !important;
+  }
+
+  &:global([data-visible="1"]) {
+    visibility: visible;
+    background-color: rgba(70, 69, 69, 0.7);
+
+    .form-box {
+      top: 0;
+      // left: 0;
+    }
+  }
+
+  &:global([data-visible="0"]) {
+    visibility: hidden;
+
+    .form-box {
+      top: -800px;
+      // left: -800px
+    }
+  }
+}
+
 .form-box {
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   padding-bottom: 40px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  position: relative;
+  transition: .3s;
+  transition-delay: left 2s;
+
+  @media (screen(sm)) {
+    position: static;
+  }
+
+  // position: fixed;
+  // width: calc(100vw - 10px);
 
   header {
     background-color: $locci-red;
-    font-size: 1.25rem;
+    font-size: 1rem;
     color: white;
-    padding: 15px 80px;
+    padding: 15px 20px;
     font-weight: 600;
     position: relative;
     z-index: 2;
     border-top: 2px solid white;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+
+    @media (screen(sm)) {
+      padding: 15px 80px;
+      font-size: 1.25rem;
+    }
   }
 
   main {
@@ -35,15 +90,46 @@
   }
 
   main, .footer-button {
-    width: 85%;
+    width: 90%;
     margin: 10px auto 0;
+
+    @media (screen(sm)) {
+      width: 85%;
+    }
   }
 }
 
 .tabs {
+  min-height: 0 !important;
+  border-bottom: none;
+
+  :global(.MuiTab-root) {
+    font-size: 0.75rem;
+    padding: 10px 0;
+    min-height: 0;
+    font-family: var(--font-loccitane-sans);
+    font-weight: 700;
+    text-transform: none;
+    color: #939393;
+    flex: 1;
+
+    @media (screen(sm)) {
+      padding: 10px;
+      font-size: 0.875rem;
+    }
+  }
+
+  :global(.MuiTabs-scroller) {
+    border-bottom: 1px solid black;
+  }
   
-  [class="MuiTab-root"] {
-    display: none;
-    padding: 0;
+  :global(.Mui-selected) {
+    color: #552E0D !important;
+  }
+  
+  :global(.MuiTabs-indicator) {
+    height: 3px;
+    bottom: -1px;
+    background-color: $locci-red;
   }
 }
