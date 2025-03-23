@@ -4,7 +4,7 @@ import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
 import React from 'react';
 
-export const revalidate = 60 // invalidate cache every minute (maintain it only during dev)
+// export const revalidate = 60 // invalidate cache every minute (maintain it only during dev)
 
 const LandingPage1 = async () => {
 
