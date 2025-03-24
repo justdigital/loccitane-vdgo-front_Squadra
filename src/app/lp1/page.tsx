@@ -8,10 +8,8 @@ import React from 'react';
 
 const LandingPage1 = async () => {
 
-  // const drupalService = new DrupalService('/api/node/17');
-  // const { sections } = await drupalService.fetchData();
-
-  const sections = [];
+  const drupalService = new DrupalService('/api/node/17');
+  const { sections } = await drupalService.fetchData();
 
   return (
     <div>
