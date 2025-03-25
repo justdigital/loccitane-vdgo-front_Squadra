@@ -42,6 +42,7 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 WORKDIR /app
 
+COPY --from=builder /app/next.config.ts /app/next.config.ts* ./
 COPY --from=builder /app/package.json /app/package-lock.json* ./
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
