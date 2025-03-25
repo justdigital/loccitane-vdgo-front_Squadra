@@ -13,11 +13,13 @@ const LandingPage1 = async () => {
 
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       {sections.map((section, index) => {
         switch (section.type) {
           case 'banner':
             return <LeadsFormBox sectionData={section} key={index} />;
+          case 'section_header':
+            return <Header sectionData={section} key={index} />;
         }
       })}
       {/* <HorizontalVideoCardsSection />  */}

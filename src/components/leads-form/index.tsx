@@ -2,12 +2,14 @@
 import React, { forwardRef, RefAttributes, useCallback, useEffect, useImperativeHandle, useState } from 'react';
 import css from './style.module.scss';
 import { Tabs, Tab } from '@mui/material';
-import StepPersonalData from './tab-steps/personal-data';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import StepAddress from './tab-steps/addresss';
 import { IFormInputs } from '@/utils/form.util';
 import Button from '../commons/button';
 import CloseIcon from '@mui/icons-material/Close';
+import StepPersonalData from './tab-steps/personal-data';
+import StepContact from './tab-steps/contact';
+import StepSuccess from './tab-steps/success';
 
 const CustomTabPanel = ({ children, value, index }: { children: React.ReactNode, value: number, index: number }) => {
   return (
@@ -30,14 +32,13 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     //   submitButtonAction: () => {},
     //   submitButtonLoading: false,
     //   fullName: 'Jorge Luis',
-    //   documentNumber: '00000000000',
+    //   documentNumber: '04084092584',
     //   cellphoneNumber: '71999999999',
     //   birthdate: '10/03/1992',
     //   authorizeExposeCellNumbers: false,
     //   acceptReceiveInfo: false,
     //   acceptTerms: true,
     //   email: 'teste@teste.com',
-    //   emailConfirmation: 'teste@teste.com',
     //   gender: "1",
     //   isIndication: false,
     // }
@@ -64,8 +65,8 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 5 minutos!';
   const defaultSubmitButtonLabel = 'Iniciar cadastro';
 
-  const gotoNextStep = useCallback(() => {
-    const newTab = tab + 1;
+  const gotoNextStep = useCallback((step?: number) => {
+    const newTab = step ? step : tab + 1;
     setTab(newTab);
     reset(getValues(), {
       keepValues: true,
@@ -128,20 +129,24 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
                 aria-label="Navegação dos passos para cadastro"
               >
                 <Tab label="Dados pessoais" value={1} />
-                {/* <Tab label="Contato" value={1} /> */}
-                <Tab label="Endereço" value={2} disabled={majorTabAvailable < 2} />
-                <Tab label="Validação" value={3} disabled={majorTabAvailable < 3} />
+                <Tab label="Contato" value={2} disabled={majorTabAvailable < 2} />
+                <Tab label="Endereço" value={3} disabled={majorTabAvailable < 3} />
+                <Tab label="Validação" value={4} disabled={majorTabAvailable < 4} />
               </Tabs>
 
-              <div className={`mt-5 sm: mt-10`}>
+              <div className={`mt-5 sm:mt-10`}>
                 <CustomTabPanel value={tab} index={1}>
+                  {/* <StepPersonalData gotoNextStep={gotoNextStep} isTabActive={tab === 1} /> */}
                   <StepPersonalData gotoNextStep={gotoNextStep} isTabActive={tab === 1} />
                 </CustomTabPanel>
                 <CustomTabPanel value={tab} index={2}>
-                  <StepAddress gotoNextStep={gotoNextStep} isTabActive={tab === 2} />
+                  <StepContact gotoNextStep={gotoNextStep} isTabActive={tab === 2} />
                 </CustomTabPanel>
                 <CustomTabPanel value={tab} index={3}>
-                  Item Three
+                  <StepAddress gotoNextStep={gotoNextStep} isTabActive={tab === 3} />
+                </CustomTabPanel>
+                <CustomTabPanel value={tab} index={4}>
+                  <StepSuccess gotoNextStep={gotoNextStep} isTabActive={tab === 4} />
                 </CustomTabPanel>
               </div>
             </form>
@@ -150,9 +155,11 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
           : <></>
         }
         </main>
-        <div className={`${css['footer-button']}`}>
-          <Button label={submitButtonLabel || defaultSubmitButtonLabel} onClick={submitButtonAction} isLoading={submitButtonLoading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
-        </div>
+        {submitButtonLabel != null && (
+          <div className={`${css['footer-button']}`}>
+            <Button label={submitButtonLabel || defaultSubmitButtonLabel} onClick={submitButtonAction} isLoading={submitButtonLoading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
+          </div>
+        )}
       </div>
     </div>
   );

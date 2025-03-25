@@ -28,6 +28,8 @@ const FormTextField: React.FC<FormTextFieldProps & TextFieldProps> = ({
       variant="outlined"
       size='small'
       slotProps={{
+        ...props.slotProps,
+        htmlInput: { maxLength: 12 },
         input: {
           inputComponent: mask && MaskedInput as any,
           inputProps: {

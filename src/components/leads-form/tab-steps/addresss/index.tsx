@@ -1,13 +1,16 @@
 "use client";
-import React, { useCallback, useEffect } from 'react';
-import { Controller, useFormContext } from "react-hook-form";
+import React, { useCallback, useEffect, useState } from 'react';
+import { Controller, set, useFormContext } from "react-hook-form";
 import { fetchAddressByCep } from '@/services/fetch-cep';
 import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, validateStep } from '@/utils/form.util';
 import { useAppContext } from '@/contexts/app.context';
 import _ from 'lodash';
-import { putAddressData } from '@/services/backend-comunication.service';
+import { getStateCityList, getStateList, putAddressData } from '@/services/backend-comunication.service';
 import { UUID } from 'crypto';
+import FormSelect from '@/components/commons/form-inputs/select';
+import { Autocomplete, TextField } from '@mui/material';
+import FormAutoComplete from '@/components/commons/form-inputs/autocomplete';
 
 interface StepAddressProps {
   gotoNextStep: () => void;
@@ -29,8 +32,13 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
   
   const userFormId = getUserFormId();
 
+  const [stateList, setStateList] = useState<{id: number, label: string}[]>([]);
+  const [cityList, setCityList] = useState<{id: number, label: string}[]>([]);
+  const [cityFilterInputValue, setCityFilterInputValue] = useState('');
+
   const cepPattern = /^[0-9]{5}-[0-9]{3}$/;
   const cep = watch('cep');
+  const state: any = watch('state');
 
   const fetchAddressDataByCep = async (cep: string) => {
     try {
@@ -39,13 +47,14 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
         setValue('address', '');
         throw new Error('CEP não encontrado');
       }
-      // const fullAddress = `<strong>${data.logradouro}</strong>, ${data.bairro}\n${data.localidade} - ${data.uf}`;
-      const fullAddress = `${data.logradouro}, ${data.bairro}\n${data.localidade} - ${data.uf}`;
+      const fullAddress = data.logradouro;
       setValue('address', fullAddress);
       /** remover quando atualizar formulário */
       setValue('neighborhood', data.bairro);
       setValue('city', data.localidade);
-      setValue('state', data.estado);
+      const foundState = stateList.find(state => state.label === data.estado);
+      console.log('foundState', foundState)
+      setValue('state', foundState as any);
     } catch (error) {
       console.error(error);
     }
@@ -56,6 +65,9 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
 
     try {
       const data = _.pick(getValues(), ['cep', 'address', 'addressNumber', 'addressAdditionalInfo', 'addressReference', 'neighborhood', 'city', 'state']);
+      console.log('data', data)
+      data.state = ''+data.state.id;
+      data.city = ''+data.city.id;
       await putAddressData(userFormId as UUID, data);
       onOk();
     } catch (e) {
@@ -67,12 +79,19 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
 
   const clickButton = useCallback(async () => {
     setValue('submitButtonLoading', true);
-    console.log('userFormId', userFormId);
     await handleSubmit(() => {}, () => setValue('submitButtonLoading', false))();
     if (validateStep('address', getFieldState)) {
       sendDataToServer(() => gotoNextStep());
     }
-  }, [getFieldState, userFormId]);
+  }, [getFieldState, userFormId, gotoNextStep]);
+
+  const fetchCityList = async (cityFilter: any) => {
+    if (!state || !cityFilter) {
+      return;
+    }
+    const result = await getStateCityList(+state?.id, cityFilter);
+    setCityList(result.map(({id, nome}) => ({id, label: nome})));
+  };
 
   useEffect(() => {
     if (!isTabActive) {
@@ -90,6 +109,17 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
 
     fetchAddressDataByCep(cep);
   }, [cep, getFieldState]);
+
+  useEffect(() => {
+    (async () => {
+      const result = (await getStateList());
+      setStateList(
+        result
+          .sort((a, b) => a.nome.localeCompare(b.nome))
+          .map(({id, nome}) => ({id, label: nome}))
+      );
+    })();
+  }, []);
   
   return (
     <>
@@ -117,8 +147,6 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
             field={field}
             fieldState={fieldState}
             label="Endereço" 
-            multiline
-            rows={2}
           />
           // <div
           //   contentEditable
@@ -129,16 +157,76 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       />
 
       <div className="flex gap-x-4 mt-5">
-        <div className="w-2/5">
+        <div className="w-1/5">
           <Controller
             name="addressNumber"
             control={control}
-            rules={{ required: 'Número é obrigatório' }}
+            rules={{ required: true }}
             render={({ field, fieldState }) =>
               <FormTextField
                 field={field}
                 fieldState={fieldState}
                 label="Número" 
+              />
+            }
+          />
+        </div>
+        <div className="w-2/5">
+          <Controller
+            name="state"
+            control={control}
+            rules={{ required: 'Selecione um estado' }}
+            render={({ field, fieldState }) =>
+              // <FormSelect
+              //   field={field}
+              //   fieldState={fieldState}
+              //   label="Estado" 
+              //   items={stateList}
+              // />
+              <FormAutoComplete
+                field={field}
+                fieldState={fieldState}
+                options={stateList}
+                label="Estado"
+              />
+            }
+          />
+        </div>
+        <div className="w-2/5">
+          {/* estado: {state?.label} */}
+          <Controller
+            name="city"
+            control={control}
+            rules={{ required: 'Selecione uma cidade' }}
+            render={({ field, fieldState }) =>
+              <FormAutoComplete
+                field={field}
+                fieldState={fieldState}
+                filterOptions={(x) => x}
+                options={cityList}
+                onInputChange={(event, newInputValue) => {
+                  setCityFilterInputValue(newInputValue);
+                  fetchCityList(newInputValue);
+                }}
+                label="Cidade"
+                noOptionsText={cityFilterInputValue ? 'Nenhuma cidade encontrada' : 'Pesquise uma cidade'}
+              />
+            }
+          />
+        </div>
+      </div>
+
+      <div className="flex gap-x-4 mt-5">
+        <div className="w-2/5">
+          <Controller
+            name="neighborhood"
+            control={control}
+            rules={{ required: 'Bairro é obrigatório' }}
+            render={({ field, fieldState }) =>
+              <FormTextField
+                field={field}
+                fieldState={fieldState}
+                label="Bairro" 
               />
             }
           />
@@ -152,6 +240,8 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
                 field={field}
                 fieldState={fieldState}
                 label="Complemento" 
+                onChange={(e) => field.onChange(e.target.value.substring(0, 60))}
+                // slotProps={{ htmlInput: { maxLength: 12 } }}
               />
             }
           />
@@ -165,7 +255,8 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
           <FormTextField
             field={field}
             fieldState={fieldState}
-            label="Referência" 
+            label="Referência"
+            onChange={(e) => field.onChange(e.target.value.substring(0, 60))}
           />
         }
       />

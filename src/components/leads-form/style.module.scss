@@ -32,7 +32,7 @@
     visibility: hidden;
 
     .form-box {
-      top: -800px;
+      top: -2000px;
       // left: -800px
     }
   }
@@ -50,6 +50,7 @@
 
   @media (screen(sm)) {
     position: static;
+    min-height: 620px;
   }
 
   // position: fixed;
@@ -114,7 +115,7 @@
     flex: 1;
 
     @media (screen(sm)) {
-      padding: 10px;
+      // padding: 10px;
       font-size: 0.875rem;
     }
   }

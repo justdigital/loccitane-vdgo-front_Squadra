@@ -1,23 +1,23 @@
 "use client";
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { Box, FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
+import { Box } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
 import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, validateStep } from '@/utils/form.util';
-import { checkEmailIsUnavailable, putPersonalData } from '@/services/backend-comunication.service';
+import { checkBirthdateMatches, checkEmailIsUnavailable, putPersonalData } from '@/services/backend-comunication.service';
 import FormCheckbox from '@/components/commons/form-inputs/checkbox';
 import _ from 'lodash';
 import { useAppContext } from '@/contexts/app.context';
 import { UUID } from 'crypto';
 import FormSelect from '@/components/commons/form-inputs/select';
+import css from './style.module.scss';
 
-interface Part2Props {
-  gotoPart: (part: 1 | 2) => void;
+interface StepContactProps {
   gotoNextStep: () => void;
   isTabActive: boolean;
 }
 
-const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep, isTabActive}) => {
+const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) => {
 
   const {getUserFormId} = useAppContext();
   const {
@@ -34,6 +34,7 @@ const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep, isTabA
 
   const userFormId = getUserFormId();
   const isIndication = watch("isIndication");
+  const cpf = watch("documentNumber");
 
   const genderItems = [
     { value: 1, label: 'Masculino' },
@@ -44,7 +45,7 @@ const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep, isTabA
   const sendDataToServer = async (onOk: () => void) => {
 
     try {
-      const data = _.pick(getValues(), ['email', 'gender', 'isIndication', 'resellerCode']);
+      const data = _.pick(getValues(), ['birthdate', 'email', 'gender', 'isIndication', 'resellerCode']);
       await putPersonalData(userFormId as UUID, data);
       onOk();
     } catch (e) {
@@ -57,10 +58,10 @@ const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep, isTabA
   const clickButton = useCallback(async () => {
     setValue('submitButtonLoading', true);
     await handleSubmit(() => {}, () => setValue('submitButtonLoading', false))();
-    if (validateStep('personalData2', getFieldState)) {
+    if (validateStep('contactData', getFieldState)) {
       sendDataToServer(() => gotoNextStep());
     }
-  }, [getFieldState]);
+  }, [getFieldState, userFormId]);
   
   useEffect(() => {
     if (!isTabActive) {
@@ -73,8 +74,30 @@ const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep, isTabA
   }, [isTabActive]);
   
   return (
-    <div className="flex flex-col">
+    <div className={`${css['fields-box']} flex flex-col`}>
       <Box className="grow">
+        <Controller
+          name="birthdate"
+          control={control}
+          rules={{
+            required: 'Digite a data de nascimento',
+            pattern: {value: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, message: 'Data de nascimento inválida. Use o formato DD/MM/AAAA.'},
+            validate: {
+              checkBirthdateMatches: async (birthdate) => {
+                return !(await checkBirthdateMatches(cpf, birthdate)) ? 'A data de nascimento não confere com o CPF' : true
+              }
+            }
+          }}
+          render={({ field, fieldState }) =>
+            <FormTextField
+              field={field}
+              fieldState={fieldState}
+              label="Data de nascimento"
+              mask="00/00/0000"
+            />
+          }
+        />
+
         <Controller
           name="email"
           control={control}
@@ -101,15 +124,15 @@ const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep, isTabA
         />
 
         <Controller
-          name="emailConfirmation"
+          name="gender"
           control={control}
-          rules={{ required: 'Confirme o e-mail', validate: value => value === watch('email') || 'E-mails não conferem' }}
-          render={({ field, fieldState }) =>
-            <FormTextField
+          rules={{ required: 'Selecione o gênero' }}
+          render={({ field, fieldState }) => 
+            <FormSelect
               field={field}
               fieldState={fieldState}
-              type="email"
-              label="Confirmação do E-mail"
+              label="Gênero"
+              items={genderItems}
             />
           }
         />
@@ -145,44 +168,10 @@ const StepPersonalPart2: React.FC<Part2Props> = ({gotoPart, gotoNextStep, isTabA
             </Box>
           )}
         </Box>
-
-        <Controller
-          name="gender"
-          control={control}
-          rules={{ required: 'Selecione o gênero' }}
-          render={({ field, fieldState }) => 
-            <FormSelect
-              field={field}
-              fieldState={fieldState}
-              label="Gênero"
-              items={genderItems}
-            />
-            // <FormControl
-            //   fullWidth
-            //   size='small'
-            //   error={fieldState.invalid}
-            // >
-            //   <InputLabel id="gender-select">Gênero</InputLabel>
-            //   <Select
-            //     {...field}
-            //     value={field.value ?? undefined}
-            //     labelId="gender-select"
-            //     label="Gênero"
-            //     variant="outlined" 
-            //   >
-            //     <MenuItem value={1}>Masculino</MenuItem>
-            //     <MenuItem value={2}>Feminino</MenuItem>
-            //     <MenuItem value={3}>Prefiro não informar</MenuItem>
-            //   </Select>
-            //   <FormHelperText>{fieldState.error?.message}</FormHelperText>
-            // </FormControl>
-          }
-        />
       </Box>
 
-      {/* <Button label="Iniciar cadastro" type='button' onClick={clickButton} disabled={!activeSubmitButton} buttonClasses={`w-full ${css['submit-button']}`} /> */}
     </div>
   );
 };
 
-export default StepPersonalPart2;
+export default StepContact;

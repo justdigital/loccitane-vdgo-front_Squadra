@@ -15,6 +15,17 @@ const nextConfig: NextConfig = {
     // Ignora erros de checagem de tipos durante o build
     ignoreBuildErrors: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'vdgo-cms-dev.squadra.com.br',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+    ],
+  },
 };
 
 export default nextConfig;

@@ -1,22 +1,21 @@
-export interface IStep1CreateUser {
+export interface IStepCreateUser {
   fullName: string;
   documentNumber: string;
   cellphoneNumber: string;
-  birthdate: string;
   authorizeExposeCellNumbers: boolean;
   acceptReceiveInfo: boolean;
   acceptTerms: boolean;
 }
 
-export interface IStep1PersonalData {
+export interface IStepContactData {
+  birthdate: string;
   email: string;
-  emailConfirmation: string;
   isIndication: boolean;
   resellerCode: string;
   gender: '1' | '2' | '3';
 }
 
-export interface IStep2Address {
+export interface IStepAddress {
   cep: string;
   address: string;
   addressNumber: boolean;
@@ -29,28 +28,27 @@ export interface IStep2Address {
 
 export interface SharedInfo {
   headerTitle: string;
-  submitButtonLabel: string;
+  submitButtonLabel: string | null;
   submitButtonAction: () => void
   submitButtonLoading: boolean;
 }
 
-export interface IFormInputs extends IStep1CreateUser, IStep1PersonalData, IStep2Address, SharedInfo {
+export interface IFormInputs extends IStepCreateUser, IStepContactData, IStepAddress, SharedInfo {
 
 }
 
 const StepFieldsToValidate = {
-  'personalData1': [
+  'personalData': [
     'fullName',
     'documentNumber',
     'cellphoneNumber',
-    'birthdate',
     // 'authorizeExposeCellNumbers',
     // 'acceptReceiveInfo',
     'acceptTerms'
   ],
-  'personalData2': [
+  'contactData': [
     'email',
-    'emailConfirmation',
+    'birthdate',
     'isIndication',
     'resellerCode',
     'gender'
@@ -58,13 +56,16 @@ const StepFieldsToValidate = {
   'address': [
     'cep',
     'address',
+    'city',
+    'state',
+    'neighborhood',
     'addressNumber',
     'addressAdditionalInfo',
     'addressReference'
   ]
 };
 
-export const validateStep = (step: 'personalData1' | 'personalData2' | 'address', getFieldState: Function) => {
+export const validateStep = (step: 'personalData' | 'contactData' | 'address', getFieldState: Function) => {
   return StepFieldsToValidate[step].every(field =>  {
     const _fieldState = getFieldState(field as keyof IFormInputs);
     // console.log(field, _fieldState);

@@ -1,7 +1,7 @@
 .fields-box {
   // margin-top: 20px;
 
-  :global(.MuiTextField-root:not(:first-child)) {
+  :global(.MuiTextField-root:not(:first-child)), :global(.form-checkbox:not(:first-child)) {
     margin-top: 35px !important;
   }
 

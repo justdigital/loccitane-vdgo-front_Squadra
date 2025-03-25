@@ -1,4 +1,5 @@
-import { IStep1CreateUser, IStep1PersonalData, IStep2Address } from "@/utils/form.util";
+import { drupal } from './../../node_modules/next-drupal/dist/index.d';
+import { IStepCreateUser, IStepContactData, IStepAddress } from "@/utils/form.util";
 import axios from "axios"
 import { UUID } from "node:crypto";
 
@@ -15,12 +16,34 @@ export async function checkCpfIsUnavailable(cpf: string): Promise<boolean> {
   return (await axios.get(url.toString()))?.data
 }
 
-export async function createUser(data: IStep1CreateUser): Promise<UUID> {
+export async function checkCpfIsValid(cpf: string): Promise<boolean> {
+  const urlParams = new URLSearchParams({cpf})
+  const url = new URL(API_URL + '/Cadastro/ValidarCpf/?' + urlParams)
+  return (await axios.get(url.toString()))?.data
+}
+
+export async function checkBirthdateMatches(cpf: string, dataNascimento: string): Promise<boolean> {
+  const url = new URL(API_URL + '/Cadastro/validarDataNascimento')
+  return (await axios.post(url.toString(), {cpf, dataNascimento}))?.data
+}
+
+export async function getStateList(): Promise<{id: number, nome: string}[]> {
+  const url = new URL(API_URL + '/Estado/ListaEstados')
+  return (await axios.get(url.toString()))?.data
+}
+
+export async function getStateCityList(stateId: number, cityFilter: string): Promise<{id: number, nome: string}[]> {
+  const urlParams = new URLSearchParams({estadoId: stateId.toString(), nomeParcial: cityFilter})
+  const url = new URL(API_URL + '/Municipio/ListaMunicipios?'+urlParams)
+  return (await axios.get(url.toString()))?.data
+}
+
+
+export async function createUser(data: IStepCreateUser): Promise<UUID> {
   const body = {
     nome: data.fullName,
     cpf: data.documentNumber,
     celular: data.cellphoneNumber,
-    dataNascimento: data.birthdate,
     aceitaDivulgarTelefones: data.authorizeExposeCellNumbers,
     desejaReceberInformacoes: data.acceptReceiveInfo,
     aceitaTermosUso: data.acceptTerms
@@ -30,20 +53,21 @@ export async function createUser(data: IStep1CreateUser): Promise<UUID> {
   return (await axios.post(url.toString(), body))?.data
 }
 
-export async function putPersonalData(id: UUID, data: IStep1PersonalData): Promise<UUID> {
+export async function putPersonalData(id: UUID, data: IStepContactData): Promise<UUID> {
   const body = {
     id,
+    dataNascimento: data.birthdate,
     email: data.email,
     genero: data.gender,
     indicacao: data.isIndication,
     codigoIndicacao: data.resellerCode || ''
   };
   
-  const url = new URL(API_URL + '/Cadastro/AdicionarDadosPessoais/')
+  const url = new URL(API_URL + '/Cadastro/AdicionarDadosContato/')
   return (await axios.post(url.toString(), body))?.data
 }
 
-export async function putAddressData(id: UUID, data: IStep2Address): Promise<UUID> {
+export async function putAddressData(id: UUID, data: IStepAddress): Promise<UUID> {
   const body = {
     id,
     cep: data.cep,
