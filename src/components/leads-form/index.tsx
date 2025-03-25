@@ -28,20 +28,20 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   const methods = useForm<IFormInputs>({
     mode: "onChange",
     reValidateMode: "onChange",
-    // defaultValues: {
-    //   submitButtonAction: () => {},
-    //   submitButtonLoading: false,
-    //   fullName: 'Jorge Luis',
-    //   documentNumber: '04084092584',
-    //   cellphoneNumber: '71999999999',
-    //   birthdate: '10/03/1992',
-    //   authorizeExposeCellNumbers: false,
-    //   acceptReceiveInfo: false,
-    //   acceptTerms: true,
-    //   email: 'teste@teste.com',
-    //   gender: "1",
-    //   isIndication: false,
-    // }
+    defaultValues: {
+      submitButtonAction: () => {},
+      submitButtonLoading: false,
+      fullName: 'Jorge Luis',
+      documentNumber: '04084092584',
+      cellphoneNumber: '71999999999',
+      birthdate: '10/03/1992',
+      authorizeExposeCellNumbers: false,
+      acceptReceiveInfo: false,
+      acceptTerms: true,
+      email: 'teste@teste.com',
+      gender: "1",
+      isIndication: false,
+    }
   });
   const {
     handleSubmit,
@@ -96,7 +96,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   }, [tab]);
 
   useEffect(() => {
-    gotoNextStep();
+    gotoNextStep(3);
   }, []);
 
 

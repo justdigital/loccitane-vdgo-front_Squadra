@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
 import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, validateStep } from '@/utils/form.util';
-import { checkBirthdateMatches, checkEmailIsUnavailable, putPersonalData } from '@/services/backend-comunication.service';
+import { checkBirthdateMatches, checkEmailIsUnavailable, checkIndicationCodeIsValid, putPersonalData } from '@/services/backend-comunication.service';
 import FormCheckbox from '@/components/commons/form-inputs/checkbox';
 import _ from 'lodash';
 import { useAppContext } from '@/contexts/app.context';
@@ -37,8 +37,8 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
   const cpf = watch("documentNumber");
 
   const genderItems = [
-    { value: 1, label: 'Masculino' },
-    { value: 2, label: 'Feminino' },
+    { value: 1, label: 'Feminino' },
+    { value: 2, label: 'Masculino' },
     { value: 3, label: 'Prefiro não informar' }
   ];
 
@@ -109,7 +109,7 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
                 message: 'E-mail inválido'
               },
               validate: {
-                checkEmailAvailability: async (email) => (await checkEmailIsUnavailable(email)) ? 'O e-mail já está em uso' : true
+                checkEmailAvailability: async (email) => (await checkEmailIsUnavailable(email)) ? 'E-mail já em uso' : true
               }
             }
           }
@@ -119,6 +119,9 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
               fieldState={fieldState}
               type="email"
               label="E-mail"
+              specificErrorTemplate={{
+                checkEmailAvailability: <a href="" target='_blank' className={`${css['helper-text-link']}`}>Este e-mail já está cadastrado. Clique aqui para fazer login</a>
+              }}
             />
           }
         />
@@ -154,7 +157,13 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
               <Controller
                 name="resellerCode"
                 control={control}
-                rules={{ required: watch('isIndication') ? 'Digite o código do revendedor' : false }}
+                rules={{
+                  required: watch('isIndication') ? 'Digite o código do revendedor' : false,
+                  pattern: {value: /^\d{4}$/, message: 'Digite um código de 4 números'},
+                  validate: {
+                    checkCodeIsValid: async (code: string) => !(await checkIndicationCodeIsValid(code)) ? 'Código não encontrado' : true
+                  }
+                }}
                 render={({ field, fieldState }) =>
                   <FormTextField
                     field={field}
@@ -162,6 +171,7 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
                     label="Código"
                     type='number'
                     placeholder='digite código do(a) revendedor(a)'
+                    maxLength={4}
                   />
                 }
               />

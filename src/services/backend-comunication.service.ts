@@ -1,4 +1,3 @@
-import { drupal } from './../../node_modules/next-drupal/dist/index.d';
 import { IStepCreateUser, IStepContactData, IStepAddress } from "@/utils/form.util";
 import axios from "axios"
 import { UUID } from "node:crypto";
@@ -27,6 +26,11 @@ export async function checkBirthdateMatches(cpf: string, dataNascimento: string)
   return (await axios.post(url.toString(), {cpf, dataNascimento}))?.data
 }
 
+export async function checkIndicationCodeIsValid(code: number | string): Promise<boolean> {
+  const url = new URL(API_URL + '/Cadastro/ExisteIndicado/' + encodeURIComponent(code))
+  return (await axios.get(url.toString()))?.data
+}
+
 export async function getStateList(): Promise<{id: number, nome: string}[]> {
   const url = new URL(API_URL + '/Estado/ListaEstados')
   return (await axios.get(url.toString()))?.data
@@ -46,7 +50,7 @@ export async function createUser(data: IStepCreateUser): Promise<UUID> {
     celular: data.cellphoneNumber,
     aceitaDivulgarTelefones: data.authorizeExposeCellNumbers,
     desejaReceberInformacoes: data.acceptReceiveInfo,
-    aceitaTermosUso: data.acceptTerms
+    aceitarTermosUso: data.acceptTerms
   };
   
   const url = new URL(API_URL + '/Cadastro/CriarUsuario')

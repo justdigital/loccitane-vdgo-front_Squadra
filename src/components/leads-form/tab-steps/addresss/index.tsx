@@ -240,7 +240,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
                 field={field}
                 fieldState={fieldState}
                 label="Complemento" 
-                onChange={(e) => field.onChange(e.target.value.substring(0, 60))}
+                maxLength={60}
                 // slotProps={{ htmlInput: { maxLength: 12 } }}
               />
             }
@@ -256,7 +256,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
             field={field}
             fieldState={fieldState}
             label="Referência"
-            onChange={(e) => field.onChange(e.target.value.substring(0, 60))}
+            maxLength={60}
           />
         }
       />
