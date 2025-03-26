@@ -152,7 +152,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
         <Controller
           name="acceptTerms"
           control={control}
-          rules={{ required: 'Compo obrigatório.'}}
+          rules={{ required: 'Campo obrigatório.'}}
           render={({ field, fieldState }) =>
             <FormCheckbox
               field={field}
