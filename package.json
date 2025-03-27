@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+	  }
+  },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
@@ -36,6 +41,7 @@
     "postcss": "^8",
     "sass": "^1.85.1",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "husky": "^9.1.7"
   }
 }
