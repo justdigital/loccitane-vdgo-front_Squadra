@@ -31,7 +31,7 @@ export async function checkIndicationCodeIsValid(code: number | string): Promise
   return (await axios.get(url.toString()))?.data
 }
 
-export async function getStateList(): Promise<{id: number, nome: string}[]> {
+export async function getStateList(): Promise<{id: number, nome: string, sigla: string}[]> {
   const url = new URL(API_URL + '/Estado/ListaEstados')
   return (await axios.get(url.toString()))?.data
 }

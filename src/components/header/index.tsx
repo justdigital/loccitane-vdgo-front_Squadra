@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import css from './style.module.scss';
-import LoginIcon from '@mui/icons-material/Login';
 import ISectionHeader from '@/interfaces/section-header';
 
 interface HeaderProps {
@@ -9,8 +8,6 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({sectionData}) => {
-
-  console.log('sectionData', sectionData);
 
   return (
     <div className={`${css['header-container']}`}>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import css from './style.module.scss';
 import { CircularProgress } from '@mui/material';
@@ -11,7 +11,7 @@ interface StepSuccessProps {
   isTabActive: boolean;
 }
 
-const StepSuccess: React.FC<StepSuccessProps> = ({gotoNextStep, isTabActive}) => {
+const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
 
   const {
       setValue,

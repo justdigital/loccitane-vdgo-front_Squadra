@@ -2,6 +2,7 @@ import React from 'react';
 import css from './style.module.scss';
 
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface HorizontalVideoCardsSectionProps {
 
 }

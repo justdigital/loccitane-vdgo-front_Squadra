@@ -54,7 +54,7 @@ const StepFieldsToValidate = {
     'gender'
   ],
   'address': [
-    'cep',
+    // 'cep',
     'address',
     'city',
     'state',
@@ -65,7 +65,7 @@ const StepFieldsToValidate = {
   ]
 };
 
-export const validateStep = (step: 'personalData' | 'contactData' | 'address', getFieldState: Function) => {
+export const validateStep = (step: 'personalData' | 'contactData' | 'address', getFieldState: (key: keyof IFormInputs) => any) => {
   return StepFieldsToValidate[step].every(field =>  {
     const _fieldState = getFieldState(field as keyof IFormInputs);
     // console.log(field, _fieldState);

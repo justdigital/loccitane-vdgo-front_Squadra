@@ -24,6 +24,13 @@ const nextConfig: NextConfig = {
         pathname: '/**',
         search: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'vdgo-cms-dev.squadra.com.br',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
     ],
   },
 };

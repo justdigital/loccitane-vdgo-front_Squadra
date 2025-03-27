@@ -19,6 +19,7 @@ const CustomTabPanel = ({ children, value, index }: { children: React.ReactNode,
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface LeadsFormProps {
 
 }
@@ -165,4 +166,5 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   );
 });
 
+LeadsForm.displayName = 'LeadsForm'
 export default LeadsForm;

@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import css from './style.module.scss';
 import { Box } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
@@ -23,7 +23,6 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
     handleSubmit,
     getValues,
     setValue,
-    formState: { errors } 
   } = useFormContext<IFormInputs>();
 
   const {setUserFormId} = useAppContext();
@@ -93,6 +92,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
             checkCpfIsValid: async (cpf) => {
               try {
                 return (await checkCpfIsValid(cpf)) && true
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
               } catch (e) {
                 return 'CPF inválido. Digite um CPF válido.'
               }

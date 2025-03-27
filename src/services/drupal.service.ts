@@ -1,8 +1,6 @@
 import IRemoteData from "@/interfaces/remote-data";
 import ISectionBanner from "@/interfaces/section-banner";
 import ISectionHeader from "@/interfaces/section-header";
-import axios from "axios";
-
 
 export default class DrupalService {
 

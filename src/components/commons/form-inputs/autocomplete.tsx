@@ -17,26 +17,23 @@ const FormAutoComplete: React.FC<FormAutoCompleteProps & TextFieldProps & Partia
   ...props
 }) => {
 
-  const [value, setValue] = React.useState(field.value?.value);
+  const [value, setValue] = React.useState(field.value || null);
   const [inputValue, setInputValue] = React.useState("");
 
   useEffect(() => {
-    // const selected = props.options?.find((option: any) => option.label === field.value?.label);
-    // console.log('props.options', props.options, 'field.value', field.value, 'selected', selected)
-    // setValue(selected);
-    // setInputValue(selected);
-    // onChange(null, field.value);
-    // console.log('autoSelectedValue', autoSelectedValue)
-    // onChange(autoSelectedValue, autoSelectedValue);
-    // setValue(field.value);
-    setInputValue(field.value?.value);
+    if (field.value === '') {
+      setInputValue('');
+      setValue('')
+    }
+
+    if (field.value && field.value !== '') {
+      setInputValue(field.value?.label);
+      setValue({...field.value, selected: true});
+    }
   }, [field.value]);
 
   const onChange = (_, option: any) => {
-    // setValue(option);
-    // setInputValue(option);
-    console.log('option?.value', option?.label)
-    setInputValue(option?.label);
+    setValue(option);
     field.onChange(option);
   };
 
@@ -46,24 +43,25 @@ const FormAutoComplete: React.FC<FormAutoCompleteProps & TextFieldProps & Partia
       size='small'
       {...props}
       {...field}
-      // value={value?.value}
+      value={value}
       onChange={onChange}
       inputValue={inputValue || ''}
       onInputChange={(event, newInputValue) => {
-        console.log('chegou aqui com: ', newInputValue)
+        if (!event) {
+          return;
+        }
+
         if (props.onInputChange) {
           props.onInputChange(event, newInputValue);
         }
-        if (newInputValue) {
-          setInputValue(newInputValue);
-        }
+        setInputValue(newInputValue);
       }}
       renderInput={(params) =>
         <TextField
           {...params}
           error={fieldState.invalid}
           helperText={fieldState.error?.message ?? ''}
-          className={`${css['input']} ${fieldState.invalid ? css['invalid'] : fieldState.isDirty && css['valid']}`} 
+          className={`${css['input']} ${fieldState.invalid ? css['invalid'] : field.value && css['valid']}`} 
           fullWidth
           variant="outlined"
           size='small'

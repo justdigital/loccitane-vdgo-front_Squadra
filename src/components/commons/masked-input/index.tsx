@@ -10,7 +10,7 @@ interface CustomProps {
   
 const MaskedInput = React.forwardRef<HTMLInputElement, CustomProps>(
   function TextMaskCustom(props, ref) {
-    const { onChange, mask, children, ...other } = props;
+    const { onChange, mask, ...other } = props;
 
     return (
       <IMaskInput

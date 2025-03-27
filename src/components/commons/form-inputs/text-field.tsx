@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import TextField, { TextFieldProps } from '@mui/material/TextField';
 import MaskedInput from '../masked-input';
 import css from './style.module.scss';
@@ -27,6 +27,9 @@ const FormTextField: React.FC<FormTextFieldProps & TextFieldProps> = ({
     }
 
     field.onChange(value);
+    if (props.onChange) {
+      props.onChange(e);
+    }
   }
 
   const helperText = useMemo(() => {
@@ -40,7 +43,7 @@ const FormTextField: React.FC<FormTextFieldProps & TextFieldProps> = ({
       value={field.value ?? ''}
       error={fieldState.invalid}
       helperText={helperText}
-      className={`${css['input']} ${fieldState.invalid ? css['invalid'] : fieldState.isDirty && css['valid']}`} 
+      className={`${props.className} ${css['input']} ${fieldState.invalid ? css['invalid'] : field.value && css['valid']}`} 
       fullWidth
       variant="outlined"
       size='small'

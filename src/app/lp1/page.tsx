@@ -1,5 +1,5 @@
 import Header from '@/components/header';
-import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
+// import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
 import React from 'react';
