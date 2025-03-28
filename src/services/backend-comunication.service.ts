@@ -87,3 +87,18 @@ export async function putAddressData(id: UUID, data: IStepAddress): Promise<UUID
   const url = new URL(API_URL + '/Cadastro/AdicionarEndereco/')
   return (await axios.post(url.toString(), body))?.data
 }
+
+export async function sendValidationCode(id: UUID): Promise<boolean> {
+  const url = new URL(API_URL + '/Cadastro/EnviarCodigoValidacao/' + encodeURIComponent(id))
+  return (await axios.get(url.toString()))?.data
+}
+
+export async function resendValidationCode(id: UUID): Promise<boolean> {
+  const url = new URL(API_URL + '/Cadastro/ReenviarCodigoValidacao/' + encodeURIComponent(id))
+  return (await axios.get(url.toString()))?.data
+}
+
+export async function checkValidationCode(id: UUID, code: string): Promise<number> {
+  const url = new URL(API_URL + `/Cadastro/ValidarCodigoSeguranca/${id}/${code}`)
+  return (await axios.get(url.toString()))?.data
+}

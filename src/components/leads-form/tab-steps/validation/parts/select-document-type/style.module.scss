@@ -1,0 +1,40 @@
+.document-type-selection-box {
+  
+  p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: rgba(85, 46, 13, 1)
+  }
+
+  .document-type-box {
+    background-color: rgba(249, 241, 241, 1);
+    border-radius: 5px;
+    border: 1px solid $locci-red;
+    flex-basis: calc(50% - 5px);
+    margin: 5px 0;
+    min-height: 90px;
+    cursor: pointer;
+
+    &.selected {
+      background-color: $locci-red;
+
+      p {
+        color: white
+      }
+    }
+
+    img.document-sample {
+      max-width: 50%;
+      // width: 60px;
+      max-height: 50px;
+    }
+
+    p {
+      color: $locci-red;
+      font-weight: 700;
+      font-size: .75rem;
+      line-height: 1.125rem;
+    }
+  }
+}

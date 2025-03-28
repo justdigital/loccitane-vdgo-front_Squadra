@@ -32,7 +32,7 @@ const FormAutoComplete: React.FC<FormAutoCompleteProps & TextFieldProps & Partia
     }
   }, [field.value]);
 
-  const onChange = (_, option: any) => {
+  const onChange = (_: any, option: any) => {
     setValue(option);
     field.onChange(option);
   };
@@ -46,13 +46,13 @@ const FormAutoComplete: React.FC<FormAutoCompleteProps & TextFieldProps & Partia
       value={value}
       onChange={onChange}
       inputValue={inputValue || ''}
-      onInputChange={(event, newInputValue) => {
+      onInputChange={(event, newInputValue, reason) => {
         if (!event) {
           return;
         }
 
         if (props.onInputChange) {
-          props.onInputChange(event, newInputValue);
+          props.onInputChange(event, newInputValue, reason);
         }
         setInputValue(newInputValue);
       }}

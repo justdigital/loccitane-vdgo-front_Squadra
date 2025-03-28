@@ -1,0 +1,36 @@
+.success-box {
+  padding: 0 20px;
+  color: rgba(85, 46, 13, 1);
+
+  @media (screen(sm)) {
+    padding: 0 80px;
+  }
+
+  .success-text {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 100%;
+  }
+
+  .sent-time-text {
+    font-weight: 400;
+    font-size: .75rem;
+    line-height: 16px;
+  }
+
+  p {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1rem;
+    text-align: center;
+  }
+
+  .redirect-alert-box {
+    font-weight: 600;
+    font-size: .875rem;
+    line-height: 1rem;
+    color: $locci-red;
+  }
+
+}

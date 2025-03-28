@@ -9,7 +9,7 @@ import Button from '../commons/button';
 import CloseIcon from '@mui/icons-material/Close';
 import StepPersonalData from './tab-steps/personal-data';
 import StepContact from './tab-steps/contact';
-import StepSuccess from './tab-steps/success';
+import StepValidation from './tab-steps/validation';
 
 const CustomTabPanel = ({ children, value, index }: { children: React.ReactNode, value: number, index: number }) => {
   return (
@@ -39,8 +39,8 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     //   authorizeExposeCellNumbers: false,
     //   acceptReceiveInfo: false,
     //   acceptTerms: true,
-    //   email: 'teste@teste.com',
-    //   gender: "1",
+    //   email: 'jorge.malaquias@squadra.com.br',
+    //   gender: "2",
     //   isIndication: false,
     // }
   });
@@ -56,10 +56,13 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   const [tab, setTab] = useState(0);
   const [mobileFormVisible, setMobileFormVisible] = useState(false);
 
-  const headerTitle = watch('headerTitle');
-  const submitButtonAction = watch('submitButtonAction');
-  const submitButtonLabel = watch('submitButtonLabel');
-  const submitButtonLoading = watch('submitButtonLoading');
+  const {
+    headerTitle,
+    submitButtonLabel,
+    submitButtonAction,
+    submitButtonLoading,
+    submitButtonDisabled
+  } = watch();
 
   // const [headerTitle, setHeaderTitle] = useState('O cadastro é rápido e fácil, levando menos de 5 minutos!');
   // const [submitButtonLabel, setSubmitButtonLabel] = useState('Iniciar cadastro');
@@ -147,7 +150,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
                   <StepAddress gotoNextStep={gotoNextStep} isTabActive={tab === 3} />
                 </CustomTabPanel>
                 <CustomTabPanel value={tab} index={4}>
-                  <StepSuccess gotoNextStep={gotoNextStep} isTabActive={tab === 4} />
+                  <StepValidation gotoNextStep={gotoNextStep} isTabActive={tab === 4} />
                 </CustomTabPanel>
               </div>
             </form>
@@ -158,7 +161,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
         </main>
         {submitButtonLabel != null && (
           <div className={`${css['footer-button']}`}>
-            <Button label={submitButtonLabel || defaultSubmitButtonLabel} onClick={submitButtonAction} isLoading={submitButtonLoading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
+            <Button label={submitButtonLabel || defaultSubmitButtonLabel} disabled={!!submitButtonDisabled} onClick={submitButtonAction} isLoading={submitButtonLoading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
           </div>
         )}
       </div>

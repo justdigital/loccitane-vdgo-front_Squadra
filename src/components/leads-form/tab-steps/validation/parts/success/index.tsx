@@ -1,31 +1,15 @@
 "use client";
-import React, { useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import css from './style.module.scss';
 import { CircularProgress } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
-import { IFormInputs } from '@/utils/form.util';
 
 interface StepSuccessProps {
-  gotoNextStep: () => void;
-  isTabActive: boolean;
+
 }
 
-const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
+const StepSuccess: React.FC<StepSuccessProps> = ({}) => {
 
-  const {
-      setValue,
-    } = useFormContext<IFormInputs>();
-  
-  useEffect(() => {
-    if (!isTabActive) {
-      return;
-    }
-    
-    setValue('submitButtonAction', () => {});
-    setValue('submitButtonLabel', null);
-    setValue('headerTitle', 'Última etapa! Viu como é simples? Finalize agora e comece sua jornada!');
-  }, [isTabActive]);
   
   return (
     <div className={`${css['success-box']} flex flex-col justify-center items-center`}>

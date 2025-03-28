@@ -1,3 +1,5 @@
+import { sendGTMEvent } from "@next/third-parties/google";
+
 export interface IStepCreateUser {
   fullName: string;
   documentNumber: string;
@@ -31,6 +33,12 @@ export interface SharedInfo {
   submitButtonLabel: string | null;
   submitButtonAction: () => void
   submitButtonLoading: boolean;
+  submitButtonDisabled: boolean;
+  documentType: 'RG' | 'CNH' | 'RG_NOVO' | 'CNH_DIGITAL';
+  emailCodeConfirmation: string;
+  isCodeValidated: boolean;
+  validationCodeSent: boolean;
+  validationCodeResent: boolean;
 }
 
 export interface IFormInputs extends IStepCreateUser, IStepContactData, IStepAddress, SharedInfo {
@@ -62,13 +70,27 @@ const StepFieldsToValidate = {
     'addressNumber',
     'addressAdditionalInfo',
     'addressReference'
+  ],
+  'validationCodeAndDocumentType': [
+    'emailCodeConfirmation',
+    'documentType'
   ]
 };
 
-export const validateStep = (step: 'personalData' | 'contactData' | 'address', getFieldState: (key: keyof IFormInputs) => any) => {
+export const validateStep = (step: 'personalData' | 'contactData' | 'address' | 'validationCodeAndDocumentType', getFieldState: (key: keyof IFormInputs) => any) => {
   return StepFieldsToValidate[step].every(field =>  {
     const _fieldState = getFieldState(field as keyof IFormInputs);
     // console.log(field, _fieldState);
     return !_fieldState.error;
+  });
+}
+
+export const sendGtmFormEvent = (formStep: string, submitStatus: string, extraParams: object = {}) => {
+  sendGTMEvent({
+    'event': 'form_lead',
+    'form_step': formStep,
+    'submit_status': submitStatus,
+    'page_url': window.location.href,
+    ...extraParams
   });
 }
