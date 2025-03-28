@@ -5,6 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { IFormInputs, SharedInfo } from '@/utils/form.util';
 import Image from 'next/image';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface StepValidationSelectDocumentProps {
   
 }

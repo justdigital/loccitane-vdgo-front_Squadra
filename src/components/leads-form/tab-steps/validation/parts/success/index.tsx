@@ -4,6 +4,7 @@ import Image from 'next/image';
 import css from './style.module.scss';
 import { CircularProgress } from '@mui/material';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface StepSuccessProps {
 
 }
