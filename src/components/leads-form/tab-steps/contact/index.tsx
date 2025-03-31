@@ -159,7 +159,7 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
                 control={control}
                 rules={{
                   required: watch('isIndication') ? 'Digite o código do revendedor' : false,
-                  pattern: {value: /^\d{4}$/, message: 'Digite um código de 4 números'},
+                  pattern: {value: /^\d{4,}$/, message: 'Digite um código de, no mínimo, 4 números'},
                   validate: {
                     checkCodeIsValid: async (code: string) => !(await checkIndicationCodeIsValid(code)) ? 'Código não encontrado' : true
                   }
@@ -171,7 +171,6 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
                     label="Código"
                     type='number'
                     placeholder='digite código do(a) revendedor(a)'
-                    maxLength={4}
                   />
                 }
               />
