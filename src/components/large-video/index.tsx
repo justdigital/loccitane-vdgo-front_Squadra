@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import css from './style.module.scss';
-import '@/styles/drupal/drupalGlobals.css';
 import ISectionLargeVideo from '@/interfaces/section-video';
 
 interface LargeVideoSectionProps {
@@ -52,7 +51,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
   };
 
   return (
-    <div className={`${css['sectionContainer']} px-8 py-8`}>
+    <div className={`${css['section-container']} px-8 py-8`}>
       <div className='container'>
         {sectionData.text && (
           <div
