@@ -15,6 +15,7 @@ type PossibleSteps = 'validationAndDocumentTypeSelection' | 'uploadInstructions'
 
 const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentPart, setCurrentPart] = useState<PossibleSteps>('validationAndDocumentTypeSelection');
 
   const {
@@ -32,7 +33,7 @@ const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
     try {
       onOk();
     } catch (e) {
-      
+      console.error(e);
     } finally {
       setValue('submitButtonLoading', false);
     }
@@ -60,12 +61,13 @@ const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
   }, [isTabActive]);
 
   useEffect(() => {
+    console.log('validação', validateStep('validationCodeAndDocumentType', getFieldState))
     setValue('submitButtonDisabled', !validateStep('validationCodeAndDocumentType', getFieldState));
-  }, [documentType, emailCodeConfirmation]);
+  }, [documentType, emailCodeConfirmation, isTabActive]);
 
   
   return (
-    <div className={`${css['validation-box']} mt-[-20]`}>
+    <div className={`${css['validation-box']} mt-[-20px]`}>
       
       {currentPart === 'validationAndDocumentTypeSelection' && (
         <>
