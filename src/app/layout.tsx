@@ -30,7 +30,8 @@ export default function RootLayout({
     <html lang="pt_BR">
       <head></head>
       <body
-        data-teste={process.env.NEXT_API_BASE_URL}
+        //data-teste={process.env.NEXT_API_BASE_URL}
+        data-teste={process.env.NEXT_PUBLIC_API_BASE_URL} // Alterado para NEXT_PUBLIC_
         className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} antialiased`}
       >
         <AppRouterCacheProvider>
@@ -38,8 +39,12 @@ export default function RootLayout({
             {children}
           </AppProvider>
         </AppRouterCacheProvider>
+        {/* Google Tag Manager */}
+        {process.env.NEXT_PUBLIC_GTM_CODE && (
+          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_CODE} />
+        )}
       </body>
-      <GoogleTagManager gtmId={process.env.NEXT_GTM_CODE || ''} />
+      {/* <GoogleTagManager gtmId={process.env.NEXT_GTM_CODE || ''} /> */}
     </html>
   );
 }

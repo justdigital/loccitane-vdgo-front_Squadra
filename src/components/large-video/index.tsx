@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import css from './style.module.scss';
 import ISectionLargeVideo from '@/interfaces/section-video';
 
@@ -9,14 +9,77 @@ interface LargeVideoSectionProps {
   className?: string;
 }
 
+type ProgressTracked = {
+  '10%': boolean;
+  '25%': boolean;
+  '50%': boolean;
+  '75%': boolean;
+};
+
 const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) => {
   const [videoUrl, setVideoUrl] = useState<string>(sectionData.videosUrls.urlDesktop);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [liked, setLiked] = useState(false); //Controlar like
   const [isMuted, setIsMuted] = useState(true); // Começa mudo por padrão
+  const [progressTracked, setProgressTracked] = useState<ProgressTracked>({
+    '10%': false,
+    '25%': false,
+    '50%': false,
+    '75%': false
+  });
 
+  // Funções de tracking
+  const pushToDataLayer = useCallback((eventName: string, progress?: string) => {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: eventName,
+      video_title: sectionData.videosUrls.altText || 'Vídeo sem título',
+      video_url: videoUrl,
+      page_url: window.location.href,
+      ...(progress && { video_progress: progress })
+    });
+  }, [sectionData.videosUrls.altText, videoUrl]);
+  
+  // Handlers de eventos do vídeo
+  const handleVideoStart = useCallback(() => {
+    if (!isMobile) pushToDataLayer('video_start');
+  }, [isMobile, pushToDataLayer]);
+
+  const handleVideoProgress = useCallback(() => {
+    if (!videoRef.current) return;
+    
+    const duration = videoRef.current.duration;
+    const currentTime = videoRef.current.currentTime;
+    const progress = (currentTime / duration) * 100;
+
+    const checkProgress = (percent: number, key: keyof ProgressTracked) => {
+      if (progress >= percent && !progressTracked[key]) {
+        setProgressTracked(prev => ({ ...prev, [key]: true }));
+        pushToDataLayer('video_progress', key);
+      }
+    };
+
+    checkProgress(10, '10%');
+    checkProgress(25, '25%');
+    checkProgress(50, '50%');
+    checkProgress(75, '75%');
+  }, [progressTracked, pushToDataLayer]);
+  
+  const handleVideoEnd = useCallback(() => {
+    pushToDataLayer('video_complete');
+    setProgressTracked({
+      '10%': false,
+      '25%': false,
+      '50%': false,
+      '75%': false
+    });
+  }, [pushToDataLayer]);
+  
   useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement) return;
+
     const handleVideoUrl = () => {
       const mobileCheck  = window.innerWidth < 768;
       setIsMobile(mobileCheck);
@@ -26,14 +89,27 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
     handleVideoUrl();
     window.addEventListener('resize', handleVideoUrl);
 
+    // Event listeners de vídeo
+    videoElement.addEventListener('play', handleVideoStart);
+    videoElement.addEventListener('timeupdate', handleVideoProgress);
+    videoElement.addEventListener('ended', handleVideoEnd);
+
     return () => {
       window.removeEventListener('resize', handleVideoUrl);
+      videoElement.removeEventListener('play', handleVideoStart);
+      videoElement.removeEventListener('timeupdate', handleVideoProgress);
+      videoElement.removeEventListener('ended', handleVideoEnd);
     };
-  }, [sectionData.videosUrls.urlMobile, sectionData.videosUrls.urlDesktop]);
+  }, [
+    sectionData.videosUrls.urlMobile,
+    sectionData.videosUrls.urlDesktop,
+    handleVideoStart,
+    handleVideoProgress,
+    handleVideoEnd
+  ]);
 
   const handleVideoClick = () => {
     if (!isMobile) return;
-    
     if (videoRef.current) {
       if (videoRef.current.paused) {
         videoRef.current.play();
@@ -54,20 +130,22 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
     <div className={`${css['section-container']} px-8 py-8`}>
       <div className='container'>
         {sectionData.text && (
-          <div
-            dangerouslySetInnerHTML={{ __html: sectionData.text }}
-          />
+          <div dangerouslySetInnerHTML={{ __html: sectionData.text }} />
         )}
-        <hr className="w-[65px] h-1 mx-auto my-[22px] bg-[#C02031]"></hr>
+        <hr className="w-[65px] h-1 mx-auto my-[22px] bg-[#C02031]" />
+        
         <div className={`relative`}>
           <video
-            ref={videoRef}
             className="bg-black rounded-[20px] sm:block sm:w-full sm:rounded-none min-h-[260px] sm:min-h-[unset]"
+            ref={videoRef}
+            autoPlay={isMobile} // Adiciona autoplay no mobile
+            loop
+            playsInline
             controls={!isMobile} // Controles apenas no mobile
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
             onClick={handleVideoClick}
-            muted={isMuted} // Controla o estado mudo
+            muted={isMuted}
             src={videoUrl}
             poster={sectionData.videosUrls.posterImage} // Imagem antes do click
             aria-label={sectionData.videosUrls.altText || 'Vídeo'} // Texto alternativo
@@ -75,6 +153,12 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
             Seu navegador não suporta vídeos HTML5.
           </video>
 
+          {sectionData.text_transcription && (
+          <div
+          className={`${css['transcription']} absolute bottom-9 left-7 md:bottom-28 md:left-1/2 md:-translate-x-1/2`}
+            dangerouslySetInnerHTML={{ __html: `<span>,,</span>${sectionData.text_transcription}` }}
+          />
+        )}
 
           {/* Botão de curtir */}
           <button 
@@ -95,7 +179,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
           </button>
 
           {/* Botão de compartilhar */}
-          <button 
+          {/* <button 
             className={`${css['btn-svg']} absolute top-20 right-4 bg-black/30 rounded-full p-2 backdrop-blur-sm`}
             aria-label="Compartilhar vídeo"
             onClick={() => {}}
@@ -117,7 +201,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
                 <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
                 <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
             </svg>
-          </button>
+          </button> */}
 
           {/* Botão Mudo */}
           <button
