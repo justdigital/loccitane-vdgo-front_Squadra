@@ -1,0 +1,11 @@
+.sectionContainer {
+  width: 100%;
+  margin: 0 auto;
+  background-color: #F7E4D2;
+}
+
+@media (min-width: 768px) {
+  .btn-svg {
+    display: none;
+  }  
+}

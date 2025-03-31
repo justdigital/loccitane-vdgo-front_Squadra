@@ -1,6 +1,7 @@
 import IRemoteData from "@/interfaces/remote-data";
 import ISectionBanner from "@/interfaces/section-banner";
 import ISectionHeader from "@/interfaces/section-header";
+import ISectionLargeVideo from "@/interfaces/section-video";
 
 export default class DrupalService {
 
@@ -55,6 +56,18 @@ export default class DrupalService {
             loginLinkIconUrl: section.logo_item[0].image_url,
             loginLinkTitle: section.logo_item[0].link_title,
           } as ISectionHeader;
+
+          case 'video':
+            return {
+              type: section.type,
+              text: section.text,
+              videosUrls: {
+                urlDesktop: section.video_url_desktop,
+                urlMobile: section.video_url_mobile,
+                altText: section.alt_text || '',
+                posterImage: section.poster_image || ''
+              }
+            } as ISectionLargeVideo;
       }
     }).filter(Boolean);
   }

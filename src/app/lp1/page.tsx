@@ -1,4 +1,5 @@
 import Header from '@/components/header';
+import LargeVideo from '@/components/large-video';
 // import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
@@ -20,6 +21,8 @@ const LandingPage1 = async () => {
             return <LeadsFormBox sectionData={section} key={index} />;
           case 'section_header':
             return <Header sectionData={section} key={index} />;
+          case 'video':
+            return <LargeVideo sectionData={section} key={index} />;
         }
       })}
       {/* <HorizontalVideoCardsSection />  */}
