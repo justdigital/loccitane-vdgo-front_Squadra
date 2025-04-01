@@ -124,7 +124,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
   ]);
 
   const handleVideoClick = () => {
-    if (!isMobile) return;
+    //if (!isMobile) return;
     if (videoRef.current) {
       if (videoRef.current.paused) {
         videoRef.current.play();
@@ -151,7 +151,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
   };
 
   return (
-    <div className={`${css['section-container']} px-8 py-8`}>
+    <div className={`${css['section-container']} py-8`}>
       <div className='container'>
         {sectionData.text && (
           <div dangerouslySetInnerHTML={{ __html: sectionData.text }} />
@@ -186,7 +186,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
 
           {/* Botão de curtir */}
           <button 
-            className={`${css['btn-svg']} absolute top-5 right-4 bg-black/30 rounded-full p-2 backdrop-blur-sm`}
+            className={`${css['btn-svg']} absolute top-5 right-4 bg-black/30 rounded-[100%] p-2 backdrop-blur-sm`}
             aria-label={liked ? "Descurtir vídeo" : "Curtir vídeo"}
             onClick={() => setLiked(!liked)}
           >
