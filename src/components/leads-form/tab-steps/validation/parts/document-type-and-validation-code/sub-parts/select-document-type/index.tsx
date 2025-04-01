@@ -48,7 +48,7 @@ const StepValidationSelectDocument: React.FC<StepValidationSelectDocumentProps> 
   });
 
   const setDocumentType = (documentType: SharedInfo['documentType']) => {
-    setValue('documentType', documentType);
+    setValue('documentType', documentType, { shouldDirty: true });
   };
 
   

@@ -9,6 +9,7 @@ import FormCheckbox from '@/components/commons/form-inputs/checkbox';
 import { checkCpfIsUnavailable, checkCpfIsValid, createUser } from '@/services/backend-comunication.service';
 import _ from 'lodash';
 import { useAppContext } from '@/contexts/app.context';
+import { useAppFormContext } from '@/contexts/app-form.context';
 
 interface StepPersonalDataProps {
   gotoNextStep: () => void;
@@ -25,11 +26,10 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
     setValue,
   } = useFormContext<IFormInputs>();
 
+  const {setFormButtonProps} = useAppFormContext();
   const {setUserFormId} = useAppContext();
 
   const sendDataToServer = async (onOk: () => void) => {
-    setValue('submitButtonLoading', true);
-
     try {
       const data = _.pick(getValues(), ['fullName', 'documentNumber', 'cellphoneNumber', 'authorizeExposeCellNumbers', 'acceptReceiveInfo', 'acceptTerms']);
       const uuid = await createUser(data);
@@ -43,8 +43,8 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
   };
   
   const clickButton = useCallback(async () => {
-    setValue('submitButtonLoading', true);
-    await handleSubmit(() => {}, () => setValue('submitButtonLoading', false))();
+    setFormButtonProps({loading: true})
+    await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
     if (validateStep('personalData', getFieldState)) {
       sendDataToServer(() => gotoNextStep());
     }
@@ -55,8 +55,10 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
       return;
     }
 
-    setValue('submitButtonAction', clickButton);
-    setValue('submitButtonLabel', 'Iniciar cadastro');
+    setFormButtonProps({
+      label: 'Iniciar cadastro',
+      action: clickButton
+    });
     setValue('headerTitle', 'O cadastro é rápido e fácil, levando menos de 5 minutos!');
   }, [isTabActive]);
   
