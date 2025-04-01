@@ -61,7 +61,7 @@ export default class DrupalService {
             return {
               type: section.type,
               text: section.text,
-              text_transcription: section.text_transcription,
+              textTranscription: section.text_transcription,
               videosUrls: {
                 urlDesktop: section.video_url_desktop,
                 urlMobile: section.video_url_mobile,

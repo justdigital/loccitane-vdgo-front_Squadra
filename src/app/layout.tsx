@@ -1,4 +1,3 @@
-import '@/styles/drupal/drupalGlobals.css';
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import { GoogleTagManager } from '@next/third-parties/google'

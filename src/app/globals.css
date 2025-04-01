@@ -1,3 +1,4 @@
+@import '@/styles/drupal/drupalGlobals.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
