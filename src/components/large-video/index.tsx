@@ -179,7 +179,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
 
           {sectionData.textTranscription && ((isMobile && isMuted) || (!isMobile && isPaused)) &&(
           <div
-          className={`${css['transcription']} absolute bottom-9 left-7 md:bottom-28 md:left-1/2 md:-translate-x-1/2`}
+          className={`${css['transcription']} absolute bottom-9 left-7 md:bottom-28 md:left-1/2 md:-translate-x-1/2 text-white`}
             dangerouslySetInnerHTML={{ __html: `<span>,,</span>${sectionData.textTranscription}` }}
           />
         )}
@@ -210,6 +210,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
               className="w-8 h-8" 
               style={{ 
                 transform: "scaleX(-1) rotate(360deg)",
+                color: "#FFFFFFFF"
               }} 
             />
           </button> */}
@@ -217,7 +218,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
           {/* Botão Mudo */}
           <button
               onClick={toggleMute}
-              className={`${css['btn-svg']} absolute bottom-8 right-2.5 bg-black/10 rounded-full p-2`}
+              className={`${css['btn-svg']} absolute bottom-8 right-2.5 bg-black/10 rounded-full p-2 text-white`}
               aria-label={isMuted ? "Ativar som" : "Desativar som"}
             >
               {isMuted ? (
