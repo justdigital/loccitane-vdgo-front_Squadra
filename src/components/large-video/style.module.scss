@@ -15,15 +15,13 @@
 .transcription span{
   display: inline-block;
   font-size: 40px;
-  font-style: italic;
   transform: rotate(180deg);
 }
 
-@media (min-width: 768px) {
+@media  (screen(sm)) {
   
   .transcription{
     width: 458px;
-    font-weight: 700;
     font-size: 38px;
     line-height: 40px;
   }
