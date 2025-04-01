@@ -1,10 +1,10 @@
+import '@/styles/drupal/drupalGlobals.css';
 import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import { GoogleTagManager } from '@next/third-parties/google'
 import "./globals.css";
 import { AppProvider } from "@/contexts/app.context";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-import '@/styles/drupal/drupalGlobals.css';
 
 const ralewayfont = Raleway({
   variable: "--font-raleway",
