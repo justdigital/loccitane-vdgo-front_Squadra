@@ -47,7 +47,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     // }
   });
 
-  const {getFormButtonProps, setFormButtonProps} = useAppFormContext();
+  const {getFormButtonProps} = useAppFormContext();
 
   const {
     handleSubmit,
