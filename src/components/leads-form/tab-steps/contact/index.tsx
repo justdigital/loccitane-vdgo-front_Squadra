@@ -11,6 +11,7 @@ import { useAppContext } from '@/contexts/app.context';
 import { UUID } from 'crypto';
 import FormSelect from '@/components/commons/form-inputs/select';
 import css from './style.module.scss';
+import { useAppFormContext } from '@/contexts/app-form.context';
 
 interface StepContactProps {
   gotoNextStep: () => void;
@@ -20,6 +21,7 @@ interface StepContactProps {
 const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) => {
 
   const {getUserFormId} = useAppContext();
+  const {setFormButtonProps} = useAppFormContext();
   const {
   } = useFormContext<IFormInputs>();
 
@@ -56,8 +58,8 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
   };
   
   const clickButton = useCallback(async () => {
-    setValue('submitButtonLoading', true);
-    await handleSubmit(() => {}, () => setValue('submitButtonLoading', false))();
+    setFormButtonProps({loading: true})
+    await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
     if (validateStep('contactData', getFieldState)) {
       sendDataToServer(() => gotoNextStep());
     }
@@ -68,8 +70,10 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
       return;
     }
     
-    setValue('submitButtonAction', clickButton);
-    setValue('submitButtonLabel', 'Avançar');
+    setFormButtonProps({
+      label: 'Avançar',
+      action: clickButton
+    });
     setValue('headerTitle', 'Apenas 3 passos para começar sua jornada de revenda.');
   }, [isTabActive]);
   

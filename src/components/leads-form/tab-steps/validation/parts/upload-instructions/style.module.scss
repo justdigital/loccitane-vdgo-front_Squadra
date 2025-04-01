@@ -1,0 +1,72 @@
+.upload-instructions-box {
+  color: rgba(85, 46, 13, 1);
+  margin-top: 20px;
+
+  @media (screen(sm)) {
+    margin-top: 0;
+  }
+
+  .instructions-titles {
+    width: 80%;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1rem;
+
+    @media (screen(sm)) {
+      font-size: 1rem;
+    }
+
+  }
+
+  p, li {
+    font-weight: 500;
+    font-size: 0.75rem;
+    line-height: 1rem;
+
+    @media (screen(sm)) {
+      font-size: 0.875rem;
+    }
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  .instructions-wrapper {
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+
+      li {
+        margin: 10px 0;
+
+        @media (screen(sm)) {
+          margin: 16px 0;
+        }
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .instructions-image-box {
+
+      img {
+        width: auto;
+        max-height: 270px;
+
+        @media (screen(sm)) {
+          // min-width: 80%;
+          max-height: 250px;
+        }
+      }
+    }
+
+  }
+
+}

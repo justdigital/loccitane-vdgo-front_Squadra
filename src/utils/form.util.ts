@@ -34,12 +34,14 @@ export interface SharedInfo {
   submitButtonAction: () => void
   submitButtonLoading: boolean;
   submitButtonDisabled: boolean;
-  documentType: 'RG' | 'CNH' | 'RG_NOVO' | 'CNH_DIGITAL';
+  documentType: DocumentType;
   emailCodeConfirmation: string;
   isCodeValidated: boolean;
   validationCodeSent: boolean;
   validationCodeResent: boolean;
 }
+
+export type DocumentType = 'RG' | 'CNH' | 'RG_NOVO' | 'CNH_DIGITAL';
 
 export interface IFormInputs extends IStepCreateUser, IStepContactData, IStepAddress, SharedInfo {
 
@@ -77,11 +79,11 @@ const StepFieldsToValidate = {
   ]
 };
 
-export const validateStep = (step: 'personalData' | 'contactData' | 'address' | 'validationCodeAndDocumentType', getFieldState: (key: keyof IFormInputs) => any) => {
+export const validateStep = (step: 'personalData' | 'contactData' | 'address' | 'validationCodeAndDocumentType', getFieldState: (key: keyof IFormInputs) => any, needToBeDrity = false) => {
   return StepFieldsToValidate[step].every(field =>  {
     const _fieldState = getFieldState(field as keyof IFormInputs);
     // console.log(field, _fieldState);
-    return !_fieldState.error;
+    return !_fieldState.error && ((needToBeDrity && _fieldState.isDirty) || !needToBeDrity);
   });
 }
 

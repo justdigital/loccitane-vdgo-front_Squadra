@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import StepPersonalData from './tab-steps/personal-data';
 import StepContact from './tab-steps/contact';
 import StepValidation from './tab-steps/validation';
+import { useAppFormContext } from '@/contexts/app-form.context';
 
 const CustomTabPanel = ({ children, value, index }: { children: React.ReactNode, value: number, index: number }) => {
   return (
@@ -42,8 +43,12 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     //   email: 'jorge.malaquias@squadra.com.br',
     //   gender: "2",
     //   isIndication: false,
+    //   // documentType: 'RG'
     // }
   });
+
+  const {getFormButtonProps} = useAppFormContext();
+
   const {
     handleSubmit,
     watch,
@@ -58,16 +63,11 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
 
   const {
     headerTitle,
-    submitButtonLabel,
-    submitButtonAction,
-    submitButtonLoading,
-    submitButtonDisabled
   } = watch();
 
   // const [headerTitle, setHeaderTitle] = useState('O cadastro é rápido e fácil, levando menos de 5 minutos!');
   // const [submitButtonLabel, setSubmitButtonLabel] = useState('Iniciar cadastro');
   const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 5 minutos!';
-  const defaultSubmitButtonLabel = 'Iniciar cadastro';
 
   const gotoNextStep = useCallback((step?: number) => {
     const newTab = step ? step : tab + 1;
@@ -101,11 +101,16 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
 
   useEffect(() => {
     gotoNextStep();
+    // setFormButtonProps({
+    //   label: 'Avançar',
+    //   action: () => {},
+    //   loading: false,
+    //   disabled: false
+    // });
   }, []);
 
 
   const changeMobileFormVisibility = (e: React.MouseEvent, visible: boolean) => {
-    // console.log('e', e)
     setMobileFormVisible(visible);
   }
 
@@ -159,9 +164,9 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
           : <></>
         }
         </main>
-        {submitButtonLabel != null && (
+        {getFormButtonProps().label && (
           <div className={`${css['footer-button']}`}>
-            <Button label={submitButtonLabel || defaultSubmitButtonLabel} disabled={!!submitButtonDisabled} onClick={submitButtonAction} isLoading={submitButtonLoading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
+            <Button label={getFormButtonProps().label || ''} disabled={!!getFormButtonProps().disabled} onClick={getFormButtonProps().action} isLoading={getFormButtonProps().loading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
           </div>
         )}
       </div>

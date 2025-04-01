@@ -10,6 +10,7 @@ import { getStateCityList, getStateList, putAddressData } from '@/services/backe
 import { UUID } from 'crypto';
 import FormAutoComplete from '@/components/commons/form-inputs/autocomplete';
 import css from './style.module.scss';
+import { useAppFormContext } from '@/contexts/app-form.context';
 
 interface StepAddressProps {
   gotoNextStep: () => void;
@@ -19,6 +20,7 @@ interface StepAddressProps {
 const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) => {
 
   const {getUserFormId} = useAppContext();
+  const {setFormButtonProps} = useAppFormContext();
 
   const {
     control,
@@ -91,8 +93,8 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
 
     try {
       const data = _.pick(getValues(), ['cep', 'address', 'addressNumber', 'addressAdditionalInfo', 'addressReference', 'neighborhood', 'city', 'state']);
-      data.state = ''+data.state.id;
-      data.city = ''+data.city.id;
+      data.state = ''+(data.state as any).id;
+      data.city = ''+(data.city as any).id;
       await putAddressData(userFormId as UUID, data);
       onOk();
     } catch (e) {
@@ -103,8 +105,8 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
   };
 
   const clickButton = useCallback(async () => {
-    setValue('submitButtonLoading', true);
-    await handleSubmit(() => {}, () => setValue('submitButtonLoading', false))();
+    setFormButtonProps({loading: true})
+    await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
     if (validateStep('address', getFieldState)) {
       sendDataToServer(() => gotoNextStep());
     }
@@ -126,8 +128,10 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       return;
     }
 
-    setValue('submitButtonAction', clickButton);
-    setValue('submitButtonLabel', 'Avançar');
+    setFormButtonProps({
+      label: 'Avançar',
+      action: clickButton
+    });
     setValue('headerTitle', 'Está quase lá! Só 2 passos e essa oportunidade vira realidade!');
   }, [isTabActive]);
 
@@ -298,8 +302,6 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
           />
         }
       />
-
-      {/* <Button label="Avançar" buttonClasses={`w-full ${css['submit-button']}`} /> */}
     </>
   );
 };

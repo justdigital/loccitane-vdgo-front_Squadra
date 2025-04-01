@@ -70,7 +70,7 @@ const StepValidationEmailCode: React.FC<StepValidationEmailCodeProps> = ({isTabA
   return (
     <div className={`${css['validation-box']}`}>
       
-      <p className='text-center w-full m-auto mb-[-8]'>Para sua segurança, enviamos um código de verificação para o e-mail cadastrado: {email}</p>
+      <p className='text-center w-full m-auto mb-[-8px]'>Para sua segurança, enviamos um código de verificação para o e-mail cadastrado: {email}</p>
 
       <Controller
         name="emailCodeConfirmation"
