@@ -18,12 +18,11 @@ const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentT
     handleSubmit,
     getFieldState,
     watch,
-    trigger
   } = useFormContext<IFormInputs>();
 
   const {setFormButtonProps} = useAppFormContext();
   
-  const {emailCodeConfirmation, documentType} = watch();
+  const {documentType} = watch();
   
   const validateAndGoNextPart = async (onOk: () => void) => {
 
@@ -52,21 +51,14 @@ const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentT
       return;
     }
     
-    (async () => {
-      if (emailCodeConfirmation) {
-        await trigger('emailCodeConfirmation');
-        await trigger('documentType');
-      }
-      setFormButtonProps({
-        label: 'Avançar',
-        action: clickButton,
-        loading: false,
-        disabled: !validateStep('validationCodeAndDocumentType', getFieldState)
-      });
-    })();
-
+    setFormButtonProps({
+      label: 'Avançar',
+      action: clickButton,
+      loading: false,
+      disabled: !documentType
+    });
     setValue('headerTitle', 'Última etapa! Viu como é simples? Finalize agora e comece sua jornada!');
-  }, [isTabActive, emailCodeConfirmation, documentType]);
+  }, [isTabActive, documentType]);
 
 
   return (
