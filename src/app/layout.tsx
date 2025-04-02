@@ -27,10 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt_BR">
-      <head></head>
+      <head>
+        <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
+      </head>
       <body
-        //data-teste={process.env.NEXT_API_BASE_URL}
-        data-teste={process.env.NEXT_PUBLIC_API_BASE_URL} // Alterado para NEXT_PUBLIC_
         className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} antialiased`}
       >
         <AppRouterCacheProvider>
