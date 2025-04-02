@@ -12,32 +12,32 @@ interface StepValidationProps {
   isTabActive: boolean;
 }
 
-type PossibleSteps = 'validationAndDocumentTypeSelection' | 'uploadInstructions' | 'uploadConfirmation';
+type PossibleSteps = 'validationAndDocumentTypeSelection' | 'validationAndDocumentTypeSelectionBacking' | 'uploadInstructions' | 'uploadConfirmation';
 
 const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
 
-  const [currentPart, setCurrentPart] = useState<PossibleSteps>('uploadConfirmation');
+  const [currentPart, setCurrentPart] = useState<PossibleSteps>('validationAndDocumentTypeSelection');
 
   const {} = useFormContext<IFormInputs>();
   
   return (
     <div className={`${css['validation-box']}`}>
       
-      {currentPart === 'validationAndDocumentTypeSelection' && (
-        <StepValidationCodeAndDocumentType isTabActive={isTabActive} gotoNextPart={() => setCurrentPart('uploadInstructions')}  />
+      {['validationAndDocumentTypeSelection', 'validationAndDocumentTypeSelectionBacking'].includes(currentPart) && (
+        <StepValidationCodeAndDocumentType isTabActive={isTabActive} gotoNextPart={() => setCurrentPart('uploadInstructions')} isBacking={currentPart === 'validationAndDocumentTypeSelectionBacking'}  />
       )}
 
       {currentPart === 'uploadInstructions' && (
         <div className="mt-[-10px]">
-          <UploadInstructions isTabActive={isTabActive} />
+          <UploadInstructions isTabActive={isTabActive} backToSelectDocumentType={() => setCurrentPart('validationAndDocumentTypeSelectionBacking')} />
         </div>
       )}
 
-      {/* {currentPart === 'uploadConfirmation' && (
+      {currentPart === 'uploadConfirmation' && (
         <div className="mt-[-10px]">
-          <Upload isTabActive={isTabActive} />
+          {/* <Upload isTabActive={isTabActive} /> */}
         </div>
-      )} */}
+      )}
       
     </div>
   );
