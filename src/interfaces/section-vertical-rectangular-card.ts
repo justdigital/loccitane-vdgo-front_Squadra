@@ -6,11 +6,11 @@ export default interface ISectionVerticalRectangularCard {
   imagesUrls?: IMultiDeviceImage;
   cardItems: Array<{
     text?: string;
-    iconeUrl?: string;
+    iconUrl?: string;
     linkUrl?: string;
     linkTitle?: string;
     imagesUrls?: IMultiDeviceImage;
   }>;
-  ButtonLink?: string;
-  ButtonLinkTitle?: string;
+  buttonLink?: string;
+  buttonLinkTitle?: string;
 }

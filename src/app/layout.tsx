@@ -28,7 +28,19 @@ export default function RootLayout({
   return (
     <html lang="pt_BR">
       <head>
-        <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
+      <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="
+              script-src 'self' 'unsafe-eval' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app; 
+              worker-src 'self' blob:; 
+              child-src 'self' blob:;
+                    style-src 'self' 'unsafe-inline' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br;
+                    font-src 'self' https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
+                    img-src 'self' data: blob: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br;
+                    media-src 'self' data: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br;
+              script-src-elem 'self' 'unsafe-inline' blob: *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app"
+        />
       </head>
       <body
         className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} antialiased`}
@@ -43,7 +55,6 @@ export default function RootLayout({
           <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_CODE} />
         )}
       </body>
-      {/* <GoogleTagManager gtmId={process.env.NEXT_GTM_CODE || ''} /> */}
     </html>
   );
 }

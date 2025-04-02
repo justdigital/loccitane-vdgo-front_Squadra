@@ -5,6 +5,7 @@ import css from './style.module.scss';
 import ButtonDefault from '../commons/button-default';
 import { usePathname } from 'next/navigation';
 import ISectionVerticalRectangularCard from '@/interfaces/section-vertical-rectangular-card';
+import Image from 'next/image';
 interface VerticalRectangularCardProps {
   sectionData: ISectionVerticalRectangularCard;
   className?: string;
@@ -27,7 +28,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
   
   return (
     <div className={`${css['section-container']} md:px-8 py-8`}>
-      <div className={`${css['container']} mx-auto w-full`}>
+      <div className={`container mx-auto w-full`}>
         {sectionData.text && (
           <div dangerouslySetInnerHTML={{ __html: sectionData.text }} />
         )}
@@ -73,8 +74,9 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
           onClick={() => card.linkUrl && window.open(card.linkUrl, '_blank')}
           aria-label="Abrir link"
         >
-          <img 
-            src={card.iconeUrl}
+          <Image 
+            src={card.iconUrl || ''}
+            alt="icone"
             width="24"
             height="24"
             className="w-6 h-6 object-contain hover:scale-110 transition-transform duration-200"
@@ -84,12 +86,12 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
           ))}
         </Swiper>
 
-        {sectionData.ButtonLinkTitle && sectionData.ButtonLink && (
+        {sectionData.buttonLinkTitle && sectionData.buttonLink && (
           <div className="text-center">
             <ButtonDefault 
               className={`${css['button-default']}`}
-              label={sectionData.ButtonLinkTitle}
-              onClick={() => handleButtonClick(sectionData.ButtonLink)}
+              label={sectionData.buttonLinkTitle}
+              onClick={() => handleButtonClick(sectionData.buttonLink)}
               /*
               onClick={() => {
                 if (isLandingPage1) {

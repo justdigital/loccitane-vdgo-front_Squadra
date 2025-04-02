@@ -79,9 +79,9 @@ export default class DrupalService {
             desktop: section.image_url_desktop,
             mobile: section.image_url_mobile
           },
-          cardItems: section.card_item.map(item => ({
+          cardItems: section.card_item.map((item: any) => ({
             text: item.text,
-            iconeUrl: item.image_icone_url,
+            iconUrl: item.image_icone_url,
             linkUrl: item.link_url,
             linkTitle: item.link_title,
             imagesUrls: {
@@ -89,8 +89,8 @@ export default class DrupalService {
               mobile: item.image_url_mobile
             }
           })),
-          ButtonLink: section.link_url,
-          ButtonLinkTitle: section.link_title,
+          buttonLink: section.link_url,
+          buttonLinkTitle: section.link_title,
         } as ISectionVerticalRectangularCard;
       }
     }).filter(Boolean);

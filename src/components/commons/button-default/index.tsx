@@ -8,11 +8,11 @@ interface ButtonDefaultProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   //buttonDefaultClasses?: string;
 }
 
-const ButtonDefault: React.FC<ButtonDefaultProps> = ({ label }) => {
+const ButtonDefault: React.FC<ButtonDefaultProps> = ({ label, ...props }) => {
   //const buttonStyle = styleType ? css[styleType] : css['primary'];
 
   return (
-    <button className={`${css['button']}`}>
+    <button {...props} className={`${props.className} ${css['button']}`}>
       {label}
     </button>
   );

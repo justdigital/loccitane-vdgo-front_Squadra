@@ -2,7 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   sassOptions: {
-    additionalData: `$locci-red: #C02031;`,
+    additionalData: `
+      $locci-red: #C02031;
+      $locci-snow: #FFFAFA;
+      $locci-coffee: #552E0D; //	Cor terrosa, reminiscente de café.
+      $locci-mist: #A09999; // Cinza suave, como névoa.
+      $locci-midnight: #001022; // Azul escuro profundo, como céu noturno.
+      $locci-ivory: #F7E4D2; //Bege claro, marfim.
+      $locci-blush: #D86276; //	Rosa avermelhado, como blush.
+    `
   },
   env: {
     NEXT_API_BASE_URL: process.env.NEXT_API_BASE_URL,
