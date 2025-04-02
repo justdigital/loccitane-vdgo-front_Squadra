@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { Raleway } from "next/font/google";
+import { Raleway, Lora } from 'next/font/google';
+//import { Ernest_Emily_Solid } from 'next/font/local';
+import localFont from 'next/font/local';
 import { GoogleTagManager } from '@next/third-parties/google'
 import "./globals.css";
 import { AppProvider } from "@/contexts/app.context";
@@ -10,9 +12,15 @@ const ralewayfont = Raleway({
   subsets: ["latin"],
 });
 
-const loccitaneSans = Raleway({
+const loccitaneSans = Lora({
   variable: "--font-loccitane-sans",
   subsets: ["latin"],
+});
+
+const ernestEmily = localFont({
+  src: '../../public/assets/fonts/Ernest_Emily_Solid.ttf',
+  //src: 'https://en.bestfonts.pro/fonts_files/5ee7a61a8526c00991149c7e/files/ErnestandEmilySlantedSolid.ttf',
+  variable: '--font-ernest-emily',
 });
 
 export const metadata: Metadata = {
@@ -35,15 +43,15 @@ export default function RootLayout({
               script-src 'self' 'unsafe-eval' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app; 
               worker-src 'self' blob:; 
               child-src 'self' blob:;
-                    style-src 'self' 'unsafe-inline' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br;
+                    style-src 'self' 'unsafe-inline' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
                     font-src 'self' https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
-                    img-src 'self' data: blob: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br;
-                    media-src 'self' data: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br;
+                    img-src 'self' data: blob: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
+                    media-src 'self' data: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
               script-src-elem 'self' 'unsafe-inline' blob: *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app"
         />
       </head>
       <body
-        className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} antialiased`}
+        className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} ${ernestEmily.variable} antialiased`}
       >
         <AppRouterCacheProvider>
           <AppProvider>

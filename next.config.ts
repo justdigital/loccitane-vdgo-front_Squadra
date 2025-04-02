@@ -27,6 +27,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
+        hostname: 'loccitane-vdgo-cms.lndo.site',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+      {
+        protocol: 'http',
         hostname: 'vdgo-cms-dev.squadra.com.br',
         port: '',
         pathname: '/**',

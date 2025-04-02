@@ -21,6 +21,7 @@
 		"@mui/icons-material": "^6.4.7",
 		"@mui/material": "^6.4.7",
 		"@mui/material-nextjs": "^6.4.3",
+		"@next/font": "^14.2.15",
 		"@next/third-parties": "^15.2.1",
 		"axios": "^1.8.3",
 		"imask": "^7.6.1",
