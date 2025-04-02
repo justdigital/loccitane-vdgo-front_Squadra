@@ -160,7 +160,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
         
         <div className={`relative z-0`}>
           <video
-            className="bg-black sm:bg-transparent rounded-[20px] sm:block sm:w-full sm:rounded-none min-h-[260px] sm:min-h-[unset] xl:max-h-[607px]"
+            className="rounded-[20px] sm:block sm:w-full sm:rounded-none min-h-[260px] sm:min-h-[unset] xl:max-h-[607px]"
             ref={videoRef}
             autoPlay={isMobile}
             loop

@@ -1,24 +1,26 @@
-.button {
-  font-size: 0.93rem;
-  font-weight: 600;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+@import '../../../app/variables.scss'; 
 
-  &.primary {
-    //background-color: $locci-snow;
-    background-color: blue;
-    color: #ffffff;
-  }
+.button {
+  font-size: 1rem;
+  font-weight: 600;
+  max-width: 337px;
+  min-width: 277px;
+  padding: 22px 90px;
+  border: 1px solid $locci-red ;
+  border-radius: 5px;
+  background-color: $locci-snow;
+  color: $locci-coffee;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background-color: #08e85e;
+    color: $locci-snow;
+    background-color: $locci-blush;
+    border: 1px solid $locci-coffee ;
   }
 
-  &:disabled {
-    cursor: not-allowed; /* Cursor não permitido */
-    opacity: 0.6; /* Opacidade reduzida */
-  }
+  @media (max-width: 640px) {
+    padding: 18px 58px;
+   }
 }
+

@@ -2,6 +2,7 @@ import IRemoteData from "@/interfaces/remote-data";
 import ISectionBanner from "@/interfaces/section-banner";
 import ISectionHeader from "@/interfaces/section-header";
 import ISectionLargeVideo from "@/interfaces/section-video";
+import ISectionVerticalRectangularCard from "@/interfaces/section-vertical-rectangular-card";
 
 export default class DrupalService {
 
@@ -57,7 +58,7 @@ export default class DrupalService {
             loginLinkTitle: section.logo_item[0].link_title,
           } as ISectionHeader;
 
-          case 'video':
+        case 'video':
             return {
               type: section.type,
               text: section.text,
@@ -69,7 +70,29 @@ export default class DrupalService {
                 posterImage: section.poster_image || ''
               }
             } as ISectionLargeVideo;
+
+        case 'vertical_rectangular_card_sectio':
+        return {
+          type: section.type,
+          text: section.text,
+          imagesUrls: {
+            desktop: section.image_url_desktop,
+            mobile: section.image_url_mobile
+          },
+          cardItems: section.card_item.map(item => ({
+            text: item.text,
+            iconeUrl: item.image_icone_url,
+            linkUrl: item.link_url,
+            linkTitle: item.link_title,
+            imagesUrls: {
+              desktop: item.image_url_desktop,
+              mobile: item.image_url_mobile
+            }
+          })),
+          ButtonLink: section.link_url,
+          ButtonLinkTitle: section.link_title,
+        } as ISectionVerticalRectangularCard;
       }
     }).filter(Boolean);
   }
-}
+}  
