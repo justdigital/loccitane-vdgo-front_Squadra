@@ -10,9 +10,10 @@ import { useAppFormContext } from '@/contexts/app-form.context';
 
 interface UploadInstructionsProps {
   isTabActive: boolean;
+  backToSelectDocumentType: () => void;
 }
 
-const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive}) => {
+const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, backToSelectDocumentType}) => {
 
   const {
     watch
@@ -70,9 +71,11 @@ const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive}) =>
               <li key={index}>{instruction}</li>
             ))}
           </ul>
+          <a className={`${css['back-document-type-link']} block sm:hidden`} onClick={backToSelectDocumentType}>Selecionar outro documento.</a>
         </div>
-        <div className={`${css['instructions-image-box']}`}>
+        <div className={`${css['instructions-image-box']} text-center`}>
           <Image src={`/assets/images/document-types/open/${documentTypeInstructions.imageName}`} alt="Validação OK" width={155} height={216} />
+          <a className={`${css['back-document-type-link']} hidden sm:block`} onClick={backToSelectDocumentType}>Selecionar outro documento.</a>
         </div>
       </div>
       
