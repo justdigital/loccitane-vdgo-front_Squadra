@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { IFormInputs } from '@/utils/form.util';
 import UploadInstructions from './parts/upload-instructions';
 import StepValidationCodeAndDocumentType from './parts/document-type-and-validation-code';
-import Upload from './parts/upload';
+// import Upload from './parts/upload';
 
 interface StepValidationProps {
   gotoNextStep: () => void;
@@ -33,11 +33,11 @@ const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
         </div>
       )}
 
-      {currentPart === 'uploadConfirmation' && (
+      {/* {currentPart === 'uploadConfirmation' && (
         <div className="mt-[-10px]">
           <Upload isTabActive={isTabActive} />
         </div>
-      )}
+      )} */}
       
     </div>
   );
