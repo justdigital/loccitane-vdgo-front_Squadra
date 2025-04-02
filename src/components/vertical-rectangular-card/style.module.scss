@@ -1,0 +1,74 @@
+//@import '../../../app/variables.scss';
+@import url('https://vdgo-cms-dev.squadra.com.br/modules/custom/custom_ckeditor_styles/css/editor-styles.css');
+
+.section-container {
+  width: 100%;
+  margin: 0 auto;
+  font-family: Raleway;
+  background-color: #F7E4D2;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+
+  @media (max-width: 600px) {
+    padding: 0  0 0 20px;
+  }
+}
+
+.card-wrapper {
+  background-image: var(--card-url-mobile);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    background-image: var(--card-url-desktop);
+  }
+}
+
+.card {
+  width: 341px;
+  height: 518px;
+  cursor: pointer;
+  background-color: #FFF;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+
+  @media (max-width: 640px) {
+    width: 267px;
+    height: 408px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+  }
+}
+
+.card img {
+  width: 341px;
+  height: 354px;
+
+  @media (max-width: 640px) {
+   width: 267px;
+    height: 207px;
+  }
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.card-container {
+  padding: 15px 31px 19px 24px;
+}
+
+.card-container p {
+  padding-top: 6px;
+  line-height: 19px;
+}
