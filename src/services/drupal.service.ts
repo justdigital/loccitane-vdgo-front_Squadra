@@ -3,6 +3,7 @@ import ISectionBanner from "@/interfaces/section-banner";
 import ISectionHeader from "@/interfaces/section-header";
 import ISectionLargeVideo from "@/interfaces/section-video";
 import ISectionVerticalRectangularCard from "@/interfaces/section-vertical-rectangular-card";
+import ISectionBannerEmpreender from "@/interfaces/section-banner-empreender";
 
 export default class DrupalService {
 
@@ -92,7 +93,19 @@ export default class DrupalService {
           buttonLink: section.link_url,
           buttonLinkTitle: section.link_title,
         } as ISectionVerticalRectangularCard;
-      }
+
+        case 'newsletter':
+          return {
+            type: section.type,
+            text: section.text,
+            imagesUrls: {
+              desktop: section.image_url_desktop,
+              mobile: section.image_url_mobile
+            },
+            buttonLink: section.link_url,
+            buttonLinkTitle: section.link_title,
+          } as ISectionBannerEmpreender;
+        }
     }).filter(Boolean);
   }
 }  
