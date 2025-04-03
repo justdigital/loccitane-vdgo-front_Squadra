@@ -5,15 +5,6 @@
   background-color: #F7E4D2;
 }
 
-.container {
-  max-width: 1080px;
-  margin: 0 auto;
-
-  @media (max-width: 600px) {
-    padding: 0  0 0 20px;
-  }
-}
-
 .card-wrapper {
   background-image: var(--card-url-mobile);
   background-size: cover;

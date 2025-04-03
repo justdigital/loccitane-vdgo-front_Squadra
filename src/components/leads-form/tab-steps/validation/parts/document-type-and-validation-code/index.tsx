@@ -8,10 +8,11 @@ import { useAppFormContext } from '@/contexts/app-form.context';
 
 interface StepValidationCodeAndDocumentTypeProps {
   isTabActive: boolean;
+  isBacking?: boolean;
   gotoNextPart: () => void;
 }
 
-const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentTypeProps> = ({isTabActive, gotoNextPart}) => {
+const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentTypeProps> = ({isTabActive, gotoNextPart, isBacking}) => {
 
   const {
     setValue,
@@ -63,7 +64,7 @@ const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentT
 
   return (
     <div className="mt-[-20px]">
-      <StepValidationEmailCode isTabActive={isTabActive} />
+      {!isBacking && <StepValidationEmailCode isTabActive={isTabActive} />}
       <div className="mt-7"><StepValidationSelectDocument /></div>
     </div>
   );
