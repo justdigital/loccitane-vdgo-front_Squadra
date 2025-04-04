@@ -54,39 +54,39 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) 
     fileSelectorRef.current?.click();
   };
 
-  const initSdk = () => {
-    console.log('chegou na função');
-    import('unico-webframe').then(UnicoWebframe => {
-      console.log('chegou aqui');
-      const { UnicoCheckBuilder, SDKEnvironmentTypes, SelfieCameraTypes, UnicoThemeBuilder, DocumentCameraTypes, UnicoConfig, LocaleTypes } = UnicoWebframe;
+  // const initSdk = () => {
+  //   console.log('chegou na função');
+  //   import('unico-webframe').then(UnicoWebframe => {
+  //     console.log('chegou aqui');
+  //     const { UnicoCheckBuilder, SDKEnvironmentTypes, SelfieCameraTypes, UnicoThemeBuilder, DocumentCameraTypes, UnicoConfig, LocaleTypes } = UnicoWebframe;
 
-      // console.log('UnicoWebframe', UnicoWebframe);
-      const config = new UnicoConfig()
-        // .setProjectNumber("13557531040735768969")
-        // .setProjectId("")
-        // .setMobileSdkAppId("")
-        .setHostname("http://localhost:8080")
-        .setHostKey("r001-06a56722-87ef-49b6-a71b-3e05c74f9898")
-        // .setHostInfo("nRMqSJJeWMZ0K4n9Dxs/Zhb5RslAxes+pmH0gJgmVtay02cX8aTbdzfZ4ln40v1Q")
+  //     // console.log('UnicoWebframe', UnicoWebframe);
+  //     const config = new UnicoConfig()
+  //       // .setProjectNumber("13557531040735768969")
+  //       // .setProjectId("")
+  //       // .setMobileSdkAppId("")
+  //       .setHostname("http://localhost:8080")
+  //       .setHostKey("r001-06a56722-87ef-49b6-a71b-3e05c74f9898")
+  //       // .setHostInfo("nRMqSJJeWMZ0K4n9Dxs/Zhb5RslAxes+pmH0gJgmVtay02cX8aTbdzfZ4ln40v1Q")
         
-      const unicoCameraBuilder = new UnicoCheckBuilder();
-      unicoCameraBuilder.setResourceDirectory("/assets/vendor/unico/resources");
-      unicoCameraBuilder.setModelsPath("/assets/vendor/unico/models");
-      unicoCameraBuilder.setEnvironment(SDKEnvironmentTypes.UAT);
-      const unicoCamera = unicoCameraBuilder.build();
-      console.log('e aqui');
+  //     const unicoCameraBuilder = new UnicoCheckBuilder();
+  //     unicoCameraBuilder.setResourceDirectory("/assets/vendor/unico/resources");
+  //     unicoCameraBuilder.setModelsPath("/assets/vendor/unico/models");
+  //     unicoCameraBuilder.setEnvironment(SDKEnvironmentTypes.UAT);
+  //     const unicoCamera = unicoCameraBuilder.build();
+  //     console.log('e aqui');
 
-      unicoCamera.prepareDocumentCamera(
-        config, 
-        DocumentCameraTypes.CNH
-      ).then(cameraOpener => {
-        cameraOpener.open(() => {});
-      }).catch(error => {
-        console.error(error);
-        // confira na aba "Referências" sobre os erros possíveis
-      });
-    })
-  };
+  //     unicoCamera.prepareDocumentCamera(
+  //       config, 
+  //       DocumentCameraTypes.CNH
+  //     ).then(cameraOpener => {
+  //       cameraOpener.open(() => {});
+  //     }).catch(error => {
+  //       console.error(error);
+  //       // confira na aba "Referências" sobre os erros possíveis
+  //     });
+  //   })
+  // };
 
   const addDocumentToForm = useCallback((file: File) => {
     const reader = new FileReader();
@@ -126,9 +126,9 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) 
     }
   }, [documentsUpload]);
 
-  const logDocuments = () => {
-    console.log('documentsUpload', documentsUpload);
-  }
+  // const logDocuments = () => {
+  //   console.log('documentsUpload', documentsUpload);
+  // }
   
   useEffect(() => {
     if (!isTabActive) {
@@ -217,7 +217,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) 
           <br />
           <button type="button" onClick={initSdk}>abrir camera</button> */}
 
-          <a onClick={logDocuments}>logar documents</a>
+          {/* <a onClick={logDocuments}>logar documents</a> */}
         </div>
       )}
     </>

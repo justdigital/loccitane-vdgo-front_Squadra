@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Raleway, Lora } from 'next/font/google';
+import { Raleway } from 'next/font/google';
 //import { Ernest_Emily_Solid } from 'next/font/local';
 import localFont from 'next/font/local';
 import { GoogleTagManager } from '@next/third-parties/google'
@@ -12,7 +12,7 @@ const ralewayfont = Raleway({
   subsets: ["latin"],
 });
 
-const loccitaneSans = Lora({
+const loccitaneSans = Raleway({
   variable: "--font-loccitane-sans",
   subsets: ["latin"],
 });
