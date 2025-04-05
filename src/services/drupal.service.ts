@@ -4,6 +4,7 @@ import ISectionHeader from "@/interfaces/section-header";
 import ISectionLargeVideo from "@/interfaces/section-video";
 import ISectionVerticalRectangularCard from "@/interfaces/section-vertical-rectangular-card";
 import ISectionBannerEmpreender from "@/interfaces/section-banner-empreender";
+import ISectionComentarios from "@/interfaces/section-comentarios";
 
 export default class DrupalService {
 
@@ -105,6 +106,23 @@ export default class DrupalService {
             buttonLink: section.link_url,
             buttonLinkTitle: section.link_title,
           } as ISectionBannerEmpreender;
+
+        case 'comentarios':
+            return {
+              type: section.type,
+              text: section.text,
+              cardItems: section.card_item.map((item: any) => ({
+                text: item.text,
+                qualification: item.qualification,
+                textName: item.text_name,
+                textDate: item.text_date,
+                imagesUrls: {
+                  desktop: item.image_url,
+                  mobile: item.image_url_mobile
+                }
+              })),
+            } as ISectionComentarios;
+
         }
     }).filter(Boolean);
   }
