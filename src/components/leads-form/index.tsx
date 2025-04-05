@@ -30,21 +30,21 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   const methods = useForm<IFormInputs>({
     mode: "onChange",
     reValidateMode: "onChange",
-    defaultValues: {
-      submitButtonAction: () => {},
-      submitButtonLoading: false,
-      fullName: 'Jorge Luis',
-      documentNumber: '04084092584',
-      cellphoneNumber: '71999999999',
-      birthdate: '10/03/1992',
-      authorizeExposeCellNumbers: false,
-      acceptReceiveInfo: false,
-      acceptTerms: true,
-      email: 'jorge.malaquias@squadra.com.br',
-      gender: "2",
-      isIndication: false,
-      documentType: 'RG'
-    }
+    // defaultValues: {
+    //   submitButtonAction: () => {},
+    //   submitButtonLoading: false,
+    //   fullName: 'Jorge Luis',
+    //   documentNumber: '04084092584',
+    //   cellphoneNumber: '71999999999',
+    //   birthdate: '10/03/1992',
+    //   authorizeExposeCellNumbers: false,
+    //   acceptReceiveInfo: false,
+    //   acceptTerms: true,
+    //   email: 'jorge.malaquias@squadra.com.br',
+    //   gender: "2",
+    //   isIndication: false,
+    //   documentType: 'RG'
+    // }
   });
 
   const {getFormButtonProps} = useAppFormContext();
@@ -100,7 +100,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   }, [tab]);
 
   useEffect(() => {
-    gotoNextStep(4);
+    gotoNextStep();
     // setFormButtonProps({
     //   label: 'Avançar',
     //   action: () => {},
@@ -127,10 +127,9 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
           {headerTitle || defaultHeader}
           <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block sm:hidden'><CloseIcon /></a>
         </header>
-        <main className='grow'>
-        {tab ? (
-          <FormProvider {...methods}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <FormProvider {...methods}>
+          {tab ? (
+            <>
               <Tabs
                 className={`${css['tabs']}`}
                 value={tab}
@@ -142,28 +141,30 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
                 <Tab label="Endereço" value={3} disabled={majorTabAvailable < 3} />
                 <Tab label="Validação" value={4} disabled={majorTabAvailable < 4} />
               </Tabs>
-
-              <div className={`mt-5 sm:mt-10`}>
-                <CustomTabPanel value={tab} index={1}>
-                  {/* <StepPersonalData gotoNextStep={gotoNextStep} isTabActive={tab === 1} /> */}
-                  <StepPersonalData gotoNextStep={gotoNextStep} isTabActive={tab === 1} />
-                </CustomTabPanel>
-                <CustomTabPanel value={tab} index={2}>
-                  <StepContact gotoNextStep={gotoNextStep} isTabActive={tab === 2} />
-                </CustomTabPanel>
-                <CustomTabPanel value={tab} index={3}>
-                  <StepAddress gotoNextStep={gotoNextStep} isTabActive={tab === 3} />
-                </CustomTabPanel>
-                <CustomTabPanel value={tab} index={4}>
-                  <StepValidation gotoNextStep={gotoNextStep} isTabActive={tab === 4} />
-                </CustomTabPanel>
-              </div>
-            </form>
-          </FormProvider>
-        )
-          : <></>
-        }
-        </main>
+              <main className='grow'>
+              
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className={`mt-5 sm:mt-10`}>
+                    <CustomTabPanel value={tab} index={1}>
+                      <StepPersonalData gotoNextStep={gotoNextStep} isTabActive={tab === 1} />
+                    </CustomTabPanel>
+                    <CustomTabPanel value={tab} index={2}>
+                      <StepContact gotoNextStep={gotoNextStep} isTabActive={tab === 2} />
+                    </CustomTabPanel>
+                    <CustomTabPanel value={tab} index={3}>
+                      <StepAddress gotoNextStep={gotoNextStep} isTabActive={tab === 3} />
+                    </CustomTabPanel>
+                    <CustomTabPanel value={tab} index={4}>
+                      <StepValidation gotoNextStep={gotoNextStep} isTabActive={tab === 4} />
+                    </CustomTabPanel>
+                  </div>
+                </form>
+              </main>
+            </>
+           )
+           : <></>
+         }
+        </FormProvider>
         {getFormButtonProps().label && (
           <div className={`${css['footer-button']}`}>
             <Button label={getFormButtonProps().label || ''} disabled={!!getFormButtonProps().disabled} onClick={getFormButtonProps().action} isLoading={getFormButtonProps().loading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />

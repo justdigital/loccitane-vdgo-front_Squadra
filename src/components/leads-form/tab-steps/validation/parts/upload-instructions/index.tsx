@@ -11,9 +11,10 @@ import { useAppFormContext } from '@/contexts/app-form.context';
 interface UploadInstructionsProps {
   isTabActive: boolean;
   backToSelectDocumentType: () => void;
+  gotoNextPart: () => void;
 }
 
-const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, backToSelectDocumentType}) => {
+const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, backToSelectDocumentType, gotoNextPart}) => {
 
   const {
     watch
@@ -23,11 +24,12 @@ const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, bac
 
   const { isMobile } = useAppContext();
   const documentType: DocumentType = watch('documentType');
-  const documentTypeInstructions = useMemo(() => InstructionsByDocumentType[documentType][(isMobile ? 'mobile' : 'desktop')], [documentType, isMobile]);
+  const documentTypeInstructions = useMemo(() => documentType && InstructionsByDocumentType[documentType][(isMobile ? 'mobile' : 'desktop')], [documentType, isMobile]);
   
   
   const clickButton = useCallback(async () => {
     // setValue('submitButtonLoading', true);
+    gotoNextPart();
     // sendGtmFormEvent('validacao_inicio', 'success'); 
   }, []);
   
@@ -36,6 +38,7 @@ const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, bac
       return;
     }
 
+    console.log('chegou aqudfdfdfdfdfd', 'isTabActive', isTabActive);
     setFormButtonProps({
       label: 'Enviar arquivo',
       action: clickButton,
@@ -57,29 +60,33 @@ const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, bac
 
   
   return (
-    <div className={`${css['upload-instructions-box']} flex flex-col justify-center items-center`}>
+    <>
+      {documentTypeInstructions && (
+        <div className={`${css['upload-instructions-box']} flex flex-col justify-center items-center`}>
 
-      <div className={`${css['instructions-titles']} text-center`}>
-        <h2>{documentTypeInstructions.title}</h2>
-        <p className="mt-2">{documentTypeInstructions.subtitle}</p>
-      </div>
+          <div className={`${css['instructions-titles']} text-center`}>
+            <h2>{documentTypeInstructions.title}</h2>
+            <p className="mt-2">{documentTypeInstructions.subtitle}</p>
+          </div>
 
-      <div className={`${css['instructions-wrapper']} flex justify-center w-full gap-5 mt-7`}>
-        <div className={`${css['instructions-box']} flex-1`}>
-          <ul>
-            {documentTypeInstructions.instructions.map((instruction, index) => (
-              <li key={index}>{instruction}</li>
-            ))}
-          </ul>
-          <a className={`${css['back-document-type-link']} block sm:hidden`} onClick={backToSelectDocumentType}>Selecionar outro documento.</a>
+          <div className={`${css['instructions-wrapper']} flex justify-center w-full gap-5 mt-7`}>
+            <div className={`${css['instructions-box']} flex-1`}>
+              <ul>
+                {documentTypeInstructions.instructions.map((instruction, index) => (
+                  <li key={index}>{instruction}</li>
+                ))}
+              </ul>
+              <a className={`${css['back-document-type-link']} block sm:hidden`} onClick={backToSelectDocumentType}>Selecionar outro documento.</a>
+            </div>
+            <div className={`${css['instructions-image-box']} text-center`}>
+              <Image src={`/assets/images/document-types/open/${documentTypeInstructions.imageName}`} alt="Validação OK" width={155} height={216} />
+              <a className={`${css['back-document-type-link']} hidden sm:block`} onClick={backToSelectDocumentType}>Selecionar outro documento.</a>
+            </div>
+          </div>
+          
         </div>
-        <div className={`${css['instructions-image-box']} text-center`}>
-          <Image src={`/assets/images/document-types/open/${documentTypeInstructions.imageName}`} alt="Validação OK" width={155} height={216} />
-          <a className={`${css['back-document-type-link']} hidden sm:block`} onClick={backToSelectDocumentType}>Selecionar outro documento.</a>
-        </div>
-      </div>
-      
-    </div>
+      )}
+    </>
   );
 };
 

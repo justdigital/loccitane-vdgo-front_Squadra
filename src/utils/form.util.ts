@@ -39,6 +39,8 @@ export interface SharedInfo {
   isCodeValidated: boolean;
   validationCodeSent: boolean;
   validationCodeResent: boolean;
+  // documentsUpload: Base64URLString[];
+  documentsUpload: any[];
 }
 
 export type DocumentType = 'RG' | 'CNH' | 'RG_NOVO' | 'CNH_DIGITAL';
