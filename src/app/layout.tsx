@@ -44,7 +44,7 @@ export default function RootLayout({
               child-src 'self' blob:;
                     style-src 'self' 'unsafe-inline' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
                     font-src 'self' data: https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
-                    img-src 'self' data: blob: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
+                    img-src 'self' data: blob: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site bsnonprodvdgobrsa.blob.core.windows.net bsprodvdgobrsa.blob.core.windows.net;
                     media-src 'self' data: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
               script-src-elem 'self' 'unsafe-inline' blob: *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app"
         />
