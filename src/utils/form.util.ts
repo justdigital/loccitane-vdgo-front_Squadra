@@ -20,7 +20,7 @@ export interface IStepContactData {
 export interface IStepAddress {
   cep: string;
   address: string;
-  addressNumber: boolean;
+  addressNumber: string | number;
   addressAdditionalInfo: string;
   addressReference: string;
   neighborhood: string;
@@ -39,10 +39,10 @@ export interface SharedInfo {
   isCodeValidated: boolean;
   validationCodeSent: boolean;
   validationCodeResent: boolean;
-  // documentsUpload: Base64URLString[];
-  documentsUpload: any[];
+  documentsUpload: UploadFile[];
 }
 
+export type UploadFile = {fileName: string, base64Content: Base64URLString};
 export type DocumentType = 'RG' | 'CNH' | 'RG_NOVO' | 'CNH_DIGITAL';
 
 export interface IFormInputs extends IStepCreateUser, IStepContactData, IStepAddress, SharedInfo {

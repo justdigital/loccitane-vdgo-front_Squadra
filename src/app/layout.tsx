@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Raleway } from 'next/font/google';
-//import { Ernest_Emily_Solid } from 'next/font/local';
 import localFont from 'next/font/local';
 import { GoogleTagManager } from '@next/third-parties/google'
 import "./globals.css";
@@ -43,9 +42,7 @@ export default function RootLayout({
               worker-src 'self' blob:; 
               child-src 'self' blob:;
                     style-src 'self' 'unsafe-inline' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
-                    font-src 'self' https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app *.lndo.site;
-                    img-src 'self' data: blob: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
-                    font-src 'self' https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
+                    font-src 'self' data: https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
                     img-src 'self' data: blob: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site bsnonprodvdgobrsa.blob.core.windows.net bsprodvdgobrsa.blob.core.windows.net;
                     media-src 'self' data: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
               script-src-elem 'self' 'unsafe-inline' blob: *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.lndo.site"

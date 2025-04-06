@@ -9,26 +9,35 @@ import { useAppContext } from '@/contexts/app.context';
 import { useAppFormContext } from '@/contexts/app-form.context';
 import { InstructionsByDocumentType } from '../upload-instructions/instructions-by-document-type';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { CircularProgress } from '@mui/material';
+import { UUID } from 'crypto';
+import { finishRegisterAndSendDocuments } from '@/services/backend-comunication.service';
+import UploadApiCredilink from './upload-api-credilink';
 
 interface UploadProps {
   isTabActive: boolean;
   backToSelectDocumentType: () => void;
+  gotoNextPart: () => void;
 }
 
-const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) => {
+const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, gotoNextPart}) => {
 
   const {
     watch,
     setValue
   } = useFormContext<IFormInputs>();
 
+  const {getUserFormId} = useAppContext();
   const {setFormButtonProps} = useAppFormContext();
-  const { isMobile } = useAppContext();
+  const { isMobileDevice } = useAppContext();
 
-  const documentsUpload: Base64URLString[] = watch('documentsUpload');
+  const uploadSdkRef = useRef(null);
+
+  const documentsUpload = watch('documentsUpload');
   const documentType: DocumentType = watch('documentType');
-  const documentTypeInstructions = useMemo(() => InstructionsByDocumentType[documentType][(isMobile ? 'mobile' : 'desktop')], [documentType, isMobile]);
-  const [selectedFileContent, setSelectedFileContent] = useState<string | ArrayBuffer | null>(null);
+  const documentTypeInstructions = useMemo(() => InstructionsByDocumentType[documentType][(isMobileDevice ? 'mobile' : 'desktop')], [documentType, isMobileDevice]);
+  const documentTypeInfo = useMemo(() => InstructionsByDocumentType[documentType], [documentType]);
+  const [selectedFileContent, setSelectedFileContent] = useState<string | undefined>(undefined);
   const fileSelectorRef = useRef<HTMLInputElement>(null);
   const [selectedFileType, setSelectedFileType] = useState<string | null>(null);
   const [isTakingDocumentBack, setIsTakingDocumentBack] = useState(false);
@@ -41,104 +50,112 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) 
   const clickButton = useCallback(async () => {
     // setValue('submitButtonLoading', true);
     // sendGtmFormEvent('validacao_inicio', 'success');
-    console.log('chego uaqui');
-    if (InstructionsByDocumentType[documentType].hasDocumentBack && !isTakingDocumentBack) {
-      console.log('vai capturar o verso', 'documentsUpload', documentsUpload);
+    if (documentTypeInfo.hasDocumentBack && !isTakingDocumentBack) {
+      // console.log('vai capturar o verso', 'documentsUpload', documentsUpload);
       gotoTakeDocumentBack();
+      return;
     }
-  }, [isTakingDocumentBack, documentType, InstructionsByDocumentType, documentsUpload]);
+
+    if (!!documentsUpload.length) {
+      sendDocumentsToServer();
+    }
+  }, [isTakingDocumentBack, documentTypeInfo, InstructionsByDocumentType, documentsUpload]);
+
+  const sendDocumentsToServer = async () => {
+    setFormButtonProps({ loading: true });
+    try {
+      await finishRegisterAndSendDocuments(getUserFormId() as UUID, documentType, documentsUpload);
+      gotoNextPart();
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setFormButtonProps({ loading: false });
+    }
+  }
 
   const gotoTakeDocumentBack = () => {
     setIsTakingDocumentBack(true);
-    deSelectFile(true);
-    fileSelectorRef.current?.click();
+    removeSelectedFile(true);
+    goTakeDocument(true);
   };
 
-  // const initSdk = () => {
-  //   console.log('chegou na função');
-  //   import('unico-webframe').then(UnicoWebframe => {
-  //     console.log('chegou aqui');
-  //     const { UnicoCheckBuilder, SDKEnvironmentTypes, SelfieCameraTypes, UnicoThemeBuilder, DocumentCameraTypes, UnicoConfig, LocaleTypes } = UnicoWebframe;
+  const estractBase64Content = (base64Content: string) => {
+    const base64 = base64Content.split(',')[1];
+    return base64;
+  };
 
-  //     // console.log('UnicoWebframe', UnicoWebframe);
-  //     const config = new UnicoConfig()
-  //       // .setProjectNumber("13557531040735768969")
-  //       // .setProjectId("")
-  //       // .setMobileSdkAppId("")
-  //       .setHostname("http://localhost:8080")
-  //       .setHostKey("r001-06a56722-87ef-49b6-a71b-3e05c74f9898")
-  //       // .setHostInfo("nRMqSJJeWMZ0K4n9Dxs/Zhb5RslAxes+pmH0gJgmVtay02cX8aTbdzfZ4ln40v1Q")
-        
-  //     const unicoCameraBuilder = new UnicoCheckBuilder();
-  //     unicoCameraBuilder.setResourceDirectory("/assets/vendor/unico/resources");
-  //     unicoCameraBuilder.setModelsPath("/assets/vendor/unico/models");
-  //     unicoCameraBuilder.setEnvironment(SDKEnvironmentTypes.UAT);
-  //     const unicoCamera = unicoCameraBuilder.build();
-  //     console.log('e aqui');
-
-  //     unicoCamera.prepareDocumentCamera(
-  //       config, 
-  //       DocumentCameraTypes.CNH
-  //     ).then(cameraOpener => {
-  //       cameraOpener.open(() => {});
-  //     }).catch(error => {
-  //       console.error(error);
-  //       // confira na aba "Referências" sobre os erros possíveis
-  //     });
-  //   })
-  // };
-
-  const addDocumentToForm = useCallback((file: File) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (evt) => {
-      setValue('documentsUpload', [...documentsUpload || [], (evt.target?.result as string)?.split(',')[1]]);
-    }
+  const addDocumentToForm = useCallback((fileName: string, fileType: string, base64Content: string) => {
+    const selectedFileData = {fileName, base64Content: estractBase64Content(base64Content)};
+    setValue('documentsUpload', [...documentsUpload || [], selectedFileData]);
+    setSelectedFileType(fileType);
+    // setSelectedFileContent(URL.createObjectURL(e.target.files[0]));
+    setSelectedFileContent(base64Content);
   }, [documentsUpload]);
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) {
-      deSelectFile();
+      removeSelectedFile();
       return;
     }
+    const file = e.target.files[0];
 
-    addDocumentToForm(e.target.files[0]);
-    setSelectedFileType(e.target.files[0].type);
-    setSelectedFileContent(URL.createObjectURL(e.target.files[0]));
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (evt) => {
+      addDocumentToForm(file.name, file.type, (evt.target?.result as string));
+    }
   };
 
   const onCancel = () => {
-    deSelectFile();
+    removeSelectedFile();
   }
 
-  const deSelectFile = useCallback((isGoingTakeDocumentBack = false) => {
-    if (documentsUpload.length && !isGoingTakeDocumentBack) {
+  const removeSelectedFile = useCallback((isGoingTakeDocumentBack = false) => {
+    if (documentsUpload && documentsUpload.length && !isGoingTakeDocumentBack) {
       documentsUpload.pop();
       setValue('documentsUpload', [...documentsUpload]);
     }
 
     setSelectedFileType(null);
-    setSelectedFileContent(null);
+    setSelectedFileContent(undefined);
     fileSelectorRef.current!.value = '';
 
-    if (!isGoingTakeDocumentBack) {
+    if (!isGoingTakeDocumentBack && !isTakingDocumentBack) {
       backToSelectDocumentType();
     }
-  }, [documentsUpload]);
+  }, [documentsUpload, isTakingDocumentBack]);
 
-  // const logDocuments = () => {
-  //   console.log('documentsUpload', documentsUpload);
-  // }
+  const goTakeDocument = useCallback((takingBack = false) => {
+    if (isMobileDevice && !!documentTypeInfo.crediLinkDocumentTypes.length) {
+      const crediLinkDocumentType = documentTypeInfo.crediLinkDocumentTypes[(takingBack ? 1 : 0)];
+      (uploadSdkRef.current as any).openSdkCamera(crediLinkDocumentType);
+      return;
+    }
+
+    fileSelectorRef.current?.click();
+  }, [documentTypeInfo, isMobileDevice]);
+
+
+  /**
+   * Funções e sucesso e erro para upload via SDK
+   */
+  const onSuccessTakingDocumentPhoto = (base64Content: string) => {
+    // setIsTakingDocumentBack(false);
+    addDocumentToForm('teste.jpg', 'image/jpeg', base64Content);
+  };
+
+  const onErrorTakingDocumentPhoto = () => {
+    onCancel();
+    // console.error(error);
+  };
   
   useEffect(() => {
     if (!isTabActive) {
       return;
     }
 
-    // initSdk();
-
     if (!selectedFileContent) {
-      fileSelectorRef.current?.click();
+      goTakeDocument();
     }
 
     setFormButtonProps({
@@ -155,20 +172,16 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) 
 
     let buttonLabel;
 
-    console.log('InstructionsByDocumentType[documentType]', InstructionsByDocumentType[documentType], isTakingDocumentBack);
-
-    if (!isMobile) {
-      buttonLabel = !InstructionsByDocumentType[documentType].hasDocumentBack || isTakingDocumentBack ? 'Enviar arquivo' : 'Upload do verso';
+    if (!isMobileDevice) {
+      buttonLabel = !documentTypeInfo.hasDocumentBack || isTakingDocumentBack ? 'Enviar arquivo' : 'Upload do verso';
     } else {
-      buttonLabel = !InstructionsByDocumentType[documentType].hasDocumentBack || isTakingDocumentBack ? 'Concluir' : 'Fotografar o verso';
+      buttonLabel = !documentTypeInfo.hasDocumentBack || isTakingDocumentBack ? 'Concluir' : 'Fotografar o verso';
     }
     
-    //documentTypeInstructions
-    // const buttonLabel = !isMobile ? 'Enviar arquivo' : (documentType === 'CNH_DIGITAL' ? 'Fazer Upload' : 'Tirar foto');
     setFormButtonProps({
       label: buttonLabel,
     });
-  }, [isMobile, documentType, isTabActive, isTakingDocumentBack]);
+  }, [isMobileDevice, documentTypeInfo, isTabActive, isTakingDocumentBack]);
 
   useEffect(() => {
     fileSelectorRef.current?.addEventListener('cancel', onCancel);
@@ -176,8 +189,9 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) 
   
   return (
     <>
-      <input type="file" accept='.jpg, .jpeg, .pdf' onChange={onSelectFile} hidden ref={fileSelectorRef} />
-      {selectedFileContent && (
+      <UploadApiCredilink ref={uploadSdkRef} onSucess={onSuccessTakingDocumentPhoto} onError={onErrorTakingDocumentPhoto} />
+      <input type="file" accept={documentTypeInfo.acceptedFileTypes} onChange={onSelectFile} hidden ref={fileSelectorRef} />
+      {selectedFileContent ? (
         <div className={`${css['upload-confirmation-box']} flex flex-col justify-center items-center w-[85%] mx-auto`}>
           
           <h2>Confirme se a imagem está clara e legível:</h2>
@@ -190,7 +204,9 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) 
                   className={`${css['image-preview']} inline`}
                 />
               )}
-              {selectedFileType?.includes('image/') && <img src={selectedFileContent} className={`${css['image-preview']} inline`} alt="Imagem do arquivo selecionado" />}
+              {selectedFileType?.includes('image/') && (
+                <img src={selectedFileContent} className={`${css['image-preview']} inline`} alt="Imagem do arquivo selecionado" />
+              )}
             </div>
             <div className={`${css['uploaded-file-actions']} flex items-center mt-5 gap-2`}>
               <div className="sm:w-4/5">
@@ -201,27 +217,22 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType}) 
                 </ul>
               </div>
               <div className="w-1/5 justify-self-end">
-                <a onClick={() => deSelectFile()} className={`${css['delete-button']} flex justify-center items-center`}><DeleteOutlineIcon fontSize="medium" /></a>
+                <a onClick={() => removeSelectedFile()} className={`${css['delete-button']} flex justify-center items-center`}><DeleteOutlineIcon fontSize="medium" /></a>
               </div>
             </div>
           </div>
 
           <p className="mt-5">{confirmationInstruction}</p>
-
-
-
-          {/* <div className="relative w-[300px] h-[300px] bg-black">
-            <div id="box-camera"></div>
-          </div>
-
-          <br />
-          <button type="button" onClick={initSdk}>abrir camera</button> */}
-
-          {/* <a onClick={logDocuments}>logar documents</a> */}
         </div>
-      )}
+        ) : (
+          <div className="flex justify-center items-center h-full">
+            <CircularProgress size="50px" color="error" />
+          </div>
+        )
+      }
     </>
   );
 };
+
 
 export default Upload;

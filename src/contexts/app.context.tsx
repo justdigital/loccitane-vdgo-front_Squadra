@@ -7,7 +7,8 @@ import { AppFormProvider } from './app-form.context';
 interface AppContextProps {
   getUserFormId: () => UUID | undefined;
   setUserFormId: (value: UUID | undefined) => void;
-  isMobile: boolean;
+  isMobileScreen: boolean;
+  isMobileDevice: boolean;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -28,14 +29,15 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [userFormId, setUserFormId] = useState<UUID | undefined>(undefined);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobileDevice = /android.+mobile|ip(hone|[oa]d)/i.test(navigator ? navigator.userAgent : '');
 
   const getUserFormId = () => {
     return userFormId;
   };
 
   return (
-    <AppContext.Provider value={{ getUserFormId, setUserFormId, isMobile }}>
+    <AppContext.Provider value={{ getUserFormId, setUserFormId, isMobileScreen, isMobileDevice }}>
       <AppFormProvider>
         {children}
       </AppFormProvider>
