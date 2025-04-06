@@ -46,17 +46,18 @@ const StepValidationEmailCode: React.FC<StepValidationEmailCodeProps> = ({isTabA
   };
 
   const checkConfirmationCodeIsValid = async (value: string) => {
+    console.log('isCodeValidated', isCodeValidated)
     if (isCodeValidated) {
       return true;
     }
 
     const result = await checkValidationCode(getUserFormId() as UUID, value);
 
-    if (result == 1) {
+    if (result === 1) {
       setValue('isCodeValidated', true); 
     }
 
-    return result == 1;
+    return result === 1;
   }
 
   useEffect(() => {

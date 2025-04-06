@@ -9,6 +9,8 @@ export interface Intructions {
 export interface InstructionsByDocumentType {
   [key: string]: {
     hasDocumentBack: boolean,
+    acceptedFileTypes: string,
+    crediLinkDocumentTypes: string[];
     desktop: Intructions,
     mobile: Intructions
   }
@@ -17,6 +19,8 @@ export interface InstructionsByDocumentType {
 export const InstructionsByDocumentType: InstructionsByDocumentType = {
   'CNH': {
     hasDocumentBack: false,
+    acceptedFileTypes: '.jpg, .jpeg, .pdf',
+    crediLinkDocumentTypes: ['CNH'],
     desktop: {
       title: 'Instruções para Upload da CNH',
       subtitle: 'Siga as orientações abaixo para garantir um envio correto do documento:',
@@ -49,6 +53,8 @@ export const InstructionsByDocumentType: InstructionsByDocumentType = {
 
   'RG': {
     hasDocumentBack: true,
+    acceptedFileTypes: '.jpg, .jpeg, .pdf',
+    crediLinkDocumentTypes: [ "RG_FRENTE", "RG_VERSO" ],
     desktop: {
       title: 'Instruções para Upload do RG',
       subtitle: 'Para garantir a melhor qualidade, siga as nossas dicas:',
@@ -84,6 +90,8 @@ export const InstructionsByDocumentType: InstructionsByDocumentType = {
 
   'RG_NOVO': {
     hasDocumentBack: true,
+    acceptedFileTypes: '.jpg, .jpeg, .pdf',
+    crediLinkDocumentTypes: [ "RG_FRENTE_NOVO", "RG_VERSO_NOVO" ],
     desktop: {
       title: 'Instruções para Upload do Novo RG (CIN - Carteira de Identidade Nacional)',
       subtitle: 'Para garantir a melhor qualidade, siga as nossas dicas:',
@@ -118,6 +126,8 @@ export const InstructionsByDocumentType: InstructionsByDocumentType = {
 
   'CNH_DIGITAL': {
     hasDocumentBack: false,
+    acceptedFileTypes: '.pdf',
+    crediLinkDocumentTypes: [],
     desktop: {
       title: 'Instruções para Upload da CNH Digital',
       subtitle: 'Para garantir a melhor qualidade, siga as nossas dicas:',

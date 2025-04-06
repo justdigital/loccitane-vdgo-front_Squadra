@@ -43,7 +43,12 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     //   email: 'jorge.malaquias@squadra.com.br',
     //   gender: "2",
     //   isIndication: false,
-    //   documentType: 'RG'
+    //   documentType: 'RG',
+    //   cep: '40296370',
+    //   // state: "29",
+    //   // city: '2927408',
+    //   addressNumber: '123',
+    //   isCodeValidated: false
     // }
   });
 
@@ -101,12 +106,6 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
 
   useEffect(() => {
     gotoNextStep();
-    // setFormButtonProps({
-    //   label: 'Avançar',
-    //   action: () => {},
-    //   loading: false,
-    //   disabled: false
-    // });
   }, []);
 
 
@@ -144,7 +143,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
               <main className='grow'>
               
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <div className={`mt-5 sm:mt-10`}>
+                  <div className={`mt-5 sm:mt-10 pt-2 sm:pt-0`}>
                     <CustomTabPanel value={tab} index={1}>
                       <StepPersonalData gotoNextStep={gotoNextStep} isTabActive={tab === 1} />
                     </CustomTabPanel>
@@ -175,5 +174,5 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   );
 });
 
-LeadsForm.displayName = 'LeadsForm'
+LeadsForm.displayName = 'LeadsForm';
 export default LeadsForm;

@@ -1,4 +1,4 @@
-import { IStepCreateUser, IStepContactData, IStepAddress } from "@/utils/form.util";
+import { IStepCreateUser, IStepContactData, IStepAddress, DocumentType, UploadFile } from "@/utils/form.util";
 import axios from "axios"
 import { UUID } from "node:crypto";
 
@@ -57,7 +57,7 @@ export async function createUser(data: IStepCreateUser): Promise<UUID> {
   return (await axios.post(url.toString(), body))?.data
 }
 
-export async function putPersonalData(id: UUID, data: IStepContactData): Promise<UUID> {
+export async function putPersonalData(id: UUID, data: IStepContactData): Promise<any> {
   const body = {
     id,
     dataNascimento: data.birthdate,
@@ -71,7 +71,7 @@ export async function putPersonalData(id: UUID, data: IStepContactData): Promise
   return (await axios.post(url.toString(), body))?.data
 }
 
-export async function putAddressData(id: UUID, data: IStepAddress): Promise<UUID> {
+export async function putAddressData(id: UUID, data: IStepAddress): Promise<any> {
   const body = {
     id,
     cep: data.cep,
@@ -85,6 +85,14 @@ export async function putAddressData(id: UUID, data: IStepAddress): Promise<UUID
   };
   
   const url = new URL(API_URL + '/Cadastro/AdicionarEndereco/')
+  return (await axios.post(url.toString(), body))?.data
+}
+
+export async function finishRegisterAndSendDocuments(id: UUID, documentType: DocumentType, documents: UploadFile[]): Promise<any> {
+  const body = documents;
+  
+  const urlParams = new URLSearchParams({id, tipoDocumento: documentType})
+  const url = new URL(API_URL + '/Cadastro/ConcluirCadastro?'+urlParams)
   return (await axios.post(url.toString(), body))?.data
 }
 

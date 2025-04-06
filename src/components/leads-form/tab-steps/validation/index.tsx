@@ -6,24 +6,31 @@ import { IFormInputs } from '@/utils/form.util';
 import UploadInstructions from './parts/upload-instructions';
 import StepValidationCodeAndDocumentType from './parts/document-type-and-validation-code';
 import Upload from './parts/upload';
+import StepSuccess from './parts/success';
 
 interface StepValidationProps {
   gotoNextStep: () => void;
   isTabActive: boolean;
 }
 
-type PossibleSteps = 'validationAndDocumentTypeSelection' | 'validationAndDocumentTypeSelectionBacking' | 'uploadInstructions' | 'uploadConfirmation' | 'uploadConfirmationDocumentBack';
+type PossibleParts =
+  'validationAndDocumentTypeSelection' |
+  'validationAndDocumentTypeSelectionBacking' |
+  'uploadInstructions' |
+  'uploadConfirmation' |
+  'uploadConfirmationDocumentBack' |
+  'success';
 
 const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
 
-  const [currentPart, setCurrentPart] = useState<PossibleSteps>('validationAndDocumentTypeSelection');
+  const [currentPart, setCurrentPart] = useState<PossibleParts>('validationAndDocumentTypeSelection');
 
   const {watch} = useFormContext<IFormInputs>();
 
   const backToSelectDocumentType = () => setCurrentPart('validationAndDocumentTypeSelectionBacking');
   const documentType = watch('documentType');
 
-  const checkIsPartActive = (parts: PossibleSteps[]) => {
+  const checkIsPartActive = (parts: PossibleParts[]) => {
     return !!parts.includes(currentPart);
   }
 
@@ -48,7 +55,7 @@ const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
       {checkIsPartActive(['uploadInstructions']) && documentType && (
         <div className="mt-[-10px]">
           <UploadInstructions
-            isTabActive={isTabActive && currentPart === 'uploadInstructions'}
+            isTabActive={isTabActive && checkIsPartActive(['uploadInstructions'])}
             backToSelectDocumentType={backToSelectDocumentType}
             gotoNextPart={() => setCurrentPart('uploadConfirmation')}
           />
@@ -58,8 +65,17 @@ const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
       {checkIsPartActive(['uploadConfirmation', 'uploadConfirmationDocumentBack']) && documentType && (
         <div className="mt-[-10px]">
           <Upload
-            isTabActive={isTabActive && currentPart === 'uploadConfirmation'}
+            isTabActive={isTabActive && checkIsPartActive(['uploadConfirmation', 'uploadConfirmationDocumentBack'])}
             backToSelectDocumentType={backToSelectDocumentType}
+            gotoNextPart={() => setCurrentPart('success')}
+          />
+        </div>
+      )}
+
+      {checkIsPartActive(['success']) && (
+        <div className="">
+          <StepSuccess
+            isTabActive={isTabActive && checkIsPartActive(['success'])}
           />
         </div>
       )}

@@ -63,7 +63,7 @@ const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentT
 
 
   return (
-    <div className="mt-[-20px]">
+    <div className="sm:mt-[-20px]">
       {!isBacking && <StepValidationEmailCode isTabActive={isTabActive} />}
       <div className="mt-7"><StepValidationSelectDocument /></div>
     </div>

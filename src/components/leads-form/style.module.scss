@@ -43,7 +43,7 @@
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   position: relative;
   transition: .3s;
@@ -80,7 +80,7 @@
     min-height: 0;
 
     @media (screen(sm)) {
-      min-height: 385px;
+      min-height: 395px;
       max-height: 0;
       overflow: hidden;
     }
@@ -119,8 +119,8 @@
 }
 
 .tabs {
-  min-height: 0 !important;
   border-bottom: none;
+  min-height: 36px !important;
 
   :global(.MuiTab-root) {
     font-size: 0.75rem;
@@ -130,16 +130,18 @@
     font-weight: 700;
     text-transform: none;
     color: #939393;
-    flex: 1;
+   
 
     @media (screen(sm)) {
       // padding: 10px;
       font-size: 0.875rem;
+      flex: 1;
     }
   }
 
   :global(.MuiTabs-scroller) {
     border-bottom: 1px solid black;
+    overflow-x: auto !important;
   }
   
   :global(.Mui-selected) {

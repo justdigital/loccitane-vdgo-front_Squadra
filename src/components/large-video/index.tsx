@@ -7,6 +7,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import ISectionLargeVideo from '@/interfaces/section-video';
+import { useAppContext } from '@/contexts/app.context';
 
 interface LargeVideoSectionProps {
   sectionData: ISectionLargeVideo;
@@ -21,9 +22,10 @@ type ProgressTracked = {
 };
 
 const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) => {
+  const { isMobileScreen: isMobile } = useAppContext();
+
   const [videoUrl, setVideoUrl] = useState<string>(sectionData.videosUrls.urlDesktop);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
   const [liked, setLiked] = useState(false); //Controlar like
   const [isMuted, setIsMuted] = useState(true); // Começa mudo por padrão
   const [isPaused, setIsPaused] = useState(true); // Começa pausado
@@ -93,9 +95,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
     videoElement.addEventListener('pause', handlePause);
 
     const handleVideoUrl = () => {
-      const mobileCheck  = window.innerWidth < 768;
-      setIsMobile(mobileCheck);
-      setVideoUrl(mobileCheck ? sectionData.videosUrls.urlMobile : sectionData.videosUrls.urlDesktop);
+      setVideoUrl(isMobile ? sectionData.videosUrls.urlMobile : sectionData.videosUrls.urlDesktop);
       hasResetOnUnmute.current = false; // Resetar ao mudar de vídeo ou tamanho de tela
     };
 

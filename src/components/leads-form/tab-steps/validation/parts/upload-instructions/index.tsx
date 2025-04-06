@@ -22,9 +22,9 @@ const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, bac
 
   const {setFormButtonProps} = useAppFormContext();
 
-  const { isMobile } = useAppContext();
+  const { isMobileScreen } = useAppContext();
   const documentType: DocumentType = watch('documentType');
-  const documentTypeInstructions = useMemo(() => documentType && InstructionsByDocumentType[documentType][(isMobile ? 'mobile' : 'desktop')], [documentType, isMobile]);
+  const documentTypeInstructions = useMemo(() => documentType && InstructionsByDocumentType[documentType][(isMobileScreen ? 'mobile' : 'desktop')], [documentType, isMobileScreen]);
   
   
   const clickButton = useCallback(async () => {
@@ -38,25 +38,24 @@ const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, bac
       return;
     }
 
-    console.log('chegou aqudfdfdfdfdfd', 'isTabActive', isTabActive);
     setFormButtonProps({
       label: 'Enviar arquivo',
       action: clickButton,
       loading: false,
       disabled: false
     });
-  }, [isTabActive,]);
+  }, [isTabActive]);
 
   useEffect(() => {
     if (!isTabActive) {
       return;
     }
     
-    const buttonLabel = !isMobile ? 'Enviar arquivo' : (documentType === 'CNH_DIGITAL' ? 'Fazer Upload' : 'Tirar foto');
+    const buttonLabel = !isMobileScreen ? 'Enviar arquivo' : (documentType === 'CNH_DIGITAL' ? 'Fazer Upload' : 'Tirar foto');
     setFormButtonProps({
       label: buttonLabel,
     });
-  }, [isMobile, documentType]);
+  }, [isMobileScreen, documentType]);
 
   
   return (
