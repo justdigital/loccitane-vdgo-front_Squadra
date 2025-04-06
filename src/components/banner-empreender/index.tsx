@@ -21,6 +21,7 @@ const BannerEmpreender: React.FC<BannerEmpreenderProps> = ({ sectionData }) => {
 
   return (
     <div 
+      id='banner-empreender'
       className={`${css['banner-wrapper']} ${hasImages ? css['has-background'] : ''}`}
       style={style as React.CSSProperties}
     >
