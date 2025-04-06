@@ -22,6 +22,7 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
   
   useEffect(() => {
     gsap.registerPlugin(Flip);
+    /* Força o click para aparecer UM primeiro slide */
     const timer = setTimeout(() => {
       if (nextButtonRef.current) {
         nextButtonRef.current.click();
@@ -100,8 +101,7 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
     Flip.from(state, {
       targets: `.${css.item}`,
       ease: "sine.inOut",
-      duration: 1,
-      //delay: 0.2,
+      duration: 1.2,
       absoluteOnLeave: true,
       scale: true,
       onEnter: (elements) => {
@@ -109,7 +109,8 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
           opacity: () => direction === 1 ? 1 : 0,
           scale: () => direction === 1 ? 1 : .8,
           yPercent: () => direction === 1 ? 20 : 40,
-          ease: "sine.out"
+          ease: "sine.inOut",
+          //duration: 0.6
         });
       },
       onLeave: (elements) => {
@@ -117,7 +118,8 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
         tl.to(elements, {
           yPercent: 20,
           opacity: 0,
-          ease: "sine.out",
+          ease: "sine.inOut",
+          //duration: 0.6,
           onComplete: () => {
             if (elements[0].parentNode === slider) {
               slider.removeChild(elements[0]);
@@ -194,17 +196,14 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
 
                       return (
                         <div key={star} style={{ position: 'relative', display: 'inline-block', marginRight: '2px' }}>
-                          {/* Estrela vazia (fundo) */}
                           <StarBorderIcon 
                             style={{
-                              fontSize: "23px",
+                              fontSize: "25px",
                               position: 'relative',
                               zIndex: 1,
-                              color: '#ddd'
+                              color: '#848484a3'
                             }}
                           />
-                          
-                          {/* Estrela preenchida (sobreposta) */}
                           {(isWholeStar || isPartialStar) && (
                             <div style={{
                               position: 'absolute',
@@ -217,8 +216,11 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
                             }}>
                               <StarIcon 
                                 style={{
+                                  //paddingTop:"3px",
                                   fontSize: "23px",
-                                  color: '#ffc107',
+                                  color: '#FFDD6B',
+                                  stroke: '#FF0F0F',
+                                  strokeWidth: 1.5,
                                 }}
                               />
                             </div>
