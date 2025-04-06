@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       $locci-midnight: #001022; // Azul escuro profundo, como céu noturno.
       $locci-ivory: #F7E4D2; //Bege claro, marfim.
       $locci-blush: #D86276; //	Rosa avermelhado, como blush.
+      $locci-brightpink: #FF8AAF;
       $locci-black: #000000;
     `
   },
@@ -25,14 +26,9 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: [
-      'loccitane-vdgo-cms.lndo.site',
-      'vdgo-cms-dev.squadra.com.br'
-    ],
     remotePatterns: [
-      // Configuração segura para desenvolvimento e produção
       {
-        protocol: 'https',
+        protocol: 'http',
         hostname: 'loccitane-vdgo-cms.lndo.site',
         pathname: '/**',
       },
@@ -41,9 +37,8 @@ const nextConfig: NextConfig = {
         hostname: 'vdgo-cms-dev.squadra.com.br',
         pathname: '/**',
       },
-      // Permite imagens de qualquer fonte HTTPS
       {
-        protocol: 'https',
+        protocol: 'http',
         hostname: '**',
       }
     ],
