@@ -57,8 +57,8 @@ export default function RootLayout({
           </AppProvider>
         </AppRouterCacheProvider>
         {/* Google Tag Manager */}
-        {process.env.NEXT_PUBLIC_GTM_CODE && (
-          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_CODE} />
+        {process.env.NEXT_GTM_CODE && (
+          <GoogleTagManager gtmId={process.env.NEXT_GTM_CODE} />
         )}
       </body>
     </html>
