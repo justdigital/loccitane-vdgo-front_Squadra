@@ -201,17 +201,18 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
                         <div key={star} className="relative inline-block mr-[2px]">
                           <StarBorderIcon 
                             style={{
-                              fontSize: "25px",
+                              fontSize: "26px",
                               position: 'relative',
                               zIndex: 1,
-                              color: '#848484a3'
+                              color: '#848484a3',
+                              left: 2,
                             }}
                           />
                           {(isWholeStar || isPartialStar) && (
                             <div style={{
                               position: 'absolute',
                               top: 0,
-                              left: 0,
+                              left: 4,
                               width: isWholeStar ? '100%' : `${fillPercentage}%`,
                               height: '100%',
                               overflow: 'hidden',
@@ -219,11 +220,11 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
                             }}>
                               <StarIcon 
                                 style={{
-                                  //paddingTop:"3px",
-                                  fontSize: "23px",
+                                  fontSize: "23.5px",
                                   color: '#FFDD6B',
                                   stroke: '#FF0F0F',
                                   strokeWidth: 1.5,
+                                  backgroundColor: '#FFFFFF',
                                 }}
                               />
                             </div>
