@@ -4,7 +4,6 @@ import LargeVideo from '@/components/large-video';
 import VerticalRectangularCard from '@/components/vertical-rectangular-card';
 import BannerEmpreender from '@/components/banner-empreender';
 import Testimonials from '@/components/testimonials';
-import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
 import React from 'react';
@@ -18,8 +17,6 @@ const LandingPage1 = async () => {
 
   return (
     <div>
-      {/* <Header /> */}
-      <HorizontalVideoCardsSection /> 
       {sections.map((section, index) => {
         switch (section.type) {
           case 'section_header':
