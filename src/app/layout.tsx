@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Raleway } from 'next/font/google';
-//import { Ernest_Emily_Solid } from 'next/font/local';
 import localFont from 'next/font/local';
 import { GoogleTagManager } from '@next/third-parties/google'
 import "./globals.css";
@@ -18,8 +17,7 @@ const loccitaneSans = Raleway({
 });
 
 const ernestEmily = localFont({
-  src: '../../public/assets/fonts/Ernest_Emily_Solid.ttf',
-  //src: 'https://en.bestfonts.pro/fonts_files/5ee7a61a8526c00991149c7e/files/ErnestandEmilySlantedSolid.ttf',
+  src: '../../public/assets/fonts/Ernest_Emily_Solid.woff2',
   variable: '--font-ernest-emily',
 });
 
@@ -40,14 +38,14 @@ export default function RootLayout({
         <meta
           httpEquiv="Content-Security-Policy"
           content="
-              script-src 'self' 'unsafe-eval' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app; 
+              script-src 'self' 'unsafe-eval' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.lndo.site; 
               worker-src 'self' blob:; 
               child-src 'self' blob:;
                     style-src 'self' 'unsafe-inline' *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
-                    font-src 'self' https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
+                    font-src 'self' data: https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
                     img-src 'self' data: blob: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site bsnonprodvdgobrsa.blob.core.windows.net bsprodvdgobrsa.blob.core.windows.net;
                     media-src 'self' data: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
-              script-src-elem 'self' 'unsafe-inline' blob: *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app"
+              script-src-elem 'self' 'unsafe-inline' blob: *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.lndo.site"
         />
       </head>
       <body
@@ -59,8 +57,8 @@ export default function RootLayout({
           </AppProvider>
         </AppRouterCacheProvider>
         {/* Google Tag Manager */}
-        {process.env.NEXT_PUBLIC_GTM_CODE && (
-          <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_CODE} />
+        {process.env.NEXT_GTM_CODE && (
+          <GoogleTagManager gtmId={process.env.NEXT_GTM_CODE} />
         )}
       </body>
     </html>

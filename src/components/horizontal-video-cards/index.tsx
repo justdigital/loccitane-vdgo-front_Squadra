@@ -14,7 +14,7 @@ const HorizontalVideoCardsSection: React.FC<HorizontalVideoCardsSectionProps> = 
     subtitle: '<p>Título 2</p>'
   }
   return (
-    <div className={`${css['cards-wrapper']} container p-6`}>
+    <div id='horizontal-video-cards' className={`${css['cards-wrapper']} container p-6`}>
       <div className={`${css['title']}`} dangerouslySetInnerHTML={{__html: mocks.title}}></div>
       <div className={`${css['subtitle']}`} dangerouslySetInnerHTML={{__html: mocks.subtitle}}></div>
 

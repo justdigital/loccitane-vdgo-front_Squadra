@@ -7,7 +7,8 @@ import { AppFormProvider } from './app-form.context';
 interface AppContextProps {
   getUserFormId: () => UUID | undefined;
   setUserFormId: (value: UUID | undefined) => void;
-  isMobile: boolean;
+  isMobileScreen: boolean;
+  isMobileDevice: boolean;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -15,7 +16,7 @@ const AppContext = createContext<AppContextProps | undefined>(undefined);
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('useAppContext must be used within a AppProvider');
+    throw new Error('useAppContext must be used within a AppProvider ');
   }
   return context;
 };
@@ -28,14 +29,17 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [userFormId, setUserFormId] = useState<UUID | undefined>(undefined);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const getUserFormId = () => {
     return userFormId;
   };
 
+  const navigator: any = typeof window !== 'undefined' ? window.navigator : {};
+  const isMobileDevice = /android.+mobile|ip(hone|[oa]d)/i.test(navigator?.userAgent);
+
   return (
-    <AppContext.Provider value={{ getUserFormId, setUserFormId, isMobile }}>
+    <AppContext.Provider value={{ getUserFormId, setUserFormId, isMobileScreen, isMobileDevice }}>
       <AppFormProvider>
         {children}
       </AppFormProvider>

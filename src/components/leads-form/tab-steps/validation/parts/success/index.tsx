@@ -1,15 +1,27 @@
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
 import css from './style.module.scss';
 import { CircularProgress } from '@mui/material';
+import { useAppFormContext } from '@/contexts/app-form.context';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface StepSuccessProps {
-
+  isTabActive?: boolean;
 }
 
-const StepSuccess: React.FC<StepSuccessProps> = ({}) => {
+const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
+
+  const {setFormButtonProps} = useAppFormContext();
+
+  useEffect(() => {
+    if (!isTabActive) {
+      return;
+    }
+
+    setFormButtonProps({
+      label: undefined,
+    });
+  }, [isTabActive]);
 
   
   return (

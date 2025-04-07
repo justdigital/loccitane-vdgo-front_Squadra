@@ -4,7 +4,8 @@ import ISectionHeader from "@/interfaces/section-header";
 import ISectionLargeVideo from "@/interfaces/section-video";
 import ISectionVerticalRectangularCard from "@/interfaces/section-vertical-rectangular-card";
 import ISectionBannerEmpreender from "@/interfaces/section-banner-empreender";
-
+import ISectionTestimonials from "@/interfaces/section-testimonials";
+import ISectionFooter from "@/interfaces/section-footer";
 export default class DrupalService {
 
   private baseApiUrl = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL;
@@ -105,6 +106,43 @@ export default class DrupalService {
             buttonLink: section.link_url,
             buttonLinkTitle: section.link_title,
           } as ISectionBannerEmpreender;
+
+        case 'comentarios':
+            return {
+              type: section.type,
+              text: section.text,
+              cardItems: section.card_item.map((item: any) => ({
+                text: item.text,
+                qualification: item.qualification,
+                textName: item.text_name,
+                textDate: item.text_date,
+                imagesUrls: {
+                  desktop: item.image_url,
+                  mobile: item.image_url_mobile
+                }
+              })),
+            } as ISectionTestimonials;
+        
+          case 'section_footer':
+            return {
+              type: section.type,
+              textDescription: section.text_description,
+              imagesUrls: {
+                desktop: section.image_url_desktop,
+                mobile: section.image_url_mobile
+              },
+              cardItems: section.card_item.map((item: any) => ({
+                text: item.text,
+                linkTitle: item.link_title,
+                imagesUrls: {
+                  desktop: item.image_url_desktop,
+                  mobile: item.image_url_mobile
+                }
+              })),
+              buttonLink: section.link_url,
+              buttonLinkTitle: section.link_title,
+            } as ISectionFooter;
+
         }
     }).filter(Boolean);
   }

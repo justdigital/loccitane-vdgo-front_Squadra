@@ -10,9 +10,9 @@ import React from 'react';
 
 export const revalidate = 60 // invalidate cache every minute (maintain it only during dev)
 
-const LandingPage1 = async () => {
+const LandingPage2 = async () => {
 
-  const drupalService = new DrupalService('/api/node/17');
+  const drupalService = new DrupalService('/api/node/20');
   const { sections } = await drupalService.fetchData();
 
   return (
@@ -40,4 +40,4 @@ const LandingPage1 = async () => {
   );
 };
 
-export default LandingPage1;
+export default LandingPage2;

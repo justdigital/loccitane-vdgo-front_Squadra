@@ -10,10 +10,14 @@ const nextConfig: NextConfig = {
       $locci-midnight: #001022; // Azul escuro profundo, como céu noturno.
       $locci-ivory: #F7E4D2; //Bege claro, marfim.
       $locci-blush: #D86276; //	Rosa avermelhado, como blush.
+      $locci-brightpink: #FF8AAF;
+      $locci-black: #000000;
     `
   },
   env: {
     NEXT_API_BASE_URL: process.env.NEXT_API_BASE_URL,
+    NEXT_CREDILINK_UNICO_HOSTNAME: process.env.NEXT_CREDILINK_UNICO_HOSTNAME,
+    NEXT_CREDILINK_UNICO_HOSTKEY: process.env.NEXT_CREDILINK_UNICO_HOSTKEY,
   },
   eslint: {
     // Ignora erros de ESLint durante o build
@@ -27,6 +31,31 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
+        hostname: 'loccitane-vdgo-cms.lndo.site',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'vdgo-cms-dev.squadra.com.br',
+        pathname: '/**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      }
+    ],
+
+    /*
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'loccitane-vdgo-cms.lndo.site',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+      {
+        protocol: 'https',
         hostname: 'loccitane-vdgo-cms.lndo.site',
         port: '',
         pathname: '/**',
@@ -47,6 +76,7 @@ const nextConfig: NextConfig = {
         search: '',
       },
     ],
+    */
   },
 };
 
