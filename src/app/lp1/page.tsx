@@ -2,6 +2,7 @@ import Header from '@/components/header';
 import LargeVideo from '@/components/large-video';
 import VerticalRectangularCard from '@/components/vertical-rectangular-card';
 import BannerEmpreender from '@/components/banner-empreender';
+import Comentarios from '@/components/comentarios';
 // import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
@@ -29,6 +30,8 @@ const LandingPage1 = async () => {
             return <VerticalRectangularCard sectionData={section} key={index} />;
           case 'newsletter':
             return <BannerEmpreender sectionData={section} key={index} />;
+          case 'comentarios':
+            return <Comentarios sectionData={section} key={index} />;
         }
       })}
       {/* <HorizontalVideoCardsSection />  */}

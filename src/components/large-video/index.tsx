@@ -151,7 +151,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
   };
 
   return (
-    <div className={`${css['section-container']} py-8`}>
+    <div id='large-video' className={`${css['section-container']} py-8`}>
       <div className='container'>
         {sectionData.text && (
           <div dangerouslySetInnerHTML={{ __html: sectionData.text }} />

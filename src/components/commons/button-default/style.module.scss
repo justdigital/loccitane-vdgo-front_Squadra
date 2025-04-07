@@ -2,8 +2,8 @@
   font-size: 1rem;
   font-weight: 600;
   max-width: 337px;
-  min-width: 277px;
-  padding: 22px 90px;
+  min-width: 174px;
+  padding: 18px 58px;
   border: 1px solid $locci-red ;
   border-radius: 5px;
   background-color: $locci-snow;
@@ -16,9 +16,8 @@
     background-color: $locci-blush;
     border: 1px solid $locci-coffee ;
   }
-
-  @media (max-width: 640px) {
-    padding: 18px 58px;
+  @media (screen(md)) {
+    padding: 22px 90px;
    }
 }
 

@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import css from './style.module.scss';
 import ButtonDefault from '../commons/button-default';
-import { usePathname } from 'next/navigation';
+//import { usePathname } from 'next/navigation';
 import ISectionVerticalRectangularCard from '@/interfaces/section-vertical-rectangular-card';
 import Image from 'next/image';
 interface VerticalRectangularCardProps {
@@ -12,7 +12,7 @@ interface VerticalRectangularCardProps {
 }
 
 const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ sectionData }) => {
-
+/*
   const pathname = usePathname();
   const isLandingPage1 = pathname.includes('/lp1');
 
@@ -25,9 +25,9 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
       window.open(url, '_blank', 'noopener,noreferrer');
     }
   };
-  
+*/
   return (
-    <div className={`${css['section-container']} md:px-8 py-8`}>
+    <div id='vertical-rectangular-card' className={`${css['section-container']} md:px-8 py-8`}>
       <div className={`container mx-auto w-full`}>
         {sectionData.text && (
           <div dangerouslySetInnerHTML={{ __html: sectionData.text }} />
@@ -70,17 +70,17 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
 
                 {/* Botão do ícone */}
                 <button 
-            className={`${css['btn-icon']} relative z-10 bottom-14 left-56 md:bottom-14 md:left-72`}
-            onClick={() => card.linkUrl && window.open(card.linkUrl, '_blank')}
-            aria-label="Abrir link"
-          >
-            <Image 
-              src={ card.iconUrl || ''}
-              alt="icone"
-              width="24"
-              height="24"
-              className="w-6 h-6 object-contain hover:scale-110 transition-transform duration-200"
-            />
+                  className={`${css['btn-icon']} relative z-10 bottom-14 left-56 md:bottom-14 md:left-72`}
+                  onClick={() => card.linkUrl && window.open(card.linkUrl, '_blank')}
+                  aria-label="Abrir link"
+                >
+                  <Image 
+                    src={ card.iconUrl || ''}
+                    alt="icone"
+                    width="24"
+                    height="24"
+                    className="w-6 h-6 object-contain hover:scale-110 transition-transform duration-200"
+                  />
                 </button>
               </SwiperSlide>
             ))}
@@ -92,7 +92,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
             <ButtonDefault 
               className={`${css['button-default']}`}
               label={sectionData.buttonLinkTitle}
-              onClick={() => handleButtonClick(sectionData.buttonLink)}
+              //onClick={() => handleButtonClick(sectionData.buttonLink)}
             /> 
           </div>
         )}

@@ -21,6 +21,7 @@ const BannerEmpreender: React.FC<BannerEmpreenderProps> = ({ sectionData }) => {
 
   return (
     <div 
+      id='banner-empreender'
       className={`${css['banner-wrapper']} ${hasImages ? css['has-background'] : ''}`}
       style={style as React.CSSProperties}
     >
@@ -34,7 +35,7 @@ const BannerEmpreender: React.FC<BannerEmpreenderProps> = ({ sectionData }) => {
           <div className={css['button-default']}>
             <a 
               href={sectionData.buttonLink} 
-              target="_blank" 
+              //target="_blank" 
               rel="noopener noreferrer"
               aria-label={`${sectionData.buttonLinkTitle} (opens in new tab)`}
             >
