@@ -7,14 +7,14 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import css from './style.module.scss';
-import ISectionComentarios from '@/interfaces/section-comentarios';
+import ISectionTestimonials from '@/interfaces/section-testimonials';
 
-interface ComentariosProps {
-  sectionData: ISectionComentarios;
+interface TestimonialsProps {
+  sectionData: ISectionTestimonials;
   className?: string;
 }
 
-const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
+const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const nextButtonRef = useRef<HTMLDivElement>(null);
   const prevButtonRef = useRef<HTMLDivElement>(null);
@@ -137,7 +137,7 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
 
   return (
     <div 
-      id='comentarios'
+      id='testimonials'
       className={`${css['section-container']} md:px-8 py-4 sm:py-10`}
     >
       <div className={`container mx-auto w-full relative`}>
@@ -198,7 +198,7 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
                       const fillPercentage = isPartialStar ? (ratingValue - (star - 1)) * 100 : 0;
 
                       return (
-                        <div key={star} style={{ position: 'relative', display: 'inline-block', marginRight: '2px' }}>
+                        <div key={star} className="relative inline-block mr-[2px]">
                           <StarBorderIcon 
                             style={{
                               fontSize: "25px",
@@ -292,4 +292,4 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
   );
 };
 
-export default Comentarios;
+export default Testimonials;

@@ -1,6 +1,6 @@
 import IMultiDeviceImage from "./multi-image";
 
-export default interface ISectionComentarios {
+export default interface ISectionTestimonials {
   type: string;
   text?: string;
   cardItems: Array<{

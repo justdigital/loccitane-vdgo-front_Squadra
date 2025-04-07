@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="pt_BR">
       <head>
-      <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
+      <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
         <meta
           httpEquiv="Content-Security-Policy"
           content="

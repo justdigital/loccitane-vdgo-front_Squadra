@@ -1,8 +1,9 @@
 import Header from '@/components/header';
+import Footer from '@/components/footer';
 import LargeVideo from '@/components/large-video';
 import VerticalRectangularCard from '@/components/vertical-rectangular-card';
 import BannerEmpreender from '@/components/banner-empreender';
-import Comentarios from '@/components/comentarios';
+import Testimonials from '@/components/testimonials';
 // import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
@@ -24,6 +25,8 @@ const LandingPage1 = async () => {
             return <LeadsFormBox sectionData={section} key={index} />;
           case 'section_header':
             return <Header sectionData={section} key={index} />;
+          case 'section_footer':
+            return <Footer sectionData={section} key={index} />;
           case 'video':
             return <LargeVideo sectionData={section} key={index} />;
           case 'vertical_rectangular_card_sectio':
@@ -31,7 +34,7 @@ const LandingPage1 = async () => {
           case 'newsletter':
             return <BannerEmpreender sectionData={section} key={index} />;
           case 'comentarios':
-            return <Comentarios sectionData={section} key={index} />;
+            return <Testimonials sectionData={section} key={index} />;
         }
       })}
       {/* <HorizontalVideoCardsSection />  */}
