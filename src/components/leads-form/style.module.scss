@@ -2,11 +2,11 @@
   position: fixed;
   width: calc(100vw - 0px);
   top: 0;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   padding: 5px;
-  transition: .5s;
+  transition: .5s, height .1s;
 
   @media (screen(sm)) {
     visibility: visible !important;
