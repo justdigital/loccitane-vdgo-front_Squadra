@@ -4,6 +4,7 @@ import LargeVideo from '@/components/large-video';
 import VerticalRectangularCard from '@/components/vertical-rectangular-card';
 import BannerEmpreender from '@/components/banner-empreender';
 import Testimonials from '@/components/testimonials';
+import Accordion from '@/components/accordion';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
 import React from 'react';
@@ -33,6 +34,8 @@ const LandingPage1 = async () => {
             return <BannerEmpreender sectionData={section} key={index} />;
           case 'comentarios':
             return <Testimonials sectionData={section} key={index} />;
+          case 'accordion':
+            return <Accordion sectionData={section} key={index} />;
         }
       })}
       

@@ -1,0 +1,83 @@
+.sectionContainer {
+  width: 100%;
+  padding-bottom: 75px;
+  background-color: #FFFFFF;
+
+
+  @media (screen(md)) {
+    padding: 33px 20px;
+  }
+}
+
+.accordion {
+  cursor: pointer;
+  margin-bottom: 18px;
+  width: 100%;
+  border-radius: 10px;
+  border: 1.9px solid $locci-red;
+  outline: none;
+  transition: 0.4s;
+
+
+  &Button {
+    display: grid;
+    grid-template-areas: "span";
+    grid-template-columns: auto 30px;
+    align-items: center;
+    width: 100%;
+    color: $locci-midnight;
+    padding: 0 34px;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+    cursor: pointer;
+    
+    &:hover {
+      background-color: $locci-ivory;
+      border-radius: 10px;
+    }
+  }
+
+  &Icon {
+    color: #ffffff;
+    font-size: 1.5rem !important;
+    transition: transform 0.3s ease;
+  }
+
+  .panel {
+    padding: 0 34px;
+    width: 100%;
+    border-right: 64px solid $locci-red;
+    border-bottom-right-radius: 8px;
+    transition: max-height 0.3s ease-in-out;
+  }
+}
+
+
+.iconContainer {
+  padding: 15px 15px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background-color: $locci-red;
+  text-align: center;
+  width: calc(100% + 34px);
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    //background-color: darken($locci-red, 5%);
+  }
+  
+}
+
+.accordionIcon {
+  color: white !important;
+  font-size: 1.5rem !important;
+}
+
+.active {
+  .iconContainer {
+    border-bottom-right-radius: 0;
+  }
+}
