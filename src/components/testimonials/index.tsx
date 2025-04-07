@@ -198,7 +198,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
                       const fillPercentage = isPartialStar ? (ratingValue - (star - 1)) * 100 : 0;
 
                       return (
-                        <div key={star} style={{ position: 'relative', display: 'inline-block', marginRight: '2px' }}>
+                        <div key={star} className="relative inline-block mr-[2px]">
                           <StarBorderIcon 
                             style={{
                               fontSize: "25px",
