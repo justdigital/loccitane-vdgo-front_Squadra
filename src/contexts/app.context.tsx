@@ -16,7 +16,7 @@ const AppContext = createContext<AppContextProps | undefined>(undefined);
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('useAppContext must be used within a AppProvider');
+    throw new Error('useAppContext must be used within a AppProvider ');
   }
   return context;
 };
@@ -30,11 +30,13 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMobileDevice = /android.+mobile|ip(hone|[oa]d)/i.test(navigator ? navigator.userAgent : '');
 
   const getUserFormId = () => {
     return userFormId;
   };
+
+  const navigator: any = typeof window !== 'undefined' ? window.navigator : {};
+  const isMobileDevice = /android.+mobile|ip(hone|[oa]d)/i.test(navigator?.userAgent);
 
   return (
     <AppContext.Provider value={{ getUserFormId, setUserFormId, isMobileScreen, isMobileDevice }}>
