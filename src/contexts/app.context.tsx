@@ -1,7 +1,7 @@
 'use client';
 import { useMediaQuery, useTheme } from '@mui/material';
 import { UUID } from 'crypto';
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useMemo } from 'react';
 import { AppFormProvider } from './app-form.context';
 
 interface AppContextProps {
@@ -30,11 +30,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMobileDevice = /android.+mobile|ip(hone|[oa]d)/i.test('');
 
   const getUserFormId = () => {
     return userFormId;
   };
+
+  const isMobileDevice = useMemo(() => /android.+mobile|ip(hone|[oa]d)/i.test(navigator.userAgent), []);
 
   return (
     <AppContext.Provider value={{ getUserFormId, setUserFormId, isMobileScreen, isMobileDevice }}>
