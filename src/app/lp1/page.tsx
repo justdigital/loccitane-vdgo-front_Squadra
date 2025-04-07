@@ -1,4 +1,5 @@
 import Header from '@/components/header';
+import Footer from '@/components/footer';
 import LargeVideo from '@/components/large-video';
 import VerticalRectangularCard from '@/components/vertical-rectangular-card';
 import BannerEmpreender from '@/components/banner-empreender';
@@ -24,6 +25,8 @@ const LandingPage1 = async () => {
             return <LeadsFormBox sectionData={section} key={index} />;
           case 'section_header':
             return <Header sectionData={section} key={index} />;
+          case 'section_footer':
+            return <Footer sectionData={section} key={index} />;
           case 'video':
             return <LargeVideo sectionData={section} key={index} />;
           case 'vertical_rectangular_card_sectio':
