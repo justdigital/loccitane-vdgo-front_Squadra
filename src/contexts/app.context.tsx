@@ -30,7 +30,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMobileDevice = /android.+mobile|ip(hone|[oa]d)/i.test(navigator ? navigator.userAgent : '');
+  const isMobileDevice = /android.+mobile|ip(hone|[oa]d)/i.test('');
 
   const getUserFormId = () => {
     return userFormId;
