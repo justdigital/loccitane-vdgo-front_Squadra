@@ -70,17 +70,17 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
 
                 {/* Botão do ícone */}
                 <button 
-            className={`${css['btn-icon']} relative z-10 bottom-14 left-56 md:bottom-14 md:left-72`}
-            onClick={() => card.linkUrl && window.open(card.linkUrl, '_blank')}
-            aria-label="Abrir link"
-          >
-            <Image 
-              src={ card.iconUrl || ''}
-              alt="icone"
-              width="24"
-              height="24"
-              className="w-6 h-6 object-contain hover:scale-110 transition-transform duration-200"
-            />
+                  className={`${css['btn-icon']} relative z-10 bottom-14 left-56 md:bottom-14 md:left-72`}
+                  onClick={() => card.linkUrl && window.open(card.linkUrl, '_blank')}
+                  aria-label="Abrir link"
+                >
+                  <Image 
+                    src={ card.iconUrl || ''}
+                    alt="icone"
+                    width="24"
+                    height="24"
+                    className="w-6 h-6 object-contain hover:scale-110 transition-transform duration-200"
+                  />
                 </button>
               </SwiperSlide>
             ))}

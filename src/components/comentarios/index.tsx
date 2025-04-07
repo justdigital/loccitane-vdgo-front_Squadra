@@ -136,7 +136,10 @@ const Comentarios: React.FC<ComentariosProps> = ({ sectionData }) => {
   };
 
   return (
-    <div className={`${css['section-container']} md:px-8 py-10`}>
+    <div 
+      id='comentarios'
+      className={`${css['section-container']} md:px-8 py-4 sm:py-10`}
+    >
       <div className={`container mx-auto w-full relative`}>
         {sectionData.text && (
           <div dangerouslySetInnerHTML={{ __html: sectionData.text || ''}} />
