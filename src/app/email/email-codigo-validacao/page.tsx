@@ -109,7 +109,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                         <tr>
                                                             <td align="center">
                                                                 <div style="display: flex; align-items: center;">
-                                                                    <a href="https://geraad.revendedorloccitaneaubresil.com/Client" style="display: inline-block;">
+                                                                    <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
                                                                     </a>
                                                                     <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">PORTAL<BR>REVE</span>
@@ -176,7 +176,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                         <tr>
                                                             <td align="center">
                                                                 <div style="display: flex; align-items: center;">
-                                                                    <a href="https://geraad.revendedorloccitaneaubresil.com/Client" style="display: inline-block;">
+                                                                    <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
                                                                     </a>
                                                                     <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">PORTAL<BR>REVE</span>
