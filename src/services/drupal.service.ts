@@ -4,7 +4,7 @@ import ISectionHeader from "@/interfaces/section-header";
 import ISectionLargeVideo from "@/interfaces/section-video";
 import ISectionVerticalRectangularCard from "@/interfaces/section-vertical-rectangular-card";
 import ISectionBannerEmpreender from "@/interfaces/section-banner-empreender";
-import ISectionComentarios from "@/interfaces/section-comentarios";
+import ISectionTestimonials from "@/interfaces/section-testimonials";
 import ISectionFooter from "@/interfaces/section-footer";
 export default class DrupalService {
 
@@ -121,7 +121,7 @@ export default class DrupalService {
                   mobile: item.image_url_mobile
                 }
               })),
-            } as ISectionComentarios;
+            } as ISectionTestimonials;
         
           case 'section_footer':
             return {

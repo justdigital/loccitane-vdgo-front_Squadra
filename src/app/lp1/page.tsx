@@ -3,7 +3,7 @@ import Footer from '@/components/footer';
 import LargeVideo from '@/components/large-video';
 import VerticalRectangularCard from '@/components/vertical-rectangular-card';
 import BannerEmpreender from '@/components/banner-empreender';
-import Comentarios from '@/components/comentarios';
+import Testimonials from '@/components/testimonials';
 // import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
@@ -34,7 +34,7 @@ const LandingPage1 = async () => {
           case 'newsletter':
             return <BannerEmpreender sectionData={section} key={index} />;
           case 'comentarios':
-            return <Comentarios sectionData={section} key={index} />;
+            return <Testimonials sectionData={section} key={index} />;
         }
       })}
       {/* <HorizontalVideoCardsSection />  */}
