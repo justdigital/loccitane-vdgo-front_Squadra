@@ -6,6 +6,7 @@ import ISectionVerticalRectangularCard from "@/interfaces/section-vertical-recta
 import ISectionBannerEmpreender from "@/interfaces/section-banner-empreender";
 import ISectionTestimonials from "@/interfaces/section-testimonials";
 import ISectionFooter from "@/interfaces/section-footer";
+import ISectionHorizontalCards from "@/interfaces/section-horizontal-cards";
 export default class DrupalService {
 
   private baseApiUrl = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL;
@@ -60,40 +61,57 @@ export default class DrupalService {
             loginLinkTitle: section.logo_item[0].link_title,
           } as ISectionHeader;
 
-        case 'video':
-            return {
-              type: section.type,
-              text: section.text,
-              textTranscription: section.text_transcription,
-              videosUrls: {
-                urlDesktop: section.video_url_desktop,
-                urlMobile: section.video_url_mobile,
-                altText: section.alt_text || '',
-                posterImage: section.poster_image || ''
+        case 'secao_card_retangular_horizontal':
+          return {
+            type: section.type,
+            title: section.text,
+            subtitle: section.text_description,
+            cardItems: section.card_item.map((item: any) => ({
+              text: item.text,
+              linkUrl: item.link_url,
+              linkTitle: item.link_title,
+              iconeUrl: item.image_icone_url,
+              imagesUrls: {
+                desktop: item.image_url_desktop,
+                mobile: item.image_url_mobile
               }
-            } as ISectionLargeVideo;
+            }))
+          } as ISectionHorizontalCards;
+
+        case 'video':
+          return {
+            type: section.type,
+            text: section.text,
+            textTranscription: section.text_transcription,
+            videosUrls: {
+              urlDesktop: section.video_url_desktop,
+              urlMobile: section.video_url_mobile,
+              altText: section.alt_text || '',
+              posterImage: section.poster_image || ''
+            }
+          } as ISectionLargeVideo;
 
         case 'vertical_rectangular_card_sectio':
-        return {
-          type: section.type,
-          text: section.text,
-          imagesUrls: {
-            desktop: section.image_url_desktop,
-            mobile: section.image_url_mobile
-          },
-          cardItems: section.card_item.map((item: any) => ({
-            text: item.text,
-            iconUrl: item.image_icone_url,
-            linkUrl: item.link_url,
-            linkTitle: item.link_title,
+          return {
+            type: section.type,
+            text: section.text,
             imagesUrls: {
-              desktop: item.image_url_desktop,
-              mobile: item.image_url_mobile
-            }
-          })),
-          buttonLink: section.link_url,
-          buttonLinkTitle: section.link_title,
-        } as ISectionVerticalRectangularCard;
+              desktop: section.image_url_desktop,
+              mobile: section.image_url_mobile
+            },
+            cardItems: section.card_item.map((item: any) => ({
+              text: item.text,
+              iconUrl: item.image_icone_url,
+              linkUrl: item.link_url,
+              linkTitle: item.link_title,
+              imagesUrls: {
+                desktop: item.image_url_desktop,
+                mobile: item.image_url_mobile
+              }
+            })),
+            buttonLink: section.link_url,
+            buttonLinkTitle: section.link_title,
+          } as ISectionVerticalRectangularCard;
 
         case 'newsletter':
           return {

@@ -2,12 +2,11 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import css from './style.module.scss';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 //import ReplyIcon from '@mui/icons-material/Reply';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import ISectionLargeVideo from '@/interfaces/section-video';
 import { useAppContext } from '@/contexts/app.context';
+import LikeButton from '../commons/like-button';
+import MuteButton from '../commons/mute-button';
 
 interface LargeVideoSectionProps {
   sectionData: ISectionLargeVideo;
@@ -26,7 +25,6 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
 
   const [videoUrl, setVideoUrl] = useState<string>(sectionData.videosUrls.urlDesktop);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [liked, setLiked] = useState(false); //Controlar like
   const [isMuted, setIsMuted] = useState(true); // Começa mudo por padrão
   const [isPaused, setIsPaused] = useState(true); // Começa pausado
   const hasResetOnUnmute = useRef(false); // Novo ref para controle
@@ -178,27 +176,14 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
           </video>
 
           {sectionData.textTranscription && ((isMobile && isMuted) || (!isMobile && isPaused)) &&(
-          <div
-          className={`${css['transcription']} absolute bottom-9 left-7 md:bottom-28 md:left-1/2 md:-translate-x-1/2 text-white`}
-            dangerouslySetInnerHTML={{ __html: `<span>,,</span>${sectionData.textTranscription}` }}
-          />
-        )}
+            <div
+              className={`${css['transcription']} absolute bottom-9 left-7 md:bottom-28 md:left-1/2 md:-translate-x-1/2 text-white`}
+              dangerouslySetInnerHTML={{ __html: `<span>,,</span>${sectionData.textTranscription}` }}
+            />
+          )}
 
           {/* Botão de curtir */}
-          <button 
-            className={`${css['btn-svg']} absolute top-5 right-4 bg-black/30 rounded-[100%] p-2 backdrop-blur-sm`}
-            aria-label={liked ? "Descurtir vídeo" : "Curtir vídeo"}
-            onClick={() => setLiked(!liked)}
-          >
-            <FavoriteIcon 
-              style={{
-                width: "20px",
-                height: "20px",
-                fill: liked ? "#C02031" : "#FFFFFF",
-                color: liked ? "#C02031" : "#FFFFFF"
-              }}
-            />
-          </button>
+          <LikeButton className={`${css['btn-svg']} absolute top-5 right-4`} />
 
           {/* Botão de compartilhar */}
           {/* <button 
@@ -216,18 +201,7 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
           </button> */}
 
           {/* Botão Mudo */}
-          <button
-              onClick={toggleMute}
-              className={`${css['btn-svg']} absolute bottom-8 right-2.5 bg-black/10 rounded-full p-2 text-white`}
-              aria-label={isMuted ? "Ativar som" : "Desativar som"}
-            >
-              {isMuted ? (
-                <VolumeOffIcon className="w-8 h-8" />
-              ) : (
-                <VolumeUpIcon className="w-12 h-12" />
-              )}
-            </button>
-
+          <MuteButton onClick={toggleMute} isMuted={isMuted} className={`${css['btn-svg']} absolute bottom-8 right-2.5`} />
         </div>
       </div>
     </div>

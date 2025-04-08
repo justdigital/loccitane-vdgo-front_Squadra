@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({sectionData}) => {
   return (
     <div id='header' className={`${css['header-container']}`}>
       <div className={`container relative flex flex-row md:justify-center items-end justify-between`}>
-        <Image src={sectionData.logoImagesUrls.desktop} className={css['logo-locci']} width={221} height={50} alt={sectionData.logoImageTitle} />
+        <Image src={sectionData.logoImagesUrls.desktop} className={css['logo-locci']} width={221} height={50} alt={sectionData.logoImageTitle || ''} />
 
         <div className={`${css['icon-buttons']}`}>
           <ul className='flex space-between items-center'>

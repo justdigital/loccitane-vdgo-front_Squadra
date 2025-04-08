@@ -6,6 +6,7 @@ import ButtonDefault from '../commons/button-default';
 //import { usePathname } from 'next/navigation';
 import ISectionVerticalRectangularCard from '@/interfaces/section-vertical-rectangular-card';
 import Image from 'next/image';
+import SectionsTitle from '../commons/sections-title';
 interface VerticalRectangularCardProps {
   sectionData: ISectionVerticalRectangularCard;
   className?: string;
@@ -29,11 +30,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
   return (
     <div id='vertical-rectangular-card' className={`${css['section-container']} md:px-8 py-8`}>
       <div className={`container mx-auto w-full`}>
-        {sectionData.text && (
-          <div dangerouslySetInnerHTML={{ __html: sectionData.text }} />
-        )}
-
-        <hr className="w-[65px] h-1 mx-auto my-[22px] bg-[#C02031]" />
+        <SectionsTitle title={sectionData.text} />
         
         {/* Slider de Cards */}
         <div className="sm:mr-0 -mr-5">
