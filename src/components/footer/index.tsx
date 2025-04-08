@@ -35,7 +35,7 @@ const Footer: React.FC<FooterProps> = ({ sectionData }) => {
         </div>
 
         {/* Logo */}
-        <div className={`${css.footerImage}`} onClick={() => sectionData.buttonLink && window.open(sectionData.buttonLink, '_blank')}>
+        <div className={`${css.footerImage}`} onClick={() => sectionData.buttonLink && window.open(sectionData.buttonLink, '_self')}>
           {sectionData.imagesUrls && (
             <picture>
               <source media="(min-width: 768px)" srcSet={sectionData.imagesUrls.desktop} />

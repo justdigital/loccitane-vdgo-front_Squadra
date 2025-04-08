@@ -76,7 +76,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                 <tr class="desktop-only">
                                     <td align="left" style="padding-left: 10px; padding-right: 50px;">
                                         <p style="font-size: 16px; width: 246px">Verifiquei alguma inconsistência no documento enviado. Para garantir a aprovação, peço que você o reenvie  de forma legível.</p>
-                                        <a href="https://revendedor.loccitaneaubresil.com/#!/" target="_blank"
+                                        <a href="https://portalh.tshield.com.br/analise/LOCCITANE/linkfixo" target="_blank"
                                            style="text-decoration: none; color: inherit; display: block; padding-top:40px;padding-bottom:40px">
                                             <table width="232" height="49" cellpadding="0" cellspacing="0" border="0"
                                                    style="background-color: #C02031; color: #ffffff; text-align: center; height: 59px;">
@@ -97,7 +97,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                 <tr class="mobile-only">
                                     <td align="left" style="padding-left: 10px; padding-right: 50px;">
                                         <p style="width: 246px">Verifiquei alguma inconsistência no documento enviado. Para garantir a aprovação, peço que você o reenvie  de forma legível.</p>
-                                        <a href="https://revendedor.loccitaneaubresil.com/#!/" target="_blank"
+                                        <a href="https://portalh.tshield.com.br/analise/LOCCITANE/linkfixo" target="_blank"
                                            style="text-decoration: none; color: inherit; display: block; padding-top:40px;padding-bottom:40px">
                                             <table width="232" height="49" cellpadding="0" cellspacing="0" border="0"
                                                    style="background-color: #C02031; color: #ffffff; text-align: center; height: 59px;">
@@ -158,7 +158,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                         <tr>
                                                             <td align="center">
                                                                 <div style="display: flex; align-items: center;">
-                                                                    <a href="https://geraad.revendedorloccitaneaubresil.com/Client" style="display: inline-block;">
+                                                                    <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
                                                                     </a>
                                                                     <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">PORTAL<BR>REVE</span>
@@ -225,7 +225,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                         <tr>
                                                             <td align="center">
                                                                 <div style="display: flex; align-items: center;">
-                                                                    <a href="https://geraad.revendedorloccitaneaubresil.com/Client" style="display: inline-block;">
+                                                                    <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
                                                                     </a>
                                                                     <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">PORTAL<BR>REVE</span>
