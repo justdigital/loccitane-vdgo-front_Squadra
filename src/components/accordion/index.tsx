@@ -3,7 +3,6 @@ import 'swiper/css';
 import css from './style.module.scss';
 import ISectionAccordion from '@/interfaces/section-accordion';
 import { useState } from 'react';
-//import Image from 'next/image';
 import { Add, Remove } from '@mui/icons-material';
 
 interface AccordionProps {
@@ -61,7 +60,9 @@ const Accordion: React.FC<AccordionProps> = ({ sectionData }) => {
                     }}
                   >
                     <hr className="w-full h-[1px] my-3 bg-[#C8C5C5]" />
-                    <div dangerouslySetInnerHTML={{ __html: accordion.text }} />
+                    <div
+                    className='inline-block max-w-full whitespace-normal py-3'
+                     dangerouslySetInnerHTML={{ __html: accordion.text }} />
                     </div>
                 )}
               </div>
