@@ -24,15 +24,20 @@
     grid-template-areas: "span";
     grid-template-columns: auto 30px;
     align-items: center;
-    width: 100%;
+    width: calc(100% - 17px);
     color: $locci-midnight;
-    padding: 0 34px;
+    padding: 0 17px;
     font-size: 15px;
     font-weight: 700;
     line-height: 24px;
     text-align: left;
     cursor: pointer;
     
+    @media (screen(md)) {
+      width: 100%;
+      padding: 0 34px;
+    }
+
     &:hover {
       background-color: $locci-ivory;
       border-radius: 10px;
