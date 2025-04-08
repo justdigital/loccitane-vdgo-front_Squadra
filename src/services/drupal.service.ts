@@ -6,6 +6,7 @@ import ISectionVerticalRectangularCard from "@/interfaces/section-vertical-recta
 import ISectionBannerEmpreender from "@/interfaces/section-banner-empreender";
 import ISectionTestimonials from "@/interfaces/section-testimonials";
 import ISectionFooter from "@/interfaces/section-footer";
+import ISectionAccordion from "@/interfaces/section-accordion";
 export default class DrupalService {
 
   private baseApiUrl = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL;
@@ -142,6 +143,16 @@ export default class DrupalService {
               buttonLink: section.link_url,
               buttonLinkTitle: section.link_title,
             } as ISectionFooter;
+
+          case 'accordion':
+            return {
+              type: section.type,
+              text: section.text,
+              accordionItem: section.accordion_item.map((item: any) => ({
+                title: item.title,
+                text: item.text,
+              }))
+            } as ISectionAccordion;
 
         }
     }).filter(Boolean);
