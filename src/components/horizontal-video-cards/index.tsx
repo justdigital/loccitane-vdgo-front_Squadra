@@ -13,12 +13,12 @@ import MuteButton from '../commons/mute-button';
 // import { useAppContext } from '@/contexts/app.context';
 import Image from 'next/image';
 
-interface ItemsProps {
+interface ItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
   openModal: (videoUrl: string) => void;
 }
 
-const CardItem: React.FC<ItemsProps> = ({ item, openModal }) => {
+const CardItem: React.FC<ItemsProps> = ({ item, openModal, ...props }) => {
 
   const [isMuted, setIsMuted] = useState(true);
   // const [isPaused, setIsPaused] = useState(true);
@@ -28,7 +28,7 @@ const CardItem: React.FC<ItemsProps> = ({ item, openModal }) => {
   // item.videoUrl = "https://vdgo-cms-dev.squadra.com.br/sites/default/files/2025-04/Modelo%20de%20Neg%C3%B3cio_Valentina%20Serikawa_FINAL_horizontal%20%281%29.mp4";
 
   return (
-    <div className={`${css['card-item']} ${isVideoCard && css['video-card']} flex flex-col sm:flex-row`}>
+    <div className={`${css['card-item']} ${isVideoCard && css['video-card']} ${props.className} flex flex-col sm:flex-row`}>
       {isVideoCard && (
         <div className={`${css['play-button-box']} flex items-center justify-center`} onClick={() => openModal(item.videoUrl || '')}>
           <PlayCircleOutlineIcon />
@@ -91,7 +91,6 @@ interface HorizontalVideoCardsSectionProps {
 
 const HorizontalVideoCardsSection: React.FC<HorizontalVideoCardsSectionProps> = ({sectionData}) => {
 
-  // const swiper = useSwiper();
   const [swiper, setSwiper] = useState<SwiperClass>({} as SwiperClass);
   const [modalOpen, setModalOpen] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
@@ -105,7 +104,7 @@ const HorizontalVideoCardsSection: React.FC<HorizontalVideoCardsSectionProps> = 
     swiper.slidePrev();
   };
 
-  const onCloseModal = (e, reason: any) => {
+  const onCloseModal = (e: any, reason: any) => {
     console.log('reason', reason)
     setModalOpen(false);
   }
@@ -120,7 +119,7 @@ const HorizontalVideoCardsSection: React.FC<HorizontalVideoCardsSectionProps> = 
       <div className="container p-6">
         <SectionsTitle title={sectionData.title} subtitle={sectionData.subtitle} />
 
-        <div className={`${css['slider-wrapper']} flex items-center mt-5 sm:mt-10`}>
+        <div className={`${css['slider-wrapper']} flex items-center mt-5 sm:mt-10 ${typeof swiper.slideNext != 'function' ? 'hidden' : ''}`}>
           <button onClick={() => moveSlide('prev')} className={`${css['navigation-button']} ${css['prev']}`}>
             <NavigateBeforeIcon />
           </button>
@@ -137,11 +136,9 @@ const HorizontalVideoCardsSection: React.FC<HorizontalVideoCardsSectionProps> = 
             onSlideChange={() => console.log('slide change')}
           >
             {sectionData.cardItems.map((item, index) => (
-              <>
-                <SwiperSlide key={index}>
-                  <CardItem item={item} openModal={openModal} />
-                </SwiperSlide>
-              </>
+              <SwiperSlide key={index}>
+                <CardItem item={item} openModal={openModal} />
+              </SwiperSlide>
             ))}
           </Swiper>
           <button onClick={() => moveSlide('next')} className={`${css['navigation-button']} ${css['next']}`}>
