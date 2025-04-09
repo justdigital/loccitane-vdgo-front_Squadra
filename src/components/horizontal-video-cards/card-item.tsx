@@ -7,6 +7,7 @@ import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
 import { useAppContext } from '@/contexts/app.context';
 import Image from 'next/image';
+// import Video from '../commons/video';
 
 type ProgressTracked = {
   '10%': boolean;
@@ -149,6 +150,21 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
           } as React.CSSProperties}>
 
           {isVideoCard && (
+            // <Video
+            //   videoText={item.videosUrls?.altText}
+            //   className="w-[90dvw] sm:w-[60dvw] h-auto"
+            //   loop
+            //   playsInline
+            //   autoPlay={isMobile}
+            //   muted={isMuted}
+            //   controls={false}
+            //   controlsList="nodownload nofullscreen noremoteplayback"
+            //   disablePictureInPicture
+            //   src={videoUrl} 
+            //   poster={isMobile ? item.imagesUrls?.mobile : item.imagesUrls?.desktop}
+            //   aria-label="Vídeo"
+            //   onClick={handleVideoClick}
+            // />
             <video
               ref={videoRef}
               className="w-[90dvw] sm:w-[60dvw] h-auto"
@@ -191,8 +207,8 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
               />
             )}
 
-            <LikeButton className="absolute top-5 right-4 z-[3]" />
-            <MuteButton onClick={() => toggleMute()} isMuted={isMuted} className={`absolute bottom-8 right-2.5 z-[3]`} />
+            <LikeButton className="absolute top-5 right-4 z-[3] sm:hidden" />
+            <MuteButton onClick={() => toggleMute()} isMuted={isMuted} className={`absolute bottom-8 right-2.5 z-[3] sm:hidden`} />
           </div>
         )}
       </div>
