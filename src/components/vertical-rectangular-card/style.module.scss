@@ -1,11 +1,11 @@
-.section-container {
+.sectionContainer {
   width: 100%;
   margin: 0 auto;
   font-family: Raleway;
   background-color: #F7E4D2;
 }
 
-.card-wrapper {
+.cardWrapper {
   background-image: var(--card-url-mobile);
   background-size: cover;
   background-position: center;
@@ -20,7 +20,7 @@
 }
 
 .card {
-  width: 341px;
+  //width: 341px;
   height: 518px;
   cursor: pointer;
   background-color: #FFF;
@@ -30,7 +30,7 @@
   border-bottom-left-radius: 8px;
 
   @media (max-width: 640px) {
-    width: 267px;
+    //width: 267px;
     height: 408px;
     border-bottom-right-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -39,7 +39,7 @@
 }
 
 .card img {
-  width: 341px;
+  //width: 341px;
   height: 354px;
 
   @media (max-width: 640px) {
@@ -52,11 +52,11 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.card-container {
+.cardContainer {
   padding: 15px 31px 19px 24px;
 }
 
-.card-container p {
+.cardContainer p {
   padding-top: 6px;
   line-height: 19px;
 }

@@ -33,16 +33,14 @@ const BannerEmpreender: React.FC<BannerEmpreenderProps> = ({ sectionData }) => {
         
         {sectionData.buttonLinkTitle && sectionData.buttonLink && (
           <div className={css['button-default']}>
-            <a 
-              href={sectionData.buttonLink} 
-              //target="_blank" 
-              rel="noopener noreferrer"
-              aria-label={`${sectionData.buttonLinkTitle} (opens in new tab)`}
-            >
-              <ButtonDefault label={sectionData.buttonLinkTitle} />
-            </a>
+            <ButtonDefault 
+              className={`${css['button-default']}`}
+              label={sectionData.buttonLinkTitle}
+              href={sectionData.buttonLink}
+            /> 
           </div>
         )}
+
       </div>
     </div>
   );
