@@ -33,7 +33,7 @@ const UploadApiCredilink: React.FC<UploadApiCredilinkProps & RefAttributes<any>>
     // unicoCameraBuilder.setTheme(unicoTheme);
     const unicoCamera = unicoCameraBuilder.build();
 
-    console.log('DocumentCameraTypes[documentTypeCrediLink]', DocumentCameraTypes[documentTypeCrediLink]);
+    // console.log('DocumentCameraTypes[documentTypeCrediLink]', DocumentCameraTypes[documentTypeCrediLink]);
     unicoCamera.prepareDocumentCamera(
       sdkConfig.current, 
       DocumentCameraTypes[documentTypeCrediLink]
