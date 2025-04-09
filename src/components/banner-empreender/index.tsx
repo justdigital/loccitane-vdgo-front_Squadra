@@ -31,7 +31,7 @@ const BannerEmpreender: React.FC<BannerEmpreenderProps> = ({ sectionData }) => {
             dangerouslySetInnerHTML={{ __html: sectionData.text }} />
         )}
         
-        {sectionData.buttonLinkTitle && sectionData.buttonLink && (
+        {/* {sectionData.buttonLinkTitle && sectionData.buttonLink && (
           <div className={css['button-default']}>
             <a 
               href={sectionData.buttonLink} 
@@ -42,7 +42,17 @@ const BannerEmpreender: React.FC<BannerEmpreenderProps> = ({ sectionData }) => {
               <ButtonDefault label={sectionData.buttonLinkTitle} />
             </a>
           </div>
+        )} */}
+        {sectionData.buttonLinkTitle && sectionData.buttonLink && (
+          <div className={css['button-default']}>
+            <ButtonDefault 
+              className={`${css['button-default']}`}
+              label={sectionData.buttonLinkTitle}
+              href={sectionData.buttonLink}
+            /> 
+          </div>
         )}
+
       </div>
     </div>
   );

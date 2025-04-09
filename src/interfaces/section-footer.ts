@@ -8,6 +8,8 @@ export default interface ISectionFooter {
     text?: string;
     linkTitle?: string;
     imagesUrls?: IMultiDeviceImage;
+    buttonLink?: string;
+    buttonLinkTitle?: string;
   }>;
   buttonLink?: string;
   buttonLinkTitle?: string;

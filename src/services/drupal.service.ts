@@ -156,7 +156,9 @@ export default class DrupalService {
                 imagesUrls: {
                   desktop: item.image_url_desktop,
                   mobile: item.image_url_mobile
-                }
+                },
+                buttonLink: item.link_url,
+                buttonLinkTitle: item.link_title,
               })),
               buttonLink: section.link_url,
               buttonLinkTitle: section.link_title,

@@ -1,11 +1,11 @@
-.section-container {
+.sectionContainer {
   width: 100%;
   margin: 0 auto;
   font-family: Raleway;
   background-color: #F7E4D2;
 }
 
-.card-wrapper {
+.cardWrapper {
   background-image: var(--card-url-mobile);
   background-size: cover;
   background-position: center;
@@ -52,11 +52,11 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.card-container {
+.cardContainer {
   padding: 15px 31px 19px 24px;
 }
 
-.card-container p {
+.cardContainer p {
   padding-top: 6px;
   line-height: 19px;
 }
