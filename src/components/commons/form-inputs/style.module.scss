@@ -91,6 +91,10 @@
     margin-right: 0;
   }
 
+  :global(.MuiCheckbox-root.Mui-disabled) {
+    opacity: 0.3;
+  }
+
   :global(.MuiCheckbox-root) {
     // padding: 9px 0 0;
   }

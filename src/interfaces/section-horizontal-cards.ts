@@ -11,7 +11,7 @@ export default interface ISectionHorizontalCards {
     linkUrl?: string;
     linkTitle?: string;
     imagesUrls?: IMultiDeviceImage;
-    videosUrl?: IMultiDeviceVideo;
+    videosUrls?: IMultiDeviceVideo;
     iconUrl?: string;
   }>;
 }

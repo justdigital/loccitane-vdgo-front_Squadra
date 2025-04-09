@@ -84,11 +84,16 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     return base64;
   };
 
-  const addDocumentToForm = useCallback((fileName: string, fileType: string, base64Content: string) => {
+  const addDocumentToForm = useCallback((fileName: string, fileType: string, base64Content: string, file?: File) => {
     const selectedFileData = {fileName, base64Content: estractBase64Content(base64Content)};
     setValue('documentsUpload', [...documentsUpload || [], selectedFileData]);
     setSelectedFileType(fileType);
-    // setSelectedFileContent(URL.createObjectURL(e.target.files[0]));
+
+    if (!fileType.includes('image/') && file) {
+      setSelectedFileContent(URL.createObjectURL(file));
+      return;
+    }
+
     setSelectedFileContent(base64Content);
   }, [documentsUpload]);
 
@@ -102,7 +107,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (evt) => {
-      addDocumentToForm(file.name, file.type, (evt.target?.result as string));
+      addDocumentToForm(file.name, file.type, (evt.target?.result as string), file);
     }
   };
 

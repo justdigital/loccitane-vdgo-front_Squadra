@@ -73,7 +73,7 @@ export default class DrupalService {
               linkUrl: item.link_url,
               linkTitle: item.link_title,
               iconUrl: item.image_icone_url,
-              videosUrl: {
+              videosUrls: {
                 urlDesktop: item.video_url_desktop,
                 urlMobile: item.video_url_mobile,
                 altText: item.text_transcription || '',
