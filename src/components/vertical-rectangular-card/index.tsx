@@ -35,7 +35,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
         {/* Slider de Cards */}
         <div className="sm:mr-0 -mr-5">
           <Swiper
-            spaceBetween={15}
+            spaceBetween={20}
             slidesPerView={1.3}
             pagination={{ clickable: true }}
             breakpoints={{
@@ -45,7 +45,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
           >
             {sectionData.cardItems.map((card, index) => (
               <SwiperSlide key={index}>
-                <div className={`${css.card} h-full`} onClick={() => window.open(card.linkUrl, '_self')}>
+                <div className={`${css.card} h-full`} onClick={() => card.linkUrl && window.open(card.linkUrl, '_self')}>
                   {card.imagesUrls && (
                     <picture>
                       <source media="(min-width: 768px)" srcSet={card.imagesUrls.desktop} />
@@ -68,7 +68,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
                 {/* Botão do ícone */}
                 <button 
                   className={`${css.btnIcon} relative z-10 bottom-14 left-56 md:bottom-14 md:left-72`}
-                  onClick={() => window.open(card.linkUrl, '_self')}
+                  onClick={() => card.linkUrl && window.open(card.linkUrl, '_self')}
                   aria-label="Abrir link"
                 >
                   <Image 

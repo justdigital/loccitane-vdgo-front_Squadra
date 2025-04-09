@@ -37,12 +37,14 @@
     
     @media (screen(md)) {
       padding: 0 34px;
+
+      &:hover {
+        background-color: $locci-ivory;
+        border-radius: 10px;
+      }
     }
 
-    &:hover {
-      background-color: $locci-ivory;
-      border-radius: 10px;
-    }
+
   }
 
   &Icon {

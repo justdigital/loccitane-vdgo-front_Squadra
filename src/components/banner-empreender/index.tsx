@@ -31,18 +31,6 @@ const BannerEmpreender: React.FC<BannerEmpreenderProps> = ({ sectionData }) => {
             dangerouslySetInnerHTML={{ __html: sectionData.text }} />
         )}
         
-        {/* {sectionData.buttonLinkTitle && sectionData.buttonLink && (
-          <div className={css['button-default']}>
-            <a 
-              href={sectionData.buttonLink} 
-              //target="_blank" 
-              rel="noopener noreferrer"
-              aria-label={`${sectionData.buttonLinkTitle} (opens in new tab)`}
-            >
-              <ButtonDefault label={sectionData.buttonLinkTitle} />
-            </a>
-          </div>
-        )} */}
         {sectionData.buttonLinkTitle && sectionData.buttonLink && (
           <div className={css['button-default']}>
             <ButtonDefault 
