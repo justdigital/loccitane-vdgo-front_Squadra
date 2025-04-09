@@ -68,10 +68,16 @@ export default class DrupalService {
             title: section.text,
             subtitle: section.text_description,
             cardItems: section.card_item.map((item: any) => ({
+              cardTypeImage: item.card_type === "1",
               text: item.text,
               linkUrl: item.link_url,
               linkTitle: item.link_title,
-              iconeUrl: item.image_icone_url,
+              iconUrl: item.image_icone_url,
+              videosUrl: {
+                urlDesktop: item.video_url_desktop,
+                urlMobile: item.video_url_mobile,
+                altText: item.text_transcription || '',
+              },
               imagesUrls: {
                 desktop: item.image_url_desktop,
                 mobile: item.image_url_mobile
@@ -87,7 +93,7 @@ export default class DrupalService {
             videosUrls: {
               urlDesktop: section.video_url_desktop,
               urlMobile: section.video_url_mobile,
-              altText: section.alt_text || '',
+              altText: section.text_transcription || '',
               posterImage: section.poster_image || ''
             }
           } as ISectionLargeVideo;
