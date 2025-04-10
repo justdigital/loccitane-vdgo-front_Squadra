@@ -30,7 +30,7 @@ const BannerOrderExplain = (props: {
                         label={sectionData.link_title} 
                         eventData={{
                             eventName: 'cta_interaction',
-                            sectionName: 'section_banner_lp2_part_2',
+                            sectionName: 'fazer_pedido',
                             ctaName: sectionData.link_title,
                             customData: {
                             // outros dados

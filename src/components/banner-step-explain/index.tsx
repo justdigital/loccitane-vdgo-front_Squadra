@@ -1,5 +1,5 @@
 import ISectionBannerStepExplain from "@/interfaces/section-banner-step-explain";
-
+import css from "./styles.module.scss";
 const BannerStepExplain = (props: {
     sectionData: ISectionBannerStepExplain
 }) => {
@@ -12,7 +12,7 @@ const BannerStepExplain = (props: {
         </div>
         <div className="lg:w-5/12 w-full relative">
             <div className="flex flex-col absolute justify-center items-center lg:items-start m-auto w-[85vw] lg:w-auto h-[50vh] lg:h-auto top-[-46vh] left-[10vw] lg:top-0 mb-4 lg:relative lg:left-[-32px] border-[3px] border-[#C02031]">
-                <div className="p-[0px_14px_18px] mt-auto lg:p-9 bg-white w-full" dangerouslySetInnerHTML={{ __html: sectionData.text }} />
+                <div className={`${css['banner-text-content']} p-[0px_14px_18px] mt-auto lg:p-9 bg-white w-full`} dangerouslySetInnerHTML={{ __html: sectionData.text }} />
             </div>
             <div className="px-4 pt-[3rem] lg:px-0 lg:pt-0 flex flex-row justify-end gap-4">
                 {sectionData.cardItems.map((item) => (
