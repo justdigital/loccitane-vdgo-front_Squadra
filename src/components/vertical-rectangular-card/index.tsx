@@ -7,6 +7,7 @@ import ButtonDefault from '../commons/button-default';
 import ISectionVerticalRectangularCard from '@/interfaces/section-vertical-rectangular-card';
 import Image from 'next/image';
 import SectionsTitle from '../commons/sections-title';
+import { sendGTMEvent } from '@next/third-parties/google';
 interface VerticalRectangularCardProps {
   sectionData: ISectionVerticalRectangularCard;
   className?: string;
@@ -27,6 +28,28 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
     }
   };
 */
+
+  const handleSlideClick = (cardData: { text?: string, linkUrl?: string }) => {
+      //const visibleCard = document.querySelector(`.${css.btnIcon}[aria-hidden="false"]`);
+      //const cardName = visibleCard?.querySelector(`.${css.linkUrl}`)?.textContent;
+
+      const getPlainText = (html?: string) => {
+        if (!html) return null;
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        return tempDiv.textContent || tempDiv.innerText || '';
+      };
+
+      sendGTMEvent({
+        'event': 'select_content',
+        'section_name': 'cards_informativos',
+        'content_type': 'card_info',
+        //'content_text': cardName || 'Título',
+        'content_text': getPlainText(cardData.text)?.substring(0, 30) || cardData.linkUrl || 'Título',
+        'page_url': window.location.href
+      });
+  };
+
   return (
     <div id='vertical-rectangular-card' className={`${css.sectionContainer} md:px-8 py-8`}>
       <div className={`container mx-auto w-full`}>
@@ -45,7 +68,12 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
           >
             {sectionData.cardItems.map((card, index) => (
               <SwiperSlide key={index}>
-                <div className={`${css.card} h-full`} onClick={() => card.linkUrl && window.open(card.linkUrl, '_self')}>
+                <div 
+                  className={`${css.card} h-full`} 
+                  onClick={() => card.linkUrl && 
+                  window.open(card.linkUrl, '_self') &&  
+                  handleSlideClick(card)}>
+
                   {card.imagesUrls && (
                     <picture>
                       <source media="(min-width: 768px)" srcSet={card.imagesUrls.desktop} />
@@ -67,8 +95,8 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
 
                 {/* Botão do ícone */}
                 <button 
-                  className={`${css.btnIcon} relative z-10 bottom-14 left-56 md:bottom-14 md:left-72`}
-                  onClick={() => card.linkUrl && window.open(card.linkUrl, '_self')}
+                  className={`${css.btnIcon} relative z-10 bottom-14 left-[86%] md:bottom-14`}
+                  onClick={() => card.linkUrl && window.open(card.linkUrl, '_self') && handleSlideClick(card)}
                   aria-label="Abrir link"
                 >
                   <Image 
@@ -90,6 +118,14 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
               className={`${css.buttonDefault}`}
               label={sectionData.buttonLinkTitle}
               href={sectionData.buttonLink}
+              eventData={{
+                eventName: 'cta_interaction',
+                sectionName: 'cards_informativos',
+                ctaName: sectionData.buttonLinkTitle,
+                customData: {
+                  // outros dados
+                }
+              }}
             /> 
           </div>
         )}

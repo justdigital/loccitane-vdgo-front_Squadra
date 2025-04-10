@@ -59,7 +59,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     handleSubmit,
     watch,
     reset,
-    getValues
+    getValues,
   } = methods;
   const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data)
 

@@ -20,6 +20,7 @@ interface AppContextProps {
     (key: 'header'): ISectionHeader | undefined;
     <T>(key: string): T | undefined;
   };
+  pagesUrls: {[key: string]: string}
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -39,6 +40,12 @@ interface AppProviderProps {
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [userFormId, setUserFormId] = useState<UUID | undefined>(undefined);
   const [sectionData, setSectionData] = useState<Record<string, unknown>>({});
+
+  const pagesUrls = {
+    externalLogin: 'https://revendedor.loccitaneaubresil.com',
+    lp1: typeof window !== 'undefined' ? `${window.location.origin}/lp1` : '',
+    lp2: typeof window !== 'undefined' ? `${window.location.origin}/lp2` : '',
+  };
 
   const theme = useTheme();
   const isMobileScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -62,7 +69,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const isMobileDevice = /android.+mobile|ip(hone|[oa]d)/i.test(navigator?.userAgent);
 
   return (
-    <AppContext.Provider value={{ getUserFormId, setUserFormId, isMobileScreen, isMobileDevice, updateSectionData, getSectionData }}>
+    <AppContext.Provider value={{ getUserFormId, setUserFormId, isMobileScreen, isMobileDevice, pagesUrls, updateSectionData, getSectionData }}>
       <AppFormProvider>
         {children}
       </AppFormProvider>
