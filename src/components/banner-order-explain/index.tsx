@@ -1,6 +1,7 @@
 import { ISectionBannerOrderExplain } from '@/interfaces/section-banner-order-explain';
 import React from 'react';
 import ButtonDefault from '../commons/button-default';
+import Image from 'next/image';
 
 // import { Container } from './styles';
 
@@ -15,7 +16,7 @@ const BannerOrderExplain = (props: {
                 <div className='w-[220px] lg:w-auto mx-auto lg:mx-0 text-center lg:text-start leading-[100%]' dangerouslySetInnerHTML={{ __html: sectionData.text }} />
                 <div className="w-[65px] border-b-[3px] border-[#C02031] my-5 mx-auto lg:mx-0" />
                 <div>
-                    <img className='lg:hidden float-left w-[158px] h-auto mr-[14px]' src={sectionData.imagesUrls.desktop} alt="image-banner-order-explain" />
+                    <Image className='lg:hidden float-left h-auto mr-[14px]' width={158} height={158} src={sectionData.imagesUrls.desktop} alt="image-banner-order-explain" />
                     <p dangerouslySetInnerHTML={{ __html: sectionData.textDescription }} />
                 </div>
                 <div className='mx-auto lg:mx-0 mt-[20px]'>
@@ -41,7 +42,7 @@ const BannerOrderExplain = (props: {
                 </div>
             </div>
             <div className="hidden lg:block lg:w-5/12 w-[158px] h-auto order-1 lg:order-2 relative">
-                <img src={sectionData.imagesUrls.desktop} alt="image-banner-order-explain" />
+                <Image src={sectionData.imagesUrls.desktop} width={158} height={158} alt="image-banner-order-explain" className='w-full h-auto' />
             </div>
         </div>
     )
