@@ -1,15 +1,26 @@
 "use client";
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import css from './style.module.scss';
 import Button from '../commons/button';
 import LeadsForm from '../leads-form';
 import ISectionBanner from '@/interfaces/section-banner';
+import { useAppContext } from '@/contexts/app.context';
+import ISectionTermsAndConditions from '@/interfaces/section-terms-and-conditions';
+import ISectionFooter from '@/interfaces/section-footer';
+import ISectionHeader from '@/interfaces/section-header';
 
 interface LeadsFormHeaderProps {
-  sectionData: ISectionBanner
+  sectionData: ISectionBanner;
+  termsAndConditionsSectionData: ISectionTermsAndConditions;
+  headerSectionData: ISectionHeader;
+  footerSectionData: ISectionFooter;
 }
 
-const LeadsFormBox: React.FC<LeadsFormHeaderProps> = ({sectionData}) => {
+const LeadsFormBox: React.FC<LeadsFormHeaderProps> = ({sectionData, termsAndConditionsSectionData, headerSectionData, footerSectionData}) => {
+
+  const {
+      updateSectionData
+    } = useAppContext();
 
   const formChildElement = useRef(null);
 
@@ -26,6 +37,12 @@ const LeadsFormBox: React.FC<LeadsFormHeaderProps> = ({sectionData}) => {
       '--banner-url-mobile': `url('${sectionData.imagesUrls.mobile}')`
     }
   }, []);
+
+  useEffect(() => {
+    updateSectionData("terms", termsAndConditionsSectionData);
+    updateSectionData("header", headerSectionData);
+    updateSectionData("footer", footerSectionData);
+  }, [termsAndConditionsSectionData, headerSectionData, footerSectionData])
 
   return (
     <div className={`${css['banner-wrapper']}`} style={bannersUrls as React.CSSProperties}>

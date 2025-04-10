@@ -16,6 +16,9 @@ const LandingPage1 = async () => {
 
   const drupalService = new DrupalService('/api/node/17');
   const { sections } = await drupalService.fetchData();
+  const termsAndConditionsSection = sections.find((s) => s.type === 'section_terms_and_conditions');
+  const footerSection = sections.find((s) => s.type === 'section_footer');
+  const headerSection = sections.find((s) => s.type === 'section_header');
 
   return (
     <div>
@@ -25,7 +28,12 @@ const LandingPage1 = async () => {
           case 'section_header':
             return <Header sectionData={section} key={index} />;
           case 'banner':
-            return <LeadsFormBox sectionData={section} key={index} />;
+            return <LeadsFormBox 
+              sectionData={section} 
+              termsAndConditionsSectionData={termsAndConditionsSection} 
+              headerSectionData={headerSection} 
+              footerSectionData={footerSection} 
+              key={index} />;
           case 'secao_card_retangular_horizontal':
             return <HorizontalVideoCardsSection sectionData={section} key={index} />;
           case 'section_footer':
@@ -40,6 +48,8 @@ const LandingPage1 = async () => {
             return <Testimonials sectionData={section} key={index} />;
           case 'accordion':
             return <Accordion sectionData={section} key={index} />;
+          //case 'section_terms_and_conditions':
+           // return <TermsAndConditions sectionData={section} key={index} />;
         }
       })}
       

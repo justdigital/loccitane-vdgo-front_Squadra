@@ -9,6 +9,7 @@ import ISectionFooter from "@/interfaces/section-footer";
 import ISectionHorizontalCards from "@/interfaces/section-horizontal-cards";
 import ISectionAccordion from "@/interfaces/section-accordion";
 import ISectionBannerStepExplain from "@/interfaces/section-banner-step-explain";
+import ISectionTermsAndConditions from "@/interfaces/section-terms-and-conditions";
 export default class DrupalService {
 
   private baseApiUrl = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL;
@@ -209,6 +210,12 @@ export default class DrupalService {
                 text: item.text,
               }))
             } as ISectionAccordion;
+
+          case 'section_terms_and_conditions':
+            return {
+              type: section.type,
+              text: section.text,
+            } as ISectionTermsAndConditions;
 
         }
     }).filter(Boolean);
