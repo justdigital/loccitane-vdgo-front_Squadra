@@ -62,7 +62,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
           >
             {sectionData.cardItems.map((item, index) => (
               <SwiperSlide key={index}>
-                <CardItem item={item} openModal={() => openModal(item.videosUrls.urlDesktop)} />
+                <CardItem item={item} openModal={() => openModal(item.videosUrls?.urlDesktop as string)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -84,7 +84,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
           loop
           playsInline
           autoPlay
-          controls
+          controls={true}
           controlsList="nodownload nofullscreen noremoteplayback"
           disablePictureInPicture
           src={videoUrl} 

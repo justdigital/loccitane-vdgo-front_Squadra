@@ -3,9 +3,10 @@ import React from 'react';
 interface SectionsTitleProps {
   title: React.ReactNode | string;
   subtitle?: React.ReactNode | string;
+  leftAligned?: boolean;
 }
 
-const SectionsTitle: React.FC<SectionsTitleProps> = ({ title, subtitle }) => {
+const SectionsTitle: React.FC<SectionsTitleProps> = ({ title, subtitle, leftAligned = false }) => {
 
   return (
     <div>
@@ -13,7 +14,7 @@ const SectionsTitle: React.FC<SectionsTitleProps> = ({ title, subtitle }) => {
         <div dangerouslySetInnerHTML={{ __html: title }} />
       )}
 
-      <hr className="w-[65px] h-1 mx-auto my-[22px] bg-[#C02031]" />
+      <hr className={`w-[65px] h-1 ${!leftAligned ? 'mx-auto' : ''} my-[22px] bg-[#C02031]`} />
 
       {subtitle && (
         <div dangerouslySetInnerHTML={{ __html: subtitle }} />
