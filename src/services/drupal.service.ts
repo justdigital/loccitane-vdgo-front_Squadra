@@ -8,6 +8,7 @@ import ISectionTestimonials from "@/interfaces/section-testimonials";
 import ISectionFooter from "@/interfaces/section-footer";
 import ISectionHorizontalCards from "@/interfaces/section-horizontal-cards";
 import ISectionAccordion from "@/interfaces/section-accordion";
+import ISectionBannerStepExplain from "@/interfaces/section-banner-step-explain";
 import ISectionTermsAndConditions from "@/interfaces/section-terms-and-conditions";
 import ISectionHorizontalVideos from "@/interfaces/section-horizontal-cards";
 export default class DrupalService {
@@ -49,6 +50,35 @@ export default class DrupalService {
               mobile: section.image_url_mobile
             }
           } as ISectionBanner;
+
+        case 'banner_lp2_part1':
+          return {
+            type: section.type,
+            text: section.text,
+            imagesUrls: {
+              desktop: section.image_url_desktop,
+              mobile: section.image_url_mobile
+            },
+            cardItems: section.card_item.map((item: any) => ({
+              text: item.text,
+              linkUrl: item.link_url,
+              linkTitle: item.link_title,
+              imageUrl: item.image_url_desktop
+            }))
+          } as ISectionBannerStepExplain;
+
+        case 'section_banner_lp2_part_2':
+          return {
+            type: section.type,
+            text: section.text,
+            textDescription: section.text_description,
+            link_url: section.link_url,
+            link_title: section.link_title,
+            imagesUrls: {
+              desktop: section.image_url_desktop,
+              mobile: section.image_url_mobile
+            },
+          }
 
         case 'section_header':
           return {
