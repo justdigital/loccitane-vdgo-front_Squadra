@@ -8,6 +8,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import css from './style.module.scss';
 import ISectionTestimonials from '@/interfaces/section-testimonials';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 interface TestimonialsProps {
   sectionData: ISectionTestimonials;
@@ -134,6 +135,18 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
     });
   };
 
+  const handleSlideClick = () => {
+      const visibleCard = document.querySelector(`.${css.item}[aria-hidden="false"]`);
+      const cardName = visibleCard?.querySelector(`.${css.textName}`)?.textContent;
+
+      sendGTMEvent({
+        'event': 'cta_interaction',
+        'section_name': 'depoimentos',
+        'cta_name': cardName || 'Nome',
+        'page_url': window.location.href
+      });
+  };
+
   return (
     <div 
       id='testimonials'
@@ -250,7 +263,11 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
         <div 
           ref={prevButtonRef}
           className={`${css.customPrev} absolute top-1/2 z-10 cursor-pointer max-sm:hidden`}
-          onClick={() => moveItem(-1)}
+          //onClick={() => moveItem(-1)}
+          onClick={() => {
+            moveItem(-1);
+            handleSlideClick();
+          }}
         >
           <NavigateBeforeIcon 
             style={{
@@ -266,7 +283,11 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
         <div 
         ref={nextButtonRef}
         className={`${css.customNext} absolute top-1/2 z-10 cursor-pointer max-sm:hidden`}
-        onClick={() => moveItem(1)}
+        //onClick={() => moveItem(1)}
+        onClick={() => {
+          moveItem(1);
+          handleSlideClick();
+        }}
         >
           <NavigateNextIcon 
             style={{

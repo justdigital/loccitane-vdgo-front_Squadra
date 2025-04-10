@@ -1,11 +1,18 @@
 'use client';
 import React from 'react';
 import css from './style.module.scss';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 interface ButtonDefaultProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   href?: string;
   scrollBehavior?: 'smooth' | 'auto';
+  eventData?: {
+    eventName: string;
+    sectionName: string;
+    ctaName?: string;
+    customData?: Record<string, any>;
+  };
 }
 
 const ButtonDefault: React.FC<ButtonDefaultProps> = ({ 
@@ -13,10 +20,23 @@ const ButtonDefault: React.FC<ButtonDefaultProps> = ({
   href, 
   onClick, 
   scrollBehavior = 'smooth',
+  eventData,
   ...props 
 }) => {
   
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+
+    // Disparar evento do dataLayer se eventData estiver definido
+    if (eventData) {
+      sendGTMEvent({
+        'event': eventData.eventName,
+        'section_name': eventData.sectionName,
+        'cta_name': eventData.ctaName || label,
+        'page_url': window.location.href,
+        ...(eventData.customData || {})
+      });
+    }
+
     if (onClick) {
       onClick(e);
     }
