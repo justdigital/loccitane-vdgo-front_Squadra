@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import css from './style.module.scss';
 import { Box } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
@@ -16,6 +16,8 @@ interface StepPersonalDataProps {
   isTabActive: boolean;
 }
 
+const loginLink = 'https://revendedor.loccitaneaubresil.com';
+
 const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabActive}) => {
 
   const {
@@ -28,6 +30,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
 
   const {setFormButtonProps} = useAppFormContext();
   const {setUserFormId} = useAppContext();
+  const [disableFormFields, setDisableFormFields] = useState(false);
 
   const sendDataToServer = async (onOk: () => void) => {
     try {
@@ -49,6 +52,25 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
       sendDataToServer(() => gotoNextStep());
     }
   }, [getFieldState]);
+
+  const checkCpfAvailability = useCallback(async (cpf: string) => {
+    try {
+      const isUnavailable = await checkCpfIsUnavailable(cpf);
+      if (isUnavailable) {
+        setDisableFormFields(true);
+        setFormButtonProps({
+          label: 'Fazer login',
+          action: () => window.open(loginLink, '_blank')
+        });
+        return 'O CPF já está em uso';
+      }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e: any) {
+      return 'CPF inválido. Digite um CPF válido.'
+    }
+
+    return true
+  }, []);
 
   useEffect(() => {
     if (!isTabActive) {
@@ -87,6 +109,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
       <Controller
         name="documentNumber"
         control={control}
+        disabled={disableFormFields}
         rules={{
           required: 'Digite um CPF válido',
           pattern: {value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/, message: 'CPF inválido. Digite um CPF válido.'},
@@ -100,7 +123,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
               }
             },
             checkCpfAvailability: async (cpf) => {
-              return (await checkCpfIsUnavailable(cpf)) ? 'O CPF já está em uso' : true
+              return await checkCpfAvailability(cpf)
             }
           }
         }}
@@ -110,6 +133,9 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
             fieldState={fieldState}
             label="CPF"
             mask="000.000.000-00"
+            specificErrorTemplate={{
+              checkCpfAvailability: <a href={loginLink} target='_blank' className={`${css['helper-text-link']}`}>Este CPF já está cadastrado. Clique aqui para fazer login</a>
+            }}
           />
         }
       />
@@ -117,6 +143,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
       <Controller
         name="cellphoneNumber"
         control={control}
+        disabled={disableFormFields}
         rules={{ required: 'Digite um número de celular válido', pattern: {value: /^\(\d{2}\) 9\d{4}-\d{4}$/, message: 'Número de celular inválido. Utilize o formato (DDD) 9XXXX-XXXX.'} }}
         render={({ field, fieldState }) =>
           <FormTextField
@@ -132,6 +159,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
         <Controller
           name="authorizeExposeCellNumbers"
           control={control}
+          disabled={disableFormFields}
           render={({ field }) =>
             <FormCheckbox
               field={field}
@@ -143,6 +171,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
         <Controller
           name="acceptReceiveInfo"
           control={control}
+          disabled={disableFormFields}
           render={({ field }) =>
             <FormCheckbox
               field={field}
@@ -154,6 +183,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
         <Controller
           name="acceptTerms"
           control={control}
+          disabled={disableFormFields}
           rules={{ required: 'Campo obrigatório.'}}
           render={({ field, fieldState }) =>
             <FormCheckbox

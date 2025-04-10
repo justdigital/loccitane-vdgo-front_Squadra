@@ -16,7 +16,11 @@ const Footer: React.FC<FooterProps> = ({ sectionData }) => {
       <div className={`${css.footerContainer} container`}>
         <div className={`${css.footerItens}`}>
           {sectionData.cardItems.map((card, index) => (
-            <div className={`${css.columnContent}`} key={index}>
+            <div 
+              className={`${css.columnContent}`} 
+              onClick={() => card.buttonLink && window.open(card.buttonLink, '_self')}
+              key={index}
+            >
               {card.imagesUrls && (
                 <picture>
                   <source media="(min-width: 768px)" srcSet={card.imagesUrls.desktop} />
@@ -28,7 +32,9 @@ const Footer: React.FC<FooterProps> = ({ sectionData }) => {
                 </picture>
               )}
               {card.text && (
-                <div dangerouslySetInnerHTML={{ __html: card.text }} />
+                <div 
+                  className={`${css.columnText}`}
+                  dangerouslySetInnerHTML={{ __html: card.text }} />
               )}
             </div>
           ))}

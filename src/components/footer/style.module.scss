@@ -15,7 +15,7 @@
     "footerItens footerImage"
     "footerBottom footerBottom";
   grid-template-columns: 4fr 1fr;
-  gap: 5px;
+  gap: 2px;
 
   @media (screen(md)) {
     grid-template-areas:
@@ -54,13 +54,18 @@
 
 .columnContent{
   display: flex;
+  cursor: pointer;
   align-items: center;
   gap: 11px;
 }
 
 .columnContent img{
-  width: 30px;
-  height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+}
+
+.columnContent .columnText{
+  word-break: break-word;
 }
 
 .footerImage img {

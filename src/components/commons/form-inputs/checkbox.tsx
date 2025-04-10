@@ -30,7 +30,7 @@ const FormCheckbox: React.FC<FormCheckboxProps> = ({
         control={
           <Checkbox
             {...field}
-            checked={field.value}
+            checked={!!field.value}
             sx={checkBoxColorStyle}
           />
         }

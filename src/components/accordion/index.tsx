@@ -61,9 +61,10 @@ const Accordion: React.FC<AccordionProps> = ({ sectionData }) => {
                   >
                     <hr className="w-full h-[1px] my-3 bg-[#C8C5C5]" />
                     <div
-                    className='inline-block max-w-full whitespace-normal py-3'
-                     dangerouslySetInnerHTML={{ __html: accordion.text }} />
-                    </div>
+                      className="inline-block max-w-full whitespace-normal py-3"
+                      dangerouslySetInnerHTML={{ __html: accordion.text }} 
+                    />
+                  </div>
                 )}
               </div>
           ))}

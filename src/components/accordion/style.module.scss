@@ -13,12 +13,13 @@
   cursor: pointer;
   margin-bottom: 18px;
   width: 100%;
+  min-height: 48px;
+  align-content: center;
   border-radius: 10px;
   border: 1.9px solid $locci-red;
   border-right: 64px solid $locci-red;
   outline: none;
   transition: 0.4s;
-
 
   &Button {
     display: grid;
@@ -27,7 +28,7 @@
     align-items: center;
     width: 100%;
     color: $locci-midnight;
-    padding: 0 17px;
+    padding: 5px 17px;
     font-size: 15px;
     font-weight: 700;
     line-height: 24px;
@@ -36,12 +37,14 @@
     
     @media (screen(md)) {
       padding: 0 34px;
+
+      &:hover {
+        background-color: $locci-ivory;
+        border-radius: 10px;
+      }
     }
 
-    &:hover {
-      background-color: $locci-ivory;
-      border-radius: 10px;
-    }
+
   }
 
   &Icon {

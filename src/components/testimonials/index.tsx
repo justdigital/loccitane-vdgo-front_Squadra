@@ -23,13 +23,12 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   useEffect(() => {
     gsap.registerPlugin(Flip);
     /* Força o click para aparecer UM primeiro slide */
-    const timer = setTimeout(() => {
-      if (nextButtonRef.current) {
-        nextButtonRef.current.click();
+    const requestId = requestAnimationFrame(() => {
+      if (prevButtonRef.current) {
+        prevButtonRef.current.click();
       }
-    }, 1000);
-    
-    return () => clearTimeout(timer);
+    });
+    return () => cancelAnimationFrame(requestId);
   }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -138,14 +137,14 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   return (
     <div 
       id='testimonials'
-      className={`${css['section-container']} md:px-8 py-4 sm:py-10`}
+      className={`${css.sectionContainer} md:px-8 py-4 sm:py-10`}
     >
       <div className={`container mx-auto w-full relative`}>
         {sectionData.text && (
           <div dangerouslySetInnerHTML={{ __html: sectionData.text || ''}} />
         )}
         
-        <hr className="w-[65px] h-1 mx-auto mt-6 mb-16 sm:mb-20 bg-[#C02031]" />
+        <hr className="w-[65px] h-1 mx-auto mt-6 mb-[4.5rem] sm:mb-20 bg-[#C02031]" />
         
         {/* Slide */}
         <div 
@@ -160,7 +159,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
                 aria-hidden={index !== 0 ? "true" : "false"}
                 key={index}
               >
-                <div className={`${css.card} flex flex-col justify-end text-center items-center px-3 py-2 sm:px-12 sm:py-2`}>
+                <div className={`${css.card} flex flex-col justify-end text-center items-center px-3 py-7 sm:px-12 sm:py-3`}>
                   {/* Foto */}
                   <div className="absolute -top-14">
                     {card.imagesUrls && (
@@ -181,16 +180,13 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
                   </div>
 
                   {/* Nome */}
-                  <div className={css['text-title']}>
-                    {card.textName && (
-                      <div className={css['text-normal']}>
-                        {card.textName}
-                      </div>
-                    )}
+                  <div className={css.textName}>
+                    {card.textName}
                   </div>
 
                   {/* Estrela */}
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div className='flex items-center pt-1 pb-[10px]'
+                  >
                     {[1, 2, 3, 4, 5].map((star) => {
                       const ratingValue = parseFloat(String(card.qualification || 0));
                       const isWholeStar = ratingValue >= star;
@@ -236,18 +232,12 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
 
                   {/* Descrição */}
                   <div className={css.description}>
-                    {card.text && (
-                      <div dangerouslySetInnerHTML={{ __html: card.text }} />
-                    )}
+                    {card.text && <div dangerouslySetInnerHTML={{ __html: card.text }} />}
                   </div>
 
                   {/* Data */}
-                  <div className={css['text-title']}>
-                    {card.textDate && (
-                      <div className={css['text-title']}>
-                        {card.textDate}
-                      </div>
-                    )}
+                  <div className={css.textDate}>
+                    {card.textDate}
                   </div>
                     
                 </div>

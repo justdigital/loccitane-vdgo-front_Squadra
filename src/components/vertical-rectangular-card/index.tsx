@@ -28,14 +28,14 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
   };
 */
   return (
-    <div id='vertical-rectangular-card' className={`${css['section-container']} md:px-8 py-8`}>
+    <div id='vertical-rectangular-card' className={`${css.sectionContainer} md:px-8 py-8`}>
       <div className={`container mx-auto w-full`}>
         <SectionsTitle title={sectionData.text} />
         
         {/* Slider de Cards */}
         <div className="sm:mr-0 -mr-5">
           <Swiper
-            spaceBetween={15}
+            spaceBetween={20}
             slidesPerView={1.3}
             pagination={{ clickable: true }}
             breakpoints={{
@@ -45,7 +45,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
           >
             {sectionData.cardItems.map((card, index) => (
               <SwiperSlide key={index}>
-                <div className={`${css['card']} h-full`} onClick={() => card.linkUrl && window.open(card.linkUrl, '_blank')}>
+                <div className={`${css.card} h-full`} onClick={() => card.linkUrl && window.open(card.linkUrl, '_self')}>
                   {card.imagesUrls && (
                     <picture>
                       <source media="(min-width: 768px)" srcSet={card.imagesUrls.desktop} />
@@ -56,7 +56,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
                       />
                     </picture>
                   )}
-                  <div className={`${css['card-container']}`}>
+                  <div className={`${css.cardContainer}`}>
                     {card.text ? (
                       <div dangerouslySetInnerHTML={{ __html: card.text }} />
                     ) : (
@@ -67,8 +67,8 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
 
                 {/* Botão do ícone */}
                 <button 
-                  className={`${css['btn-icon']} relative z-10 bottom-14 left-56 md:bottom-14 md:left-72`}
-                  onClick={() => card.linkUrl && window.open(card.linkUrl, '_blank')}
+                  className={`${css.btnIcon} relative z-10 bottom-14 left-56 md:bottom-14 md:left-72`}
+                  onClick={() => card.linkUrl && window.open(card.linkUrl, '_self')}
                   aria-label="Abrir link"
                 >
                   <Image 
@@ -87,12 +87,13 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
         {sectionData.buttonLinkTitle && sectionData.buttonLink && (
           <div className="text-center">
             <ButtonDefault 
-              className={`${css['button-default']}`}
+              className={`${css.buttonDefault}`}
               label={sectionData.buttonLinkTitle}
-              //onClick={() => handleButtonClick(sectionData.buttonLink)}
+              href={sectionData.buttonLink}
             /> 
           </div>
         )}
+
       </div>
     </div>
   );
