@@ -6,6 +6,7 @@ import BannerEmpreender from '@/components/banner-empreender';
 import Testimonials from '@/components/testimonials';
 import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
 import Accordion from '@/components/accordion';
+import TermsAndConditions from '@/components/modals/terms-and-conditions';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
 import React from 'react';
@@ -39,6 +40,8 @@ const LandingPage2 = async () => {
               return <Testimonials sectionData={section} key={index} />;
             case 'accordion':
               return <Accordion sectionData={section} key={index} />;
+            case 'section_terms_and_conditions':
+              return <TermsAndConditions sectionData={section} key={index} />;
           }
         })} 
       </div>

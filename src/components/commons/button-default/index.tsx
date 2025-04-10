@@ -37,6 +37,7 @@ const ButtonDefault: React.FC<ButtonDefaultProps> = ({
   const scrollToElement = (hash: string, behavior: string) => {
     const element = document.getElementById(hash.substring(1));
     if (element) {
+      //window.scrollTo({ top: 0, behavior: 'smooth' });
       element.scrollIntoView({ behavior: behavior as ScrollBehavior });
     } else {
       window.scrollTo({ top: 0, behavior: behavior as ScrollBehavior });
