@@ -7,7 +7,7 @@ import Testimonials from '@/components/testimonials';
 import HorizontalCardsSection from '@/components/horizontal-cards';
 import Accordion from '@/components/accordion';
 import LeadsFormBox from '@/components/leads-form-box';
-import HorizontalVideosSection from '@/components/horizontal-videos';
+// import HorizontalVideosSection from '@/components/horizontal-videos';
 
 export const getPageAvailableSections = (sections: any[]) => {
 
@@ -29,8 +29,8 @@ export const getPageAvailableSections = (sections: any[]) => {
         />;
       case 'secao_card_retangular_horizontal':
         return <HorizontalCardsSection sectionData={section} key={index} />;
-      case 'section_card_video_rectangular_v':
-        return <HorizontalVideosSection sectionData={section} key={index} />;
+      // case 'section_card_video_rectangular_v':
+      //   return <HorizontalVideosSection sectionData={section} key={index} />;
       case 'section_footer':
         return <Footer sectionData={section} key={index} />;
       case 'video':
