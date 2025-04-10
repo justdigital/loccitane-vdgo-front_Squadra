@@ -51,6 +51,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
             onSwiper={setSwiper}
             spaceBetween={50}
             slidesPerView={1}
+            loop
             breakpoints={{
               600: {
                 slidesPerView: 2,
