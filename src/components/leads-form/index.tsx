@@ -30,26 +30,27 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   const methods = useForm<IFormInputs>({
     mode: "onChange",
     reValidateMode: "onChange",
-    // defaultValues: {
-    //   submitButtonAction: () => {},
-    //   submitButtonLoading: false,
-    //   fullName: 'Jorge Luis',
-    //   documentNumber: '04084092584',
-    //   cellphoneNumber: '71999999999',
-    //   birthdate: '10/03/1992',
-    //   authorizeExposeCellNumbers: false,
-    //   acceptReceiveInfo: false,
-    //   acceptTerms: true,
-    //   email: 'jorge.malaquias@squadra.com.br',
-    //   gender: "2",
-    //   isIndication: false,
-    //   documentType: 'RG',
-    //   cep: '40296370',
-    //   // state: "29",
-    //   // city: '2927408',
-    //   addressNumber: '123',
-    //   isCodeValidated: false
-    // }
+    defaultValues: {
+      authorizeExposeCellNumbers: true,
+      acceptReceiveInfo: true,
+
+      // submitButtonAction: () => {},
+      // submitButtonLoading: false,
+      // fullName: 'Jorge Luis',
+      // documentNumber: '04084092584',
+      // cellphoneNumber: '71999999999',
+      // birthdate: '10/03/1992',
+      // acceptTerms: true,
+      // email: 'jorge.malaquias@squadra.com.br',
+      // gender: "2",
+      // isIndication: false,
+      // documentType: 'RG',
+      // cep: '40296370',
+      // // state: "29",
+      // // city: '2927408',
+      // addressNumber: '123',
+      // isCodeValidated: false
+    }
   });
 
   const {getFormButtonProps} = useAppFormContext();
@@ -70,8 +71,6 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     headerTitle,
   } = watch();
 
-  // const [headerTitle, setHeaderTitle] = useState('O cadastro é rápido e fácil, levando menos de 5 minutos!');
-  // const [submitButtonLabel, setSubmitButtonLabel] = useState('Iniciar cadastro');
   const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 5 minutos!';
 
   const gotoNextStep = useCallback((step?: number) => {
@@ -90,19 +89,6 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     }
   }, [tab, majorTabAvailable]);
 
-  useEffect(() => {
-    switch (tab) {
-      case 1:
-        // setHeaderTitle('O cadastro é rápido e fácil, levando menos de 5 minutos!');
-        // setSubmitButtonLabel('Iniciar cadastro');
-        break;
-
-      case 2:
-        // setHeaderTitle('Está quase lá! Só 2 passos e essa oportunidade vira realidade!');
-        // setSubmitButtonLabel('Avançar');
-        break;
-    }
-  }, [tab]);
 
   useEffect(() => {
     gotoNextStep();
