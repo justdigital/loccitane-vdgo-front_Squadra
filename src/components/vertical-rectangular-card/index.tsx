@@ -51,7 +51,11 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
   };
 
   return (
-    <div id='vertical-rectangular-card' className={`${css.sectionContainer} md:px-8 py-8`}>
+    <div 
+      id='vertical-rectangular-card' 
+      className={`${css.sectionContainer} md:px-8 py-8`}
+      style={{ backgroundColor: sectionData.bgColor }}
+      >
       <div className={`container mx-auto w-full`}>
         <SectionsTitle title={sectionData.text} />
         

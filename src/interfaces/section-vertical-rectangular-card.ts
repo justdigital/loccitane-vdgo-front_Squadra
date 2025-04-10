@@ -13,4 +13,5 @@ export default interface ISectionVerticalRectangularCard {
   }>;
   buttonLink?: string;
   buttonLinkTitle?: string;
+  bgColor?: string;
 }

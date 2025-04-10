@@ -10,7 +10,7 @@ import ISectionHorizontalCards from "@/interfaces/section-horizontal-cards";
 import ISectionAccordion from "@/interfaces/section-accordion";
 import ISectionBannerStepExplain from "@/interfaces/section-banner-step-explain";
 import ISectionTermsAndConditions from "@/interfaces/section-terms-and-conditions";
-import ISectionHorizontalVideos from "@/interfaces/section-horizontal-videos";
+import ISectionHorizontalVideos from "@/interfaces/section-horizontal-cards";
 export default class DrupalService {
 
   private baseApiUrl = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL;
@@ -167,6 +167,7 @@ export default class DrupalService {
             })),
             buttonLink: section.link_url,
             buttonLinkTitle: section.link_title,
+            bgColor: section.bg_color,
           } as ISectionVerticalRectangularCard;
 
         case 'newsletter':
