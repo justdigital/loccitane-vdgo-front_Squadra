@@ -10,7 +10,8 @@ import ISectionHorizontalCards from "@/interfaces/section-horizontal-cards";
 import ISectionAccordion from "@/interfaces/section-accordion";
 import ISectionBannerStepExplain from "@/interfaces/section-banner-step-explain";
 import ISectionTermsAndConditions from "@/interfaces/section-terms-and-conditions";
-import ISectionHorizontalVideos from "@/interfaces/section-horizontal-cards";
+import ISectionHorizontalVideos from "@/interfaces/section-horizontal-videos";
+import ISectionBannerOrderExplain from "@/interfaces/section-banner-order-explain";
 export default class DrupalService {
 
   private baseApiUrl = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL;
@@ -72,13 +73,13 @@ export default class DrupalService {
             type: section.type,
             text: section.text,
             textDescription: section.text_description,
-            link_url: section.link_url,
-            link_title: section.link_title,
+            linkUrl: section.link_url,
+            linkTitle: section.link_title,
             imagesUrls: {
               desktop: section.image_url_desktop,
               mobile: section.image_url_mobile
             },
-          }
+          } as ISectionBannerOrderExplain;
 
         case 'section_header':
           return {

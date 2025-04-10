@@ -1,11 +1,11 @@
 import IMultiDeviceImage from "./multi-image";
 
-export interface ISectionBannerOrderExplain {
+export default interface ISectionBannerOrderExplain {
   id: string,
   type: string,
   text: string,
   textDescription: string,
-  link_url: string,
-  link_title: string,
+  linkUrl: string,
+  linkTitle: string,
   imagesUrls: IMultiDeviceImage,
 }
