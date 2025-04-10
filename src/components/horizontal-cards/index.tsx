@@ -51,6 +51,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
             onSwiper={setSwiper}
             spaceBetween={50}
             slidesPerView={1}
+            loop
             breakpoints={{
               600: {
                 slidesPerView: 2,
@@ -61,7 +62,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
           >
             {sectionData.cardItems.map((item, index) => (
               <SwiperSlide key={index}>
-                <CardItem item={item} openModal={openModal} />
+                <CardItem item={item} openModal={() => openModal(item.videosUrls.urlDesktop)} />
               </SwiperSlide>
             ))}
           </Swiper>
