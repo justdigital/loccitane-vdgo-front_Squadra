@@ -20,7 +20,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
   const hasResetOnUnmute = useRef(false); // Novo ref para controle
   const { isMobileScreen: isMobile } = useAppContext();
   const isVideoCard = !item.cardTypeImage;
-  const videoUrl = isMobile ? item.videosUrls?.urlMobile : item.videosUrls?.urlDesktop;
+  const videoUrl = item.videosUrls?.urlMobile || item.videosUrls.urlDesktop;
 
   const toggleMute = () => {
     const videoElement = videoRef?.current?.videoNativeElement;
@@ -63,7 +63,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
             <VideoComponent
               ref={videoRef}
               videoText={item.videosUrls?.altText}
-              className="w-[90dvw] sm:w-[60dvw] h-auto"
+              className="w-[90dvw] sm:w-[60dvw] h-auto sm:hidden"
               loop
               playsInline
               autoPlay={isMobile}

@@ -62,7 +62,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
           >
             {sectionData.cardItems.map((item, index) => (
               <SwiperSlide key={index}>
-                <CardItem item={item} openModal={openModal} />
+                <CardItem item={item} openModal={() => openModal(item.videosUrls.urlDesktop)} />
               </SwiperSlide>
             ))}
           </Swiper>
