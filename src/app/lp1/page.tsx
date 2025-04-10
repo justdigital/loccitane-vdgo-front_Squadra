@@ -1,13 +1,6 @@
-import Header from '@/components/header';
-import Footer from '@/components/footer';
-import LargeVideo from '@/components/large-video';
-import VerticalRectangularCard from '@/components/vertical-rectangular-card';
-import BannerEmpreender from '@/components/banner-empreender';
-import Testimonials from '@/components/testimonials';
-import HorizontalVideoCardsSection from '@/components/horizontal-video-cards';
-import Accordion from '@/components/accordion';
-import LeadsFormBox from '@/components/leads-form-box';
+
 import DrupalService from '@/services/drupal.service';
+import { getPageAvailableSections } from '@/utils/pages.util';
 import React from 'react';
 
 export const revalidate = 60 // invalidate cache every minute (maintain it only during dev)
@@ -16,43 +9,10 @@ const LandingPage1 = async () => {
 
   const drupalService = new DrupalService('/api/node/17');
   const { sections } = await drupalService.fetchData();
-  const termsAndConditionsSection = sections.find((s) => s.type === 'section_terms_and_conditions');
-  const footerSection = sections.find((s) => s.type === 'section_footer');
-  const headerSection = sections.find((s) => s.type === 'section_header');
 
   return (
     <div>
-      {/* <Header /> */}
-      {sections.map((section, index) => {
-        switch (section.type) {
-          case 'section_header':
-            return <Header sectionData={section} key={index} />;
-          case 'banner':
-            return <LeadsFormBox 
-              sectionData={section} 
-              termsAndConditionsSectionData={termsAndConditionsSection} 
-              headerSectionData={headerSection} 
-              footerSectionData={footerSection} 
-              key={index} />;
-          case 'secao_card_retangular_horizontal':
-            return <HorizontalVideoCardsSection sectionData={section} key={index} />;
-          case 'section_footer':
-            return <Footer sectionData={section} key={index} />;
-          case 'video':
-            return <LargeVideo sectionData={section} key={index} />;
-          case 'vertical_rectangular_card_sectio':
-            return <VerticalRectangularCard sectionData={section} key={index} />;
-          case 'newsletter':
-            return <BannerEmpreender sectionData={section} key={index} />;
-          case 'comentarios':
-            return <Testimonials sectionData={section} key={index} />;
-          case 'accordion':
-            return <Accordion sectionData={section} key={index} />;
-          //case 'section_terms_and_conditions':
-           // return <TermsAndConditions sectionData={section} key={index} />;
-        }
-      })}
-      
+      {getPageAvailableSections(sections)}
     </div>
   );
 };

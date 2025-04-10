@@ -9,11 +9,11 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Modal } from '@mui/material';
 import CardItem from './card-item';
 
-interface HorizontalVideoCardsSectionProps {
+interface HorizontalCardsSectionProps {
   sectionData: ISectionHorizontalCards
 }
 
-const HorizontalVideoCardsSection: React.FC<HorizontalVideoCardsSectionProps> = ({sectionData}) => {
+const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionData}) => {
 
   const [swiper, setSwiper] = useState<SwiperClass>({} as SwiperClass);
   const [modalOpen, setModalOpen] = useState(false);
@@ -39,7 +39,7 @@ const HorizontalVideoCardsSection: React.FC<HorizontalVideoCardsSectionProps> = 
   }
 
   return (
-    <div id='horizontal-video-cards' className={`${css['section-wrapper']} py-10`}>
+    <div id='horizontal-cards' className={`${css['section-wrapper']} py-10`}>
       <div className="container p-6">
         <SectionsTitle title={sectionData.title} subtitle={sectionData.subtitle} />
 
@@ -97,4 +97,4 @@ const HorizontalVideoCardsSection: React.FC<HorizontalVideoCardsSectionProps> = 
   );
 };
 
-export default HorizontalVideoCardsSection;
+export default HorizontalCardsSection;
