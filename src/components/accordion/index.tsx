@@ -4,6 +4,7 @@ import css from './style.module.scss';
 import ISectionAccordion from '@/interfaces/section-accordion';
 import { useState } from 'react';
 import { Add, Remove } from '@mui/icons-material';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 interface AccordionProps {
   sectionData: ISectionAccordion;
@@ -17,6 +18,27 @@ const Accordion: React.FC<AccordionProps> = ({ sectionData }) => {
   const toggleAccordion = (index: number) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+
+    const handleSlideClick = (
+      cardData: { title?: string, text?: string },
+      index: number
+    ) => {
+
+        const getPlainText = (html?: string) => {
+          if (!html) return null;
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = html;
+          return tempDiv.textContent || tempDiv.innerText || '';
+        };
+  
+        sendGTMEvent({
+          'event': 'select_content',
+          'section_name': 'faq',
+          'content_type': `faq_${index + 1}`,
+          'content_text': getPlainText(cardData.title)?.substring(0, 150) || cardData.text || 'Conteúdo',
+          'page_url': window.location.href
+        });
+    };
 
   return (
     <div id='accordion' className={`${css.sectionContainer} py-8 border-x-4`}>
@@ -35,7 +57,10 @@ const Accordion: React.FC<AccordionProps> = ({ sectionData }) => {
           {sectionData.accordionItem.map((accordion, index) => (            
               <div 
                 className={`${css.accordion} ${activeIndex === index ? css.active : ''}`}
-                onClick={() => toggleAccordion(index)}
+                onClick={() => {
+                  toggleAccordion(index);
+                  handleSlideClick(accordion, index);
+                }}
                 key={index}>
                 {accordion.title && (
                   <button 
