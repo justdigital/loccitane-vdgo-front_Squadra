@@ -66,7 +66,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
               className="w-[90dvw] sm:w-[60dvw] h-auto sm:hidden"
               loop
               playsInline
-              autoPlay={isMobile}
+              doPlay={isMobile}
               muted={isMuted}
               controls={false}
               controlsList="nodownload nofullscreen noremoteplayback"
