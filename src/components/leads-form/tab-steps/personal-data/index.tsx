@@ -1,15 +1,23 @@
 "use client";
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import css from './style.module.scss';
 import { Box } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
 import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, validateStep } from '@/utils/form.util';
 import FormCheckbox from '@/components/commons/form-inputs/checkbox';
+import TermsAndConditions from '@/components/modals/terms-and-conditions';
 import { checkCpfIsUnavailable, checkCpfIsValid, createUser } from '@/services/backend-comunication.service';
 import _ from 'lodash';
 import { useAppContext } from '@/contexts/app.context';
 import { useAppFormContext } from '@/contexts/app-form.context';
+/*
+import type { 
+  ISectionTermsAndConditions,
+  ISectionFooter,
+  ISectionHeader 
+} from '@/interfaces';
+*/
 
 interface StepPersonalDataProps {
   gotoNextStep: () => void;
@@ -17,6 +25,11 @@ interface StepPersonalDataProps {
 }
 
 const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabActive}) => {
+  const {
+    getSectionData
+  } = useAppContext();
+
+  const [modalOpen, setModalOpen] = useState(false);
 
   const {
     control,
@@ -159,12 +172,24 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
             <FormCheckbox
               field={field}
               fieldState={fieldState}
-              labelOnclick={() => console.log('open terms')}
+              //labelOnclick={() => console.log('open terms')}
+              labelOnclick={() => setModalOpen(true)}
               label="Li e aceito os  termos de uso e privacidade"
             />
           }
         />
       </Box>
+
+      {/* Modal */}
+      <TermsAndConditions 
+        isOpen={modalOpen} 
+        onClose={() => setModalOpen(false)}
+        sectionData={{
+          terms: getSectionData<ISectionTermsAndConditions>("terms"), 
+          footer: getSectionData<ISectionFooter>("footer"), 
+          header: getSectionData<ISectionHeader>("header")
+        }} 
+      />
     </div>
   );
 };
