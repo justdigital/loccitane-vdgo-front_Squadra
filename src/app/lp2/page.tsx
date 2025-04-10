@@ -7,6 +7,8 @@ import Testimonials from '@/components/testimonials';
 import LeadsFormBox from '@/components/leads-form-box';
 import DrupalService from '@/services/drupal.service';
 import React from 'react';
+import BannerStepExplain from '@/components/banner-step-explain';
+import BannerOrderExplain from '@/components/banner-order-explain';
 
 export const revalidate = 60 // invalidate cache every minute (maintain it only during dev)
 
@@ -21,6 +23,10 @@ const LandingPage2 = async () => {
         switch (section.type) {
           case 'section_header':
             return <Header sectionData={section} key={index} />;
+          case 'banner_lp2_part1':
+            return <BannerStepExplain sectionData={section} key={index} />;
+          case 'section_banner_lp2_part_2':
+            return <BannerOrderExplain sectionData={section} key={index} />;
           case 'banner':
             return <LeadsFormBox sectionData={section} key={index} />;
           case 'section_footer':
