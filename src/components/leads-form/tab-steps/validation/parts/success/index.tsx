@@ -41,6 +41,7 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
     setFormButtonProps({
       label: undefined,
     });
+    setValue('headerTitle', <div class="sm:text-center grow">Você conseguiu!<br />Etapa concluída com sucesso.</div>);
     setTimeout(() => router.push(pagesUrls.lp2), 3000)
   }, [isTabActive]);
 

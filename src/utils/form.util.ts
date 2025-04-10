@@ -29,7 +29,7 @@ export interface IStepAddress {
 }
 
 export interface SharedInfo {
-  headerTitle: string;
+  headerTitle: string | Element;
   submitButtonLabel: string | null;
   submitButtonAction: () => void
   submitButtonLoading: boolean;
