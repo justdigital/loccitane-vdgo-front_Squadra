@@ -37,6 +37,14 @@ const BannerEmpreender: React.FC<BannerEmpreenderProps> = ({ sectionData }) => {
               className={`${css['button-default']}`}
               label={sectionData.buttonLinkTitle}
               href={sectionData.buttonLink}
+              eventData={{
+                eventName: 'cta_interaction',
+                sectionName: 'banner-empreender',
+                ctaName: sectionData.buttonLinkTitle,
+                customData: {
+                  // outros dados
+                }
+              }}
             /> 
           </div>
         )}
