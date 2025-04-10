@@ -40,6 +40,8 @@ export interface SharedInfo {
   validationCodeSent: boolean;
   validationCodeResent: boolean;
   documentsUpload: UploadFile[];
+  sentAtDate: string;
+  sentAtTime: string;
 }
 
 export type UploadFile = {fileName: string, base64Content: Base64URLString};

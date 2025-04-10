@@ -9,6 +9,7 @@ import ISectionFooter from "@/interfaces/section-footer";
 import ISectionHorizontalCards from "@/interfaces/section-horizontal-cards";
 import ISectionAccordion from "@/interfaces/section-accordion";
 import ISectionTermsAndConditions from "@/interfaces/section-terms-and-conditions";
+import ISectionHorizontalVideos from "@/interfaces/section-horizontal-videos";
 export default class DrupalService {
 
   private baseApiUrl = process.env.NEXT_PUBLIC_DRUPAL_BASE_URL;
@@ -85,6 +86,23 @@ export default class DrupalService {
               }
             }))
           } as ISectionHorizontalCards;
+
+        case 'section_card_video_rectangular_v':
+          return {
+            type: section.type,
+            title: section.text,
+            subtitle: section.text_description,
+            text1: section.column_1_text,
+            text2: section.column_2_text,
+            buttonLinkUrl: section.link_url,
+            buttonTitle: section.link_title,
+            cardItems: section.card_item.map((item: any) => ({
+              text: item.text,
+              videosUrls: {
+                urlDesktop: item.video_url
+              }
+            }))
+          } as ISectionHorizontalVideos;
 
         case 'video':
           return {

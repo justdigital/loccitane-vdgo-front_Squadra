@@ -20,7 +20,7 @@ interface StepContactProps {
 
 const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) => {
 
-  const {getUserFormId} = useAppContext();
+  const {getUserFormId, pagesUrls} = useAppContext();
   const {setFormButtonProps} = useAppFormContext();
   const {
   } = useFormContext<IFormInputs>();
@@ -124,7 +124,7 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
               type="email"
               label="E-mail"
               specificErrorTemplate={{
-                checkEmailAvailability: <a href="" target='_blank' className={`${css['helper-text-link']}`}>Este e-mail já está cadastrado. Clique aqui para fazer login</a>
+                checkEmailAvailability: <a href={pagesUrls.externalLogin} target='_blank' className={`${css['helper-text-link']}`}>Este e-mail já está cadastrado. Clique aqui para fazer login</a>
               }}
             />
           }
