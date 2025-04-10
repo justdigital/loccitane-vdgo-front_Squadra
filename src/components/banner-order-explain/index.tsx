@@ -21,11 +21,22 @@ const BannerOrderExplain = (props: {
                 <div className='mx-auto lg:mx-0 mt-[20px]'>
                     <a 
                     href={sectionData.link_url} 
-                    target="_blank"
+                    // target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${sectionData.link_title} (opens in new tab)`}
                     >
-                    <ButtonDefault style={{padding: "7px 20px"}} label={sectionData.link_title} />
+                    <ButtonDefault 
+                        style={{padding: "7px 20px"}} 
+                        label={sectionData.link_title} 
+                        eventData={{
+                            eventName: 'cta_interaction',
+                            sectionName: 'section_banner_lp2_part_2',
+                            ctaName: sectionData.link_title,
+                            customData: {
+                            // outros dados
+                            }
+                        }}
+                        />
                     </a>
                 </div>
             </div>
