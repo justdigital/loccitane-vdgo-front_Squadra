@@ -5,6 +5,7 @@ import ISectionAccordion from '@/interfaces/section-accordion';
 import { useState } from 'react';
 import { Add, Remove } from '@mui/icons-material';
 import { sendGTMEvent } from '@next/third-parties/google';
+import { getPlainText } from '@/utils/general.util';
 
 interface AccordionProps {
   sectionData: ISectionAccordion;
@@ -23,13 +24,6 @@ const Accordion: React.FC<AccordionProps> = ({ sectionData }) => {
       cardData: { title?: string, text?: string },
       index: number
     ) => {
-
-        const getPlainText = (html?: string) => {
-          if (!html) return null;
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = html;
-          return tempDiv.textContent || tempDiv.innerText || '';
-        };
   
         sendGTMEvent({
           'event': 'select_content',

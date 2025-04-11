@@ -8,6 +8,8 @@ import { useAppContext } from '@/contexts/app.context';
 import Image from 'next/image';
 import VideoComponent, { VideoComponentRefType } from '../commons/video';
 import TextOverlap from '../commons/text-overlap';
+import { sendGTMEvent } from '@next/third-parties/google';
+import { getPlainText } from '@/utils/general.util';
 
 interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
@@ -45,8 +47,23 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
     videoRef.current?.togglePlay();
   };
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    // if (!item.linkUrl) {
+    //   return;
+    // }
+
+    const textPlain = getPlainText(item.text)?.substring(0, 100) || item.linkUrl || 'Título'; 
+    sendGTMEvent({
+      'event': 'select_content',
+      'section_name': 'cards_horizontais_lp1',
+      'content_type': `card__${textPlain}`,
+      'content_text': textPlain,
+      'page_url': window.location.href
+    });
+  };
+
   return (
-    <a href={item.linkUrl} target="_blank" rel="noopener noreferrer">
+    <a href={item.linkUrl} onClick={handleCardClick} target="_blank" rel="noopener noreferrer">
       <div className={`${css['card-item']} ${isVideoCard && css['video-card']} ${props.className} flex flex-col sm:flex-row`}>
         {isVideoCard && !isMobile && (
           <div className={`${css['play-button-box']} flex items-center justify-center`} onClick={() => openModal(videoUrl || '')}>
@@ -104,7 +121,12 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
               </TextOverlap>
             )}
 
-            <LikeButton className="absolute top-5 right-4 z-[3] sm:hidden" />
+            <LikeButton
+              className="absolute top-5 right-4 z-[3] sm:hidden"
+              videoTitle={item.videosUrls?.altText || ''}
+              videoUrl={videoUrl || ''}
+              sectionName="cards_horizontais_lp1"
+            />
             <MuteButton onClick={() => toggleMute()} isMuted={isMuted} className={`absolute bottom-8 right-2.5 z-[3] sm:hidden`} />
           </div>
         )}

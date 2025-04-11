@@ -4,6 +4,7 @@ import css from './style.module.scss';
 import ISectionFooter from '@/interfaces/section-footer';
 //import Image from 'next/image';
 import { sendGTMEvent } from '@next/third-parties/google';
+import { getPlainText } from '@/utils/general.util';
 
 interface FooterProps {
   sectionData: ISectionFooter;
@@ -13,13 +14,6 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ sectionData }) => {
 
   const handleSlideClick = (cardData: { text?: string, linkUrl?: string }) => {
-    const getPlainText = (html?: string) => {
-      if (!html) return null;
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = html;
-      return tempDiv.textContent || tempDiv.innerText || '';
-    };
-
       sendGTMEvent({
         'event': 'click_content',
         'section_name': 'footer',

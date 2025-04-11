@@ -1,6 +1,7 @@
 'use client';
 import React, { forwardRef, RefAttributes, SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { sendGTMEvent } from '@next/third-parties/google';
+import { getPlainText } from '@/utils/general.util';
 
 type ProgressTracked = {
   [key: string]: {tracked: boolean, progressName?: number, eventName: string};
@@ -46,19 +47,14 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
     '99': {tracked: false, progressName: 100, eventName: 'video_complete'}, //envia track de finalização do vídeo antes por conta do possível loop: true
   });
 
-  const removeTags = (str: string) => {
-    const doc = new DOMParser().parseFromString(str, 'text/html');
-    return doc.body.textContent || "";
-  };
-
   const pushToDataLayer = useCallback((eventName: string, progress?: number) => {
     
     const eventData = {
       event: eventName,
-      video_title: videoText ? removeTags(videoText) : 'Vídeo sem título',
+      video_title: videoText ? getPlainText(videoText) : 'Vídeo sem título',
       video_url: props.src,
       page_url: window.location.href,
-      ...(progress && { video_progress: progress.toFixed(0)})
+      ...(progress && { video_progress: `${progress.toFixed(0)}%`})
     };
 
     sendGTMEvent(eventData)

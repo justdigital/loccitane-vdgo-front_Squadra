@@ -2,21 +2,37 @@
 import React, { useState } from 'react';
 import css from './style.module.scss';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { sendGTMEvent } from '@next/third-parties/google';
 
 interface LikeButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconProps?: any;
+  videoUrl: string;
+  videoTitle: string;
+  sectionName: string;
 }
 
-const LikeButton: React.FC<LikeButtonProps> = ({ iconProps, ...props }) => {
+const LikeButton: React.FC<LikeButtonProps> = ({ iconProps, videoUrl, videoTitle, sectionName, ...props }) => {
 
   const [liked, setLiked] = useState(false); //Controlar like
+
+  const toggleLike = () => {
+    setLiked(!liked);
+    sendGTMEvent({
+      'event': !liked ? 'curtiu o vídeo' : 'descurtiu o vídeo',
+      'section_name': sectionName,
+      'content_type': `video`,
+      'content_text': videoTitle,
+      'video_url': videoUrl,
+      'page_url': window.location.href
+    });
+  }
 
   return (
     <button
       {...props}
       className={`${css['like-button']} ${props.className} ${liked && css['liked']} bg-black/30 rounded-[100%] p-2 backdrop-blur-sm`}
       aria-label={liked ? "Descurtir vídeo" : "Curtir vídeo"}
-      onClick={() => setLiked(!liked)}
+      onClick={() => toggleLike()}
     >
       <FavoriteIcon
         {...iconProps}
