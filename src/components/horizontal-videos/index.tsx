@@ -123,11 +123,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
         {/* <TinySlider settings={settings}> */}
           {cardItems.map((item, index) => (
             <SwiperSlide key={index}>
-              {({isActive}) => {
-                if(isActive && isInViewport){
-                  console.log('isActive', index);
-                }
-                return(
+              {({isActive}) => (
                 <div key={index}>
                   <div className={`${css['video-item']} relative`}>
                     <VideoComponent
@@ -170,7 +166,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                     </div>
                   </div>
                 </div>
-              )}}
+              )}
             </SwiperSlide>
           ))}
         {/* </TinySlider> */}
