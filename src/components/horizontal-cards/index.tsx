@@ -80,7 +80,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
         className="flex items-center justify-center h-screen"
       >
         <video
-          className="w-[90dvw] sm:w-[60dvw] h-auto"
+          className={`${css['video-modal']} w-[90dvw] sm:w-[60dvw] h-auto`}
           loop
           playsInline
           autoPlay
