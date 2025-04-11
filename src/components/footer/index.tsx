@@ -2,9 +2,7 @@
 import 'swiper/css';
 import css from './style.module.scss';
 import ISectionFooter from '@/interfaces/section-footer';
-//import Image from 'next/image';
-import { sendGTMEvent } from '@next/third-parties/google';
-import { getPlainText } from '@/utils/general.util';
+import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 
 interface FooterProps {
   sectionData: ISectionFooter;
@@ -14,13 +12,11 @@ interface FooterProps {
 const Footer: React.FC<FooterProps> = ({ sectionData }) => {
 
   const handleSlideClick = (cardData: { text?: string, linkUrl?: string }) => {
-      sendGTMEvent({
-        'event': 'click_content',
-        'section_name': 'footer',
-        'content_text': getPlainText(cardData.text)?.substring(0, 100) || cardData.linkUrl || 'Título',
-        //'cta_name': cardName || 'Nome',
-        'page_url': window.location.href
-      });
+    sendDataLayerEvent({
+      'event': 'click_content',
+      'section_name': 'footer',
+      'content_text': getPlainText(cardData.text) || cardData.linkUrl || 'Título',
+    });
   };
 
   return (

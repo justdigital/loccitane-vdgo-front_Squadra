@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({sectionData}) => {
                 {/* <LoginIcon /> */}
                 <Image src={sectionData.loginLinkIconUrl} alt="Whatsapp" width={34} height={34} />
               </a>
-              </li>
+            </li>
             {/* <li className="whatsapp"><a href={''} target="_blank"><Image src="/assets/images/icons/whatsapp.svg" alt="Whatsapp" width={37} height={37} /></a></li> */}
             {/* <li className={css.chat}><a href={''} target="_blank"><Image src="/assets/images/icons/chat.svg" alt="Chat" width={24} height={24} /></a></li> */}
           </ul>

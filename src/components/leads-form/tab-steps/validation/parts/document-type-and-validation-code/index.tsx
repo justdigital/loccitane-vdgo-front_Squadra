@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import StepValidationEmailCode from './sub-parts/validate-code';
 import StepValidationSelectDocument from './sub-parts/select-document-type';
 import { useFormContext } from 'react-hook-form';
-import { IFormInputs, sendGtmFormEvent, validateStep } from '@/utils/form.util';
+import { IFormInputs, sendDataLayerFormEvent, validateStep } from '@/utils/form.util';
 import { useAppFormContext } from '@/contexts/app-form.context';
 
 interface StepValidationCodeAndDocumentTypeProps {
@@ -41,8 +41,8 @@ const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentT
     await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
     if (validateStep('validationCodeAndDocumentType', getFieldState)) {
       validateAndGoNextPart(() => {
-          gotoNextPart();
-          sendGtmFormEvent('validacao_inicio', 'success'); 
+        gotoNextPart();
+        sendDataLayerFormEvent('validacao_inicio', 'success'); 
       });
     }
   }, [getFieldState]);

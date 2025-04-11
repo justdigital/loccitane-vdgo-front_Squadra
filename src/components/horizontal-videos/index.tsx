@@ -104,7 +104,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
           }}
           // onSlideChange={() => console.log('slide change')}
         >
-        {/* <TinySlider settings={settings}> */}
+          {/* <TinySlider settings={settings}> */}
           {cardItems.map((item, index) => (
             <SwiperSlide key={index}>
               {({isActive}) => (
@@ -153,7 +153,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
               )}
             </SwiperSlide>
           ))}
-        {/* </TinySlider> */}
+          {/* </TinySlider> */}
         </Swiper>
       </div>
 

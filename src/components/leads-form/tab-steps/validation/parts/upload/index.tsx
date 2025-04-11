@@ -229,12 +229,11 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
 
           <p className="mt-5">{confirmationInstruction}</p>
         </div>
-        ) : (
-          <div className="flex justify-center items-center h-full">
-            <CircularProgress size="50px" color="error" />
-          </div>
-        )
-      }
+      ) : (
+        <div className="flex justify-center items-center h-full">
+          <CircularProgress size="50px" color="error" />
+        </div>
+      )}
     </>
   );
 };

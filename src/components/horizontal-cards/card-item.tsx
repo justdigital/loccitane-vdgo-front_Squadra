@@ -8,8 +8,7 @@ import { useAppContext } from '@/contexts/app.context';
 import Image from 'next/image';
 import VideoComponent, { VideoComponentRefType } from '../commons/video';
 import TextOverlap from '../commons/text-overlap';
-import { sendGTMEvent } from '@next/third-parties/google';
-import { getPlainText } from '@/utils/general.util';
+import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 
 interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
@@ -52,13 +51,12 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
     //   return;
     // }
 
-    const textPlain = getPlainText(item.text)?.substring(0, 100) || item.linkUrl || 'Título'; 
-    sendGTMEvent({
+    const textPlain = getPlainText(item.text) || item.linkUrl || 'Título'; 
+    sendDataLayerEvent({
       'event': 'select_content',
       'section_name': 'cards_horizontais_lp1',
       'content_type': `card__${textPlain}`,
       'content_text': textPlain,
-      'page_url': window.location.href
     });
   };
 

@@ -1,5 +1,5 @@
-import { sendGTMEvent } from "@next/third-parties/google";
 import { ReactNode } from "react";
+import { sendDataLayerEvent } from "./general.util";
 
 export interface IStepCreateUser {
   fullName: string;
@@ -92,12 +92,11 @@ export const validateStep = (step: 'personalData' | 'contactData' | 'address' | 
   });
 }
 
-export const sendGtmFormEvent = (formStep: string, submitStatus: string, extraParams: object = {}) => {
-  sendGTMEvent({
+export const sendDataLayerFormEvent = (formStep: string, submitStatus: string, extraParams: object = {}) => {
+  sendDataLayerEvent({
     'event': 'form_lead',
     'form_step': formStep,
     'submit_status': submitStatus,
-    'page_url': window.location.href,
     ...extraParams
   });
 }

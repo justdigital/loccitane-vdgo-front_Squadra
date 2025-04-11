@@ -1,7 +1,6 @@
 'use client';
 import React, { forwardRef, RefAttributes, SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { sendGTMEvent } from '@next/third-parties/google';
-import { getPlainText } from '@/utils/general.util';
+import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 
 type ProgressTracked = {
   [key: string]: {tracked: boolean, progressName?: number, eventName: string};
@@ -53,11 +52,10 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
       event: eventName,
       video_title: videoText ? getPlainText(videoText) : 'Vídeo sem título',
       video_url: props.src,
-      page_url: window.location.href,
       ...(progress && { video_progress: `${progress.toFixed(0)}%`})
     };
 
-    sendGTMEvent(eventData)
+    sendDataLayerEvent(eventData)
   }, [videoText, props.src]);
 
   const handleVideoProgress = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
