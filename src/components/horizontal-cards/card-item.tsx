@@ -47,7 +47,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
     videoRef.current?.togglePlay();
   };
 
-  const handleCardClick = (e: React.MouseEvent) => {
+  const handleCardClick = () => {
     // if (!item.linkUrl) {
     //   return;
     // }
