@@ -8,6 +8,7 @@ import ISectionVerticalRectangularCard from '@/interfaces/section-vertical-recta
 import Image from 'next/image';
 import SectionsTitle from '../commons/sections-title';
 import { sendGTMEvent } from '@next/third-parties/google';
+import { getPlainText } from '@/utils/general.util';
 interface VerticalRectangularCardProps {
   sectionData: ISectionVerticalRectangularCard;
   className?: string;
@@ -32,13 +33,6 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
   const handleSlideClick = (cardData: { text?: string, linkUrl?: string }) => {
       //const visibleCard = document.querySelector(`.${css.btnIcon}[aria-hidden="false"]`);
       //const cardName = visibleCard?.querySelector(`.${css.linkUrl}`)?.textContent;
-
-      const getPlainText = (html?: string) => {
-        if (!html) return null;
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = html;
-        return tempDiv.textContent || tempDiv.innerText || '';
-      };
 
       sendGTMEvent({
         'event': 'select_content',

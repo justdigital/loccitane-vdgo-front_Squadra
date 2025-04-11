@@ -121,7 +121,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                       controls={false}
                       controlsList="nodownload nofullscreen noremoteplayback"
                       disablePictureInPicture
-                      src={item.videosUrls?.urlDesktop} 
+                      src={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop} 
                       aria-label={`Vídeo "${item.text}"`}
                       onVideoClick={handleVideoClick}
                     />
@@ -138,7 +138,12 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
 
                       {isActive && (
                         <>
-                          <LikeButton className="absolute top-5 right-4 z-[3]" />
+                          <LikeButton
+                            className="absolute top-5 right-4 z-[3]"
+                            videoTitle={item.videosUrls?.altText || ''}
+                            videoUrl={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop || ''}
+                            sectionName="videos_horizontais_lp2"
+                          />
                           <MuteButton className={`absolute bottom-8 right-2.5 z-[3]`} isMuted={isMuted} onClick={() => toggleMute()} />
                         </>
                       )}

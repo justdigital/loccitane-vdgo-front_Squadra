@@ -183,7 +183,12 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
           )}
 
           {/* Botão de curtir */}
-          <LikeButton className={`${css['btn-svg']} absolute top-5 right-4`} />
+          <LikeButton
+            className={`${css['btn-svg']} absolute top-5 right-4`}
+            videoTitle={sectionData.textTranscription || ''}
+            videoUrl={videoUrl || ''}
+            sectionName="video_largo_lp1"
+          />
 
           {/* Botão de compartilhar */}
           {/* <button 
