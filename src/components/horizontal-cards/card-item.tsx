@@ -20,7 +20,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
   const hasResetOnUnmute = useRef(false); // Novo ref para controle
   const { isMobileScreen: isMobile } = useAppContext();
   const isVideoCard = !item.cardTypeImage;
-  const videoUrl = item.videosUrls?.urlMobile || item.videosUrls.urlDesktop;
+  const videoUrl = item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop;
 
   const toggleMute = () => {
     const videoElement = videoRef?.current?.videoNativeElement;

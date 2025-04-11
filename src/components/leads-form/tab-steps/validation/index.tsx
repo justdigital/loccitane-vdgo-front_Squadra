@@ -23,7 +23,7 @@ type PossibleParts =
 
 const StepValidation: React.FC<StepValidationProps> = ({isTabActive}) => {
 
-  const [currentPart, setCurrentPart] = useState<PossibleParts>('validationAndDocumentTypeSelection');
+  const [currentPart, setCurrentPart] = useState<PossibleParts>('success');
 
   const {watch} = useFormContext<IFormInputs>();
 

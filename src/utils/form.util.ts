@@ -1,4 +1,5 @@
 import { sendGTMEvent } from "@next/third-parties/google";
+import { ReactNode } from "react";
 
 export interface IStepCreateUser {
   fullName: string;
@@ -29,7 +30,7 @@ export interface IStepAddress {
 }
 
 export interface SharedInfo {
-  headerTitle: string | Element;
+  headerTitle: string | Element | ReactNode;
   submitButtonLabel: string | null;
   submitButtonAction: () => void
   submitButtonLoading: boolean;
