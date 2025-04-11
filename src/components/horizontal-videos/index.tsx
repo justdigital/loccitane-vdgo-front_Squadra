@@ -47,7 +47,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
   useEffect(() => {
     if (!isInViewport) {
       console.log("FORA DA VISUALIZACAO")
-      toggleMute(); 
+      setIsMuted(true);
     }
   }, [isInViewport]);
 
