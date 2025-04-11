@@ -1,7 +1,8 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
+import React from 'react';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -19,7 +20,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const nextButtonRef = useRef<HTMLDivElement>(null);
   const prevButtonRef = useRef<HTMLDivElement>(null);
-  const [touchPosition, setTouchPosition] = useState<number | null>(null);
+  const touchPositionRef = useRef<number | null>(null);
   
   useEffect(() => {
     gsap.registerPlugin(Flip);
@@ -33,34 +34,32 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    const touchDown = e.touches[0].clientX;
-    setTouchPosition(touchDown);
+    touchPositionRef.current = e.touches[0].clientX;
   };
-  
+
   const handleTouchMove = (e: React.TouchEvent) => {
-    const touchDown = touchPosition;
-  
-    if (touchDown === null) {
-      return;
-    }
-  
+    const touchDown = touchPositionRef.current;
+    if (touchDown === null) return;
+
     const currentTouch = e.touches[0].clientX;
     const diff = touchDown - currentTouch;
-  
-    if (diff > 5) {
-      if (nextButtonRef.current) {
-        nextButtonRef.current.click();
-      }
+
+
+    if (diff > 10) {
+        touchPositionRef.current = null;
+        if (nextButtonRef.current) {
+            nextButtonRef.current.click();
+        }
+        return;
     }
-  
-    if (diff < -5) {
-      if (prevButtonRef.current) {
-        prevButtonRef.current.click();
-      }
+
+    if (diff < -10) {
+        if (prevButtonRef.current) {
+            prevButtonRef.current.click();
+        }
+        return;
     }
-  
-    setTouchPosition(null);
-  };
+};
 
   const moveItem = (direction: number) => {
     direction = direction || 1;
@@ -134,7 +133,8 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
       }
     });
   };
-
+  
+  /* Datalayer */
   const handleSlideClick = () => {
       const visibleCard = document.querySelector(`.${css.item}[aria-hidden="false"]`);
       const cardName = visibleCard?.querySelector(`.${css.textName}`)?.textContent;
