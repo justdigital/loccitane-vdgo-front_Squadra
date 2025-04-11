@@ -8,6 +8,7 @@ import VideoComponent from '../commons/video';
 import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
 import ButtonDefault from '../commons/button-default';
+import TextOverlap from '../commons/text-overlap';
 // import TinySlider from "tiny-slider-react";
 // import 'tiny-slider/dist/tiny-slider.css';
 
@@ -125,12 +126,14 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                       onVideoClick={handleVideoClick}
                     />
 
-                    <div className={`${css['action-buttons']} top-0`}>
+                    <div className={`${css['action-buttons']}`}>
                       {item.text && (
-                        <div
-                          className={`${css['video-transcription']} w-[70%] absolute z-[3] bottom-8 left-5 text-white`}
-                          dangerouslySetInnerHTML={{ __html: `${item.text}` }}
-                        />
+                        <TextOverlap>
+                          <div
+                            className={`${css['video-transcription']} w-[70%] absolute z-[3] bottom-8 left-5 text-white`}
+                            dangerouslySetInnerHTML={{ __html: `${item.text}` }}
+                          />
+                        </TextOverlap>
                       )}
 
                       {isActive && (

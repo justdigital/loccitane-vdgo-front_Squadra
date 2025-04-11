@@ -7,6 +7,7 @@ import MuteButton from '../commons/mute-button';
 import { useAppContext } from '@/contexts/app.context';
 import Image from 'next/image';
 import VideoComponent, { VideoComponentRefType } from '../commons/video';
+import TextOverlap from '../commons/text-overlap';
 
 interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
@@ -95,10 +96,12 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
           <div className='action-buttons'>
 
             {item.videosUrls?.altText && isMuted && (
-              <div
-                className={`${css['video-transcription']} w-[70%] absolute z-[3] bottom-8 left-5 text-white`}
-                dangerouslySetInnerHTML={{ __html: `${item.videosUrls?.altText}` }}
-              />
+              <TextOverlap>
+                <div
+                  className={`${css['video-transcription']} w-[70%] absolute z-[3] bottom-8 left-5 text-white`}
+                  dangerouslySetInnerHTML={{ __html: `${item.videosUrls?.altText}` }}
+                />
+              </TextOverlap>
             )}
 
             <LikeButton className="absolute top-5 right-4 z-[3] sm:hidden" />

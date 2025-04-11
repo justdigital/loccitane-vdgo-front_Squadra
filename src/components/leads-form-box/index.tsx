@@ -8,6 +8,7 @@ import { useAppContext } from '@/contexts/app.context';
 import ISectionTermsAndConditions from '@/interfaces/section-terms-and-conditions';
 import ISectionFooter from '@/interfaces/section-footer';
 import ISectionHeader from '@/interfaces/section-header';
+import TextOverlap from '../commons/text-overlap';
 
 interface LeadsFormHeaderProps {
   sectionData: ISectionBanner;
@@ -45,7 +46,8 @@ const LeadsFormBox: React.FC<LeadsFormHeaderProps> = ({sectionData, termsAndCond
   }, [termsAndConditionsSectionData, headerSectionData, footerSectionData])
 
   return (
-    <div className={`${css['banner-wrapper']}`} style={bannersUrls as React.CSSProperties}>
+    <div className={`${css['banner-wrapper']} relative`} style={bannersUrls as React.CSSProperties}>
+      <TextOverlap />
       <div
         className={`container w-full h-full flex flex-col sm:items-stretch md:flex-row space-y-4 md:space-y-0 md:space-x-4`}
       >
@@ -53,7 +55,7 @@ const LeadsFormBox: React.FC<LeadsFormHeaderProps> = ({sectionData, termsAndCond
           <Button label="Cadastre-se agora" onClick={openMobileForm} />
         </div>
         <div
-          className={`basis-full flex flex-col mb-60 justify-end ${css['banner-text']}`}
+          className={`basis-full flex flex-col mb-60 justify-end relative ${css['banner-text']}`}
           dangerouslySetInnerHTML={{ __html: sectionData.text }}
         >
           {/* <div>Revenda</div>

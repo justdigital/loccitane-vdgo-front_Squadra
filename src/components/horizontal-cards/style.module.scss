@@ -41,6 +41,7 @@
       border-radius: 20px;
       overflow: hidden;
       height: 569px;
+      position: relative;
 
       @media (screen(md)) {
         padding-right: 20px;
@@ -56,7 +57,6 @@
         border-radius: 20px;
         width: 100%;
         height: 100%;
-        background-image: linear-gradient(0deg, #0000008c 1%, #00000000 50%);
         cursor: pointer;
         z-index: 2;
 
@@ -133,4 +133,8 @@
       }
     }
   }
+}
+
+.video-modal {
+  max-height: 90dvh;
 }
