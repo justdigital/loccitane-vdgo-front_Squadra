@@ -12,9 +12,9 @@ export default function Custom404() {
       <p className='text-xs sm:text-sm text-[#552E0D]'>Desculpe, a página que você está procurando não existe.</p>
       <div className='pt-5'>
             <ButtonDefault 
+              className="w-60 sm:w-72 "
               label='Página inicial'
-              //href='https://reve.loccitaneaubresil.com/'
-              href={pagesUrls.lp1 || 'https://reve.loccitaneaubresil.com/'}
+              href={pagesUrls?.lp1 ?? 'https://reve.loccitaneaubresil.com/'}
             /> 
           </div>
     </div>
