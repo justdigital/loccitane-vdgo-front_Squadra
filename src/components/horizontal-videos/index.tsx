@@ -9,7 +9,7 @@ import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
 import ButtonDefault from '../commons/button-default';
 import TextOverlap from '../commons/text-overlap';
-import useIsInViewport from '@/hooks/useIsInViewport';
+import useIsInViewport from '@/hooks/useIsInViewport_';
 
 interface HorizontalVideosSectionProps {
   sectionData: ISectionHorizontalVideos

@@ -9,7 +9,7 @@ import Image from 'next/image';
 import VideoComponent, { VideoComponentRefType } from '../commons/video';
 import TextOverlap from '../commons/text-overlap';
 import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
-import useIsInViewport from '@/hooks/useIsInViewport';
+import useIsInViewport from '@/hooks/useIsInViewport_';
 
 interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
