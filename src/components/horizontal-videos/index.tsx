@@ -9,9 +9,7 @@ import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
 import ButtonDefault from '../commons/button-default';
 import TextOverlap from '../commons/text-overlap';
-import useIsInViewport from '@/hooks/useisInViewport';
-// import TinySlider from "tiny-slider-react";
-// import 'tiny-slider/dist/tiny-slider.css';
+import useIsInViewport from '@/hooks/useIsInViewport';
 
 interface HorizontalVideosSectionProps {
   sectionData: ISectionHorizontalVideos
@@ -29,10 +27,10 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
     rootMargin: "0px", // Margem ao redor do viewport
     threshold: 0.5, // Percentual visível para considerar "dentro da viewport"
   });
+
   const handleVideoClick = () => {
     setIsPaused(!isPaused);
   };
-
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
@@ -46,48 +44,18 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
   // Coloca o player no mudo quando o elemento sai da viewport
   useEffect(() => {
     if (!isInViewport) {
-      console.log("FORA DA VISUALIZACAO")
+      // console.log("FORA DA VISUALIZACAO")
       setIsMuted(true);
     }
   }, [isInViewport]);
-
-  // const gotoSlide = (index: number) => {
-  //   // if (swiper) {
-  //   //   console.log('vai pro slide:', index);
-  //   //   swiper.slideTo(index, 300, false);
-  //   // }
-  // };
-
-  // const settings = {
-  //   prevButton: false,
-  //   controls: false,
-  //   lazyload: true,
-  //   nav: false,
-  //   mouseDrag: true,
-  //   // items: 5,
-  //   loop: true,
-  //   // fixedWidth: 301,
-  //   center: true,
-  //   gutter: 5,
-  //   responsive: {
-  //     0: {
-  //       items: 1.5,
-  //       gutter: 5,
-  //     },
-  //     600: {
-  //       items: 5,
-  //       gutter: 10,
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     if (cardItems.length > 7) {
       return;
     }
 
-    const rest = 8 - cardItems.length;
-    const newCardItems = [...cardItems, ...sectionData.cardItems.splice(0, rest)];
+    const fillableCount = 8 - cardItems.length;
+    const newCardItems = [...cardItems, ...sectionData.cardItems.reverse().splice(0, fillableCount)];
     setCardItems(newCardItems);
   }, [cardItems]);
 
@@ -97,7 +65,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
         <SectionsTitle title={sectionData.title} subtitle={sectionData.subtitle} />
       </div>
 
-      <div ref={elementRef} className={`${css['slider-wrapper']} mt-5 sm:mt-10`}>
+      <div ref={elementRef as any} className={`${css['slider-wrapper']} mt-5 sm:mt-10`}>
         <Swiper
           onSwiper={setSwiper}
           spaceBetween={15}

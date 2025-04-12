@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 
 const useIsInViewport = (options?: IntersectionObserverInit) => {
   const [isInViewport, setIsInViewport] = useState(false);
-  const elementRef = useRef<HTMLDivElement | null>(null);
+  const elementRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
