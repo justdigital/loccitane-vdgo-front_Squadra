@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react';
 import ButtonDefault from "@/components/commons/button-default";
 import { useAppContext } from '@/contexts/app.context';
@@ -11,12 +9,12 @@ export default function Custom404() {
       <h1 className='text-xl sm:text-2xl text-[#552E0D]'>404 - Página Não Encontrada</h1>
       <p className='text-xs sm:text-sm text-[#552E0D]'>Desculpe, a página que você está procurando não existe.</p>
       <div className='pt-5'>
-            <ButtonDefault 
-              className="w-60 sm:w-72 "
-              label='Página inicial'
-              href={pagesUrls?.lp1 ?? 'https://reve.loccitaneaubresil.com/'}
-            /> 
-          </div>
+        <ButtonDefault 
+          className="w-60 sm:w-72 "
+          label='Página inicial'
+          href={pagesUrls?.lp1 ?? 'https://reve.loccitaneaubresil.com/'}
+        /> 
+      </div>
     </div>
   )
 }

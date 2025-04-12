@@ -29,6 +29,7 @@ const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentT
 
     try {
       onOk();
+      sendDataLayerFormEvent('validacao_inicio', 'success'); 
     } catch (e) {
       console.error(e);
     } finally {
@@ -42,7 +43,7 @@ const StepValidationCodeAndDocumentType: React.FC<StepValidationCodeAndDocumentT
     if (validateStep('validationCodeAndDocumentType', getFieldState)) {
       validateAndGoNextPart(() => {
         gotoNextPart();
-        sendDataLayerFormEvent('validacao_inicio', 'success'); 
+        
       });
     }
   }, [getFieldState]);

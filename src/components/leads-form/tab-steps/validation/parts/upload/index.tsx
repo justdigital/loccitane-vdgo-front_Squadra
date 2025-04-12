@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import css from './style.module.scss';
 import { useFormContext } from 'react-hook-form';
-import { DocumentType, IFormInputs } from '@/utils/form.util';
+import { DocumentType, IFormInputs, sendDataLayerFormEvent } from '@/utils/form.util';
 import { useAppContext } from '@/contexts/app.context';
 import { useAppFormContext } from '@/contexts/app-form.context';
 import { InstructionsByDocumentType } from '../upload-instructions/instructions-by-document-type';
@@ -64,20 +64,17 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
   const sendDocumentsToServer = async () => {
     setFormButtonProps({ loading: true });
     try {
+      sendDataLayerFormEvent('validacao_final', 'success');
       await finishRegisterAndSendDocuments(getUserFormId() as UUID, documentType, documentsUpload);
+      sendDataLayerFormEvent('conclusao', 'success');
       gotoNextPart();
     } catch (e) {
+      sendDataLayerFormEvent('validacao_final', 'error');
       console.log(e);
     } finally {
       setFormButtonProps({ loading: false });
     }
   }
-
-  const gotoTakeDocumentBack = () => {
-    setIsTakingDocumentBack(true);
-    removeSelectedFile(true);
-    goTakeDocument(true);
-  };
 
   const estractBase64Content = (base64Content: string) => {
     const base64 = base64Content.split(',')[1];
@@ -130,6 +127,12 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     }
   }, [documentsUpload, isTakingDocumentBack]);
 
+  const gotoTakeDocumentBack = () => {
+    setIsTakingDocumentBack(true);
+    removeSelectedFile(true);
+    goTakeDocument(true);
+  };
+
   const goTakeDocument = useCallback((takingBack = false) => {
     if (isMobileDevice && !!documentTypeInfo.crediLinkDocumentTypes.length) {
       const crediLinkDocumentType = documentTypeInfo.crediLinkDocumentTypes[(takingBack ? 1 : 0)];
@@ -137,6 +140,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
       return;
     }
 
+    sendDataLayerFormEvent((!takingBack ? 'validacao_frente' : 'validacao_verso'), 'success'); 
     fileSelectorRef.current?.click();
   }, [documentTypeInfo, isMobileDevice]);
 
