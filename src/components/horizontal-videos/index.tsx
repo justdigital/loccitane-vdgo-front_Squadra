@@ -25,7 +25,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
   const { isInViewport, elementRef } = useIsInViewport({
     root: null, // Use o viewport como referência
     rootMargin: "0px", // Margem ao redor do viewport
-    threshold: 0.5, // Percentual visível para considerar "dentro da viewport"
+    threshold: 0.3, // Percentual visível para considerar "dentro da viewport"
   });
 
   const handleVideoClick = () => {
@@ -40,11 +40,14 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
     }
   };
 
+  const onVideoVolumeChange = (e: any, volume: number, muted: boolean) => {
+    setIsMuted(muted);
+  };
+
 
   // Coloca o player no mudo quando o elemento sai da viewport
   useEffect(() => {
     if (!isInViewport) {
-      // console.log("FORA DA VISUALIZACAO")
       setIsMuted(true);
     }
   }, [isInViewport]);
@@ -88,7 +91,6 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
           }}
           // onSlideChange={() => console.log('slide change')}
         >
-          {/* <TinySlider settings={settings}> */}
           {cardItems.map((item, index) => (
             <SwiperSlide key={index}>
               {({isActive}) => (
@@ -108,6 +110,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                       src={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop} 
                       aria-label={`Vídeo "${item.text}"`}
                       onVideoClick={handleVideoClick}
+                      onVideoVolumeChange={onVideoVolumeChange}
                     />
 
                     <div className={`${css['action-buttons']}`}>
@@ -137,7 +140,6 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
               )}
             </SwiperSlide>
           ))}
-          {/* </TinySlider> */}
         </Swiper>
       </div>
 

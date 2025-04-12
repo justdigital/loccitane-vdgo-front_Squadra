@@ -48,6 +48,10 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
     }
   };
 
+  const onVideoVolumeChange = (e: any, volume: number, muted: boolean) => {
+    setIsMuted(muted);
+  };
+
   const handleVideoClick = () => {
     videoRef.current?.togglePlay();
   };
@@ -103,6 +107,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
               poster={isMobile ? item.imagesUrls?.mobile : item.imagesUrls?.desktop}
               aria-label="Vídeo"
               onVideoClick={handleVideoClick}
+              onVideoVolumeChange={onVideoVolumeChange}
             />
           )}
         </div>
@@ -137,7 +142,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
               videoUrl={videoUrl || ''}
               sectionName="cards_horizontais_lp1"
             />
-            {isInViewport && <MuteButton onClick={() => toggleMute()} isMuted={isMuted} className={`absolute bottom-8 right-2.5 z-[3] sm:hidden`} />}
+            <MuteButton onClick={() => toggleMute()} isMuted={isMuted} className={`absolute bottom-8 right-2.5 z-[3] sm:hidden`} />
           </div>
         )}
       </div>

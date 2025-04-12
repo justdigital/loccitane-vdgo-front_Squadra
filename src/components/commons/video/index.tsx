@@ -17,6 +17,7 @@ interface VideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
   onVideoClick?: (e: SyntheticEvent<HTMLVideoElement, Event>) => void;
   onVideoPause?: (e: SyntheticEvent<HTMLVideoElement, Event>) => void;
   onVideoPlay?: (e: SyntheticEvent<HTMLVideoElement, Event>) => void;
+  onVideoVolumeChange?: (e: SyntheticEvent<HTMLVideoElement, Event>, volume: number, muted: boolean) => void;
   doPlay?: boolean;
 }
 
@@ -31,6 +32,7 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
   onVideoClick,
   onVideoPause,
   onVideoPlay,
+  onVideoVolumeChange,
   videoText,
   doPlay,
   ...props
@@ -86,14 +88,6 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
   }
 
   const handleVideoEnd = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
-    // pushToDataLayer('video_complete');
-    // Object.keys(progressTracked).forEach((key) => progressTracked[key] = {...progressTracked[key], tracked: false});
-    // setProgressTracked(progressTracked);
-    // setProgressTracked(prev => ({
-    //   ...prev,
-    //   ...{Object.keys(prev).map((key) => ({...prev[key], tracked: false}))
-    // }));
-
     if (onVideoEnd)
       onVideoEnd(e);
   };
@@ -112,6 +106,20 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
     if (onVideoPlay)
       onVideoPlay(e);
   };
+
+  const handleVideoVolumeChange = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
+    if (onVideoVolumeChange) {
+      onVideoVolumeChange(e, e.currentTarget.volume, e.currentTarget.muted);
+    }
+  }
+
+  const muteAllOthersVideosFromHtml = () => {
+    document.querySelectorAll('video').forEach((video: HTMLVideoElement) => {
+      if (video !== videoRef.current) {
+        video.muted = true;
+      }
+    });
+  }
 
   React.useImperativeHandle(ref, () => ({
     videoNativeElement: videoRef.current,
@@ -151,6 +159,12 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
     videoRef.current.pause();
   }, [doPlay]);
 
+  useEffect(() => {
+    if (!props.muted) {
+      muteAllOthersVideosFromHtml();
+    }
+  }, [props.muted]);
+
 
   return (
     <video
@@ -163,6 +177,7 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
       onPause={handleVideoPause}
       onEnded={handleVideoEnd}
       onTimeUpdate={handleVideoProgress}
+      onVolumeChange={handleVideoVolumeChange}
       // onLoadedMetadata={handleVideoStart}
       onClick={handleVideoClick}
       // muted={isMuted}
