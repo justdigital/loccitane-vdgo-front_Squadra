@@ -24,13 +24,13 @@ const BannerStepExplain = (props: {
         <Image src={sectionData.imagesUrls.desktop} alt="image-banner" width={375} height={320} className="w-full h-auto" />
       </div>
       <div className="lg:w-[53%] w-full relative"
-      style={{
-        width: 
-          windowWidth < 1024 ? "auto"
-            : windowWidth <= 1280 ? whiteBoxWith["1280"]
-            : windowWidth <= 1366 ? whiteBoxWith["1366"]
-            : whiteBoxWith["1920"],
-      }}>
+        style={{
+          width: 
+            windowWidth < 1024 ? "auto"
+              : windowWidth <= 1280 ? whiteBoxWith["1280"]
+                : windowWidth <= 1366 ? whiteBoxWith["1366"]
+                  : whiteBoxWith["1920"],
+        }}>
         <div className="flex flex-col absolute justify-center items-center lg:items-start m-auto w-[85vw] lg:w-[107%] h-[50vh] lg:h-auto top-[-46vh] left-[10vw] lg:top-0 mb-4 lg:relative lg:left-[-40px] border-[3px] border-[#C02031]">
           <div className={`${css['banner-text-content']} p-[10px_14px_18px] mt-auto lg:p-9 bg-white w-full`} dangerouslySetInnerHTML={{ __html: sectionData.text }} />
         </div>

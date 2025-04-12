@@ -6,7 +6,7 @@ export const getPlainText = (str?: string) => {
 };
 
 export const sendDataLayerEvent = (eventData: any) => {
-  console.info('evento de dataLayer recebido:, ', eventData);
+  // console.info('evento de dataLayer recebido:, ', eventData);
   sendGTMEvent({
     ...eventData,
     ...(eventData?.content_text ? {'content_text': eventData?.content_text?.substring(0, 150)} : {}),
