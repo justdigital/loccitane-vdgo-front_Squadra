@@ -9,6 +9,7 @@ import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
 import ButtonDefault from '../commons/button-default';
 import TextOverlap from '../commons/text-overlap';
+import useIsInViewport from '@/hooks/useisInViewport';
 // import TinySlider from "tiny-slider-react";
 // import 'tiny-slider/dist/tiny-slider.css';
 
@@ -23,9 +24,15 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
   const [isPaused, setIsPaused] = useState(false);
   const [cardItems, setCardItems] = useState(sectionData.cardItems);
 
+  const { isInViewport, elementRef } = useIsInViewport({
+    root: null, // Use o viewport como referência
+    rootMargin: "0px", // Margem ao redor do viewport
+    threshold: 0.5, // Percentual visível para considerar "dentro da viewport"
+  });
   const handleVideoClick = () => {
     setIsPaused(!isPaused);
   };
+
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
@@ -34,6 +41,15 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
       setIsPaused(false);
     }
   };
+
+
+  // Coloca o player no mudo quando o elemento sai da viewport
+  useEffect(() => {
+    if (!isInViewport) {
+      console.log("FORA DA VISUALIZACAO")
+      setIsMuted(true);
+    }
+  }, [isInViewport]);
 
   // const gotoSlide = (index: number) => {
   //   // if (swiper) {
@@ -81,7 +97,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
         <SectionsTitle title={sectionData.title} subtitle={sectionData.subtitle} />
       </div>
 
-      <div className={`${css['slider-wrapper']} mt-5 sm:mt-10`}>
+      <div ref={elementRef} className={`${css['slider-wrapper']} mt-5 sm:mt-10`}>
         <Swiper
           onSwiper={setSwiper}
           spaceBetween={15}
