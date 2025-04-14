@@ -54,6 +54,8 @@ export default function RootLayout({
   return (
     <html lang="pt_BR">
       <head>
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
         <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
         <meta
           httpEquiv="Content-Security-Policy"

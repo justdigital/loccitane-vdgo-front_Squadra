@@ -135,7 +135,9 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   };
   
   /* Datalayer */
-  const handleSlideClick = () => {
+  const handleSlideClick = (
+    //cardData: { title?: string, text?: string },
+  ) => {
     const visibleCard = document.querySelector(`.${css.item}[aria-hidden="false"]`);
     const cardName = visibleCard?.querySelector(`.${css.textName}`)?.textContent;
 
@@ -143,6 +145,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
       'event': 'cta_interaction',
       'section_name': 'depoimentos',
       'cta_name': cardName || 'Nome',
+      //'content_text': getPlainText(cardData.text),
     });
   };
 

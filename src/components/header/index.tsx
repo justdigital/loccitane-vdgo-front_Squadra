@@ -46,7 +46,13 @@ const Header: React.FC<HeaderProps> = ({sectionData}) => {
                   <span>{sectionData.loginLinkTitle?.substring(0, 2)}</span>{sectionData.loginLinkTitle?.substring(2)}
                 </span>
                 {/* <LoginIcon /> */}
-                <Image src={sectionData.loginLinkIconUrl} alt="Whatsapp" width={34} height={34} />
+                <Image 
+                  src={sectionData.loginLinkIconUrl} 
+                  alt="Whatsapp" 
+                  width={34} 
+                  height={34} 
+                  //onClick={handleLoginIconClick}
+                />
               </a>
             </li>
             {/* <li className="whatsapp"><a href={''} target="_blank"><Image src="/assets/images/icons/whatsapp.svg" alt="Whatsapp" width={37} height={37} /></a></li> */}
