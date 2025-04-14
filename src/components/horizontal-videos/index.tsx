@@ -10,6 +10,7 @@ import MuteButton from '../commons/mute-button';
 import ButtonDefault from '../commons/button-default';
 import TextOverlap from '../commons/text-overlap';
 import useIsInViewport from '@/hooks/useIsInViewport_';
+import ShareButton from '../commons/share-button';
 
 interface HorizontalVideosSectionProps {
   sectionData: ISectionHorizontalVideos
@@ -68,7 +69,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
         <SectionsTitle title={sectionData.title} subtitle={sectionData.subtitle} />
       </div>
 
-      <div ref={elementRef as any} className={`${css['slider-wrapper']} mt-5 sm:mt-10`}>
+      <div ref={elementRef as any} className={`${css['slider-wrapper']} mt-5 sm:mt-[50px]`}>
         <Swiper
           onSwiper={setSwiper}
           spaceBetween={15}
@@ -98,7 +99,8 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                   <div className={`${css['video-item']} relative`}>
                     <VideoComponent
                       // ref={videoRef}
-                      className=""
+                      runsMuteOtherVideos={false}
+                      className={`${(!isActive ? 'inactive' : '')}`}
                       videoText={item.text}
                       loop
                       playsInline
@@ -107,34 +109,43 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                       controls={false}
                       controlsList="nodownload nofullscreen noremoteplayback"
                       disablePictureInPicture
-                      src={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop} 
+                      src={item.videosUrls?.urlDesktop} 
                       aria-label={`Vídeo "${item.text}"`}
                       onVideoClick={handleVideoClick}
                       onVideoVolumeChange={onVideoVolumeChange}
                     />
 
-                    <div className={`${css['action-buttons']}`}>
-                      {item.text && (
-                        <TextOverlap>
-                          <div
-                            className={`${css['video-transcription']} w-[70%] absolute z-[3] bottom-8 left-5 text-white`}
-                            dangerouslySetInnerHTML={{ __html: `${item.text}` }}
-                          />
-                        </TextOverlap>
-                      )}
+                    
+                    {item.text && (
+                      <TextOverlap>
+                        <div
+                          className={`${css['video-transcription']} w-[70%] absolute z-[3] bottom-8 left-5 text-white`}
+                          dangerouslySetInnerHTML={{ __html: `${item.text}` }}
+                        />
+                      </TextOverlap>
+                    )}
 
-                      {isActive && (
-                        <>
+                    {isActive && (
+                      <div className={`${css['action-buttons']} absolute h-[92%] top-5 right-4 z-[3] bg-red flex flex-col gap-y-2`}>
+                        <div className='grow flex flex-col gap-y-2'>
                           <LikeButton
-                            className="absolute top-5 right-4 z-[3]"
+                            className=""
                             videoTitle={item.videosUrls?.altText || ''}
                             videoUrl={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop || ''}
                             sectionName="videos_horizontais_lp2"
                           />
-                          <MuteButton className={`absolute bottom-8 right-2.5 z-[3]`} isMuted={isMuted} onClick={() => toggleMute()} />
-                        </>
-                      )}
-                    </div>
+                          <ShareButton
+                            className=""
+                            title={`Assista: ${item.videosUrls?.altText || ''}`}
+                            text={item.videosUrls?.altText || ''}
+                            url={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop || ''}
+                            sectionName="videos_horizontais_lp2"
+                          />
+                        </div>
+                        
+                        <MuteButton className={`bottom-8 right-2.5 z-[3] self-end justify-self-end`} isMuted={isMuted} onClick={() => toggleMute()} />
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
