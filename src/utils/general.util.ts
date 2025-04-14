@@ -1,6 +1,9 @@
 import { sendGTMEvent } from "@next/third-parties/google";
 
 export const getPlainText = (str?: string) => {
+  if (typeof DOMParser === 'undefined') {
+    return str || "";
+  }
   const doc = new DOMParser().parseFromString(str || '', 'text/html');
   return doc.body.textContent || "";
 };

@@ -10,7 +10,7 @@ const BannerOrderExplain = (props: {
   const { sectionData } = props;
 
   return (
-    <div className="bg-[#f7e4d2] pb-6">
+    <div className="bg-[#F6F7F7] pb-6">
       <div className='container flex flex-col lg:flex-row justify-between items-start'>
         <div className="flex flex-col lg:w-5/12 px-[17px] py-[36px] lg:p-0 w-full  order-2 lg:order-1 relative">
           {/* <div className='w-[220px] lg:w-auto mx-auto lg:mx-0 text-center lg:text-start leading-[100%]'

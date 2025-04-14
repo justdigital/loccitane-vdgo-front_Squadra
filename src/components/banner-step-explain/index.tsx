@@ -19,7 +19,7 @@ const BannerStepExplain = (props: {
   }
 
   return (
-    <div className="banner-step-explain pb-[40px] bg-[#f7e4d2] flex flex-col lg:flex-row justify-start items-center">
+    <div className="banner-step-explain pb-[40px] bg-[#F6F7F7] flex flex-col lg:flex-row justify-start items-center">
       <div className="lg:w-5/12 w-full">
         <Image src={sectionData.imagesUrls.desktop} alt="image-banner" width={375} height={320} className="w-full h-auto" />
       </div>

@@ -10,6 +10,7 @@ import VideoComponent, { VideoComponentRefType } from '../commons/video';
 import TextOverlap from '../commons/text-overlap';
 import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 import useIsInViewport from '@/hooks/useIsInViewport_';
+import ShareButton from '../commons/share-button';
 
 interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
@@ -124,7 +125,38 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
           </div>
         )}
 
+        {isVideoCard && item.videosUrls?.altText && isMuted && (
+          <TextOverlap>
+            <div
+              className={`${css['video-transcription']} w-[70%] absolute z-[3] bottom-8 left-5 text-white`}
+              dangerouslySetInnerHTML={{ __html: `${item.videosUrls?.altText}` }}
+            />
+          </TextOverlap>
+        )}
+        
         {isVideoCard && (
+          <div className={`action-buttons flex sm:hidden absolute h-[92%] top-5 right-4 z-[3] bg-red flex-col gap-y-2`}>
+            <div className='grow flex flex-col gap-y-2'>
+              <LikeButton
+                className=""
+                videoTitle={item.videosUrls?.altText || ''}
+                videoUrl={videoUrl || ''}
+                sectionName="cards_horizontais_lp1"
+              />
+              <ShareButton
+                className=""
+                title={`Assista: ${item.videosUrls?.altText || ''}`}
+                text={item.videosUrls?.altText || ''}
+                url={videoUrl || ''}
+                sectionName="cards_horizontais_lp1"
+              />
+            </div>
+            
+            <MuteButton className={`bottom-8 right-2.5 z-[3] self-end justify-self-end`} isMuted={isMuted} onClick={() => toggleMute()} />
+          </div>
+        )}
+
+        {/* {isVideoCard && (
           <div className='action-buttons'>
 
             {item.videosUrls?.altText && isMuted && (
@@ -144,7 +176,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
             />
             <MuteButton onClick={() => toggleMute()} isMuted={isMuted} className={`absolute bottom-8 right-2.5 z-[3] sm:hidden`} />
           </div>
-        )}
+        )} */}
       </div>
     </a>
   );
