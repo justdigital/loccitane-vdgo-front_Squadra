@@ -33,6 +33,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
 
   const uploadSdkRef = useRef(null);
 
+  const email = watch('email');
   const documentsUpload = watch('documentsUpload');
   const documentType: DocumentType = watch('documentType');
   const documentTypeInstructions = useMemo(() => InstructionsByDocumentType[documentType][(isMobileDevice ? 'mobile' : 'desktop')], [documentType, isMobileDevice]);
@@ -61,7 +62,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     }
   }, [isTakingDocumentBack, documentTypeInfo, InstructionsByDocumentType, documentsUpload]);
 
-  const sendDocumentsToServer = async () => {
+  const sendDocumentsToServer =  useCallback(async () => {
     setFormButtonProps({ loading: true });
     try {
       sendDataLayerFormEvent('validacao_final', 'success');
@@ -74,7 +75,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     } finally {
       setFormButtonProps({ loading: false });
     }
-  }
+  }, [documentType, documentsUpload, getUserFormId]);
 
   const estractBase64Content = (base64Content: string) => {
     const base64 = base64Content.split(',')[1];
@@ -83,7 +84,8 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
 
   const addDocumentToForm = useCallback((fileName: string, fileType: string, base64Content: string, file?: File) => {
     const selectedFileData = {fileName, base64Content: estractBase64Content(base64Content)};
-    setValue('documentsUpload', [...documentsUpload || [], selectedFileData]);
+    const newDocumentsUpload = [...documentsUpload || [], selectedFileData];
+    setValue('documentsUpload', newDocumentsUpload);
     setSelectedFileType(fileType);
 
     if (!fileType.includes('image/') && file) {
@@ -114,29 +116,30 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
 
   const removeSelectedFile = useCallback((isGoingTakeDocumentBack = false) => {
     if (documentsUpload && documentsUpload.length && !isGoingTakeDocumentBack) {
-      documentsUpload.pop();
-      setValue('documentsUpload', [...documentsUpload]);
+      // documentsUpload.pop();
+      // setValue('documentsUpload', [...documentsUpload]);
+      setValue('documentsUpload', []);
     }
 
     setSelectedFileType(null);
     setSelectedFileContent(undefined);
     fileSelectorRef.current!.value = '';
 
-    if (!isGoingTakeDocumentBack && !isTakingDocumentBack) {
-      backToSelectDocumentType();
-    }
+    // if (!isGoingTakeDocumentBack && !isTakingDocumentBack) {
+    backToSelectDocumentType();
+    // }
   }, [documentsUpload, isTakingDocumentBack]);
 
   const gotoTakeDocumentBack = () => {
     setIsTakingDocumentBack(true);
-    removeSelectedFile(true);
     goTakeDocument(true);
   };
 
   const goTakeDocument = useCallback((takingBack = false) => {
     if (isMobileDevice && !!documentTypeInfo.crediLinkDocumentTypes.length) {
       const crediLinkDocumentType = documentTypeInfo.crediLinkDocumentTypes[(takingBack ? 1 : 0)];
-      (uploadSdkRef.current as any).openSdkCamera(crediLinkDocumentType);
+      // console.log('crediLinkDocumentType', crediLinkDocumentType);
+      (uploadSdkRef.current as any).openSdkCamera(crediLinkDocumentType, takingBack);
       return;
     }
 
@@ -148,14 +151,14 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
   /**
    * Funções e sucesso e erro para upload via SDK
    */
-  const onSuccessTakingDocumentPhoto = (base64Content: string) => {
+  const onSuccessTakingDocumentPhoto = useCallback((base64Content: string, tookDocumentBack: boolean) => {
     // setIsTakingDocumentBack(false);
-    addDocumentToForm('teste.jpg', 'image/jpeg', base64Content);
-  };
+    const fileName = `${email}_${(new Date()).getTime()}${tookDocumentBack ? '_verso' : ''}.jpg`.replace(/@/g, '_');
+    addDocumentToForm(fileName, 'image/jpeg', base64Content);
+  }, [email, documentsUpload]);
 
   const onErrorTakingDocumentPhoto = () => {
     onCancel();
-    // console.error(error);
   };
   
   useEffect(() => {
@@ -226,7 +229,9 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
                 </ul>
               </div>
               <div className="w-1/5 justify-self-end">
-                <a onClick={() => removeSelectedFile()} className={`${css['delete-button']} flex justify-center items-center`}><DeleteOutlineIcon fontSize="medium" /></a>
+                <a onClick={() => removeSelectedFile()} className={`${css['delete-button']} flex justify-center items-center`}>
+                  <DeleteOutlineIcon fontSize="medium" />
+                </a>
               </div>
             </div>
           </div>

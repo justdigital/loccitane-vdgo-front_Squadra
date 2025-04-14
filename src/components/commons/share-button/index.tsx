@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReplyIcon from '@mui/icons-material/Reply';
 import { sendDataLayerEvent } from '@/utils/general.util';
 // import { sendDataLayerEvent } from '@/utils/general.util';
@@ -15,12 +15,7 @@ interface ShareButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>
 
 const ShareButton: React.FC<ShareButtonProps> = ({ iconProps, title, text, url, sectionName, contentType, ...props }) => {
 
-  const buttonAvailable = useMemo(() => {
-    if (typeof window !== 'undefined') {
-      return !!navigator.share;
-    }
-    return false;
-  }, []);
+  const [buttonAvailable, setButtonAvailable] = useState(false);
 
   const openShareBox = () => {
     sendDataLayerEvent({
@@ -39,6 +34,10 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconProps, title, text, url, 
       .catch((error) => console.log('Error sharing', error));
   }
 
+  useEffect(() => {
+    setButtonAvailable(typeof navigator.share !== 'undefined');
+  }, []);
+
   return (
     <>
       {buttonAvailable ? 
@@ -46,7 +45,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconProps, title, text, url, 
           {...props}
           className={`${props.className} bg-black/30 rounded-[100%] p-2 backdrop-blur-sm rotate-x-90`}
           aria-label={'Compartilhar'}
-          onClick={() => openShareBox()}
+          onClick={openShareBox}
         >
           <ReplyIcon
             {...iconProps}

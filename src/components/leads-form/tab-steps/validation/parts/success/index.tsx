@@ -43,7 +43,7 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
       label: undefined,
     });
     setValue('headerTitle', <div className="sm:text-center grow">Você conseguiu!<br />Etapa concluída com sucesso.</div>);
-    setTimeout(() => router.push(pagesUrls.lp2), 3000)
+    setTimeout(() => router.push(pagesUrls.lp2), (20 * 1000));
   }, [isTabActive]);
 
   useEffect(() => {
