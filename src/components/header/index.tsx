@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import css from './style.module.scss';
@@ -11,42 +11,37 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({sectionData}) => {
 
-  const handleLogoClick  = () => {
+  const eventData = {
+    'event': 'select_content',
+    'section_name': 'header',
+    'content_type': `link`,
+  }
+
+  const handleLogoClick = () => {
     sendDataLayerEvent({
-      event: 'click_content',
-      section_name: 'header',
-      content_text: sectionData.logoImageTitle,
-      element_type: 'logo'
+      ...eventData,
+      'content_text': sectionData.logoImageTitle,
     });
   };
 
-  const handleLoginIconClick = () => {
+  const handleLoginLinkClick = () => {
     sendDataLayerEvent({
-      event: 'click_content',
-      section_name: 'header',
-      content_text: sectionData.loginLinkTitle,
-      element_type: 'login_icon'
+      ...eventData,
+      'content_text': sectionData.loginLinkTitle,
     });
-  };
+  }
 
   return (
     <div id='header' className={`${css['header-container']}`}>
       <div className={`container relative flex flex-row md:justify-center items-end justify-between`}>
-        <a href={sectionData.logoLinkUrl} title={sectionData.loginLinkTitle}>
-          <Image 
-            src={sectionData.logoImagesUrls.desktop} 
-            className={css['logo-locci']} 
-            width={221} 
-            height={50} 
-            alt={sectionData.logoImageTitle || ''} 
-            onClick={handleLogoClick}
-          />
+        <a href={sectionData.logoLinkUrl} title={sectionData.logoImageTitle} onClick={handleLogoClick}>
+          <Image src={sectionData.logoImagesUrls.desktop} className={css['logo-locci']} width={221} height={50} alt={sectionData.logoImageTitle || ''} />
         </a>
 
         <div className={`${css['icon-buttons']}`}>
           <ul className='flex space-between items-center'>
             <li className={`${css['login']}`}>
-              <a href={sectionData.loginLink} onClick={handleLoginIconClick}target="_blank" className='flex items-center gap-2'>
+              <a href={sectionData.loginLink} title={sectionData.loginLinkTitle} target="_blank" className='flex items-center gap-2' onClick={handleLoginLinkClick}>
                 <span className={`${css['login-text']}`}>
                   <span>{sectionData.loginLinkTitle?.substring(0, 2)}</span>{sectionData.loginLinkTitle?.substring(2)}
                 </span>
@@ -56,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({sectionData}) => {
                   alt="Whatsapp" 
                   width={34} 
                   height={34} 
-                  onClick={handleLoginIconClick}
+                  //onClick={handleLoginIconClick}
                 />
               </a>
             </li>

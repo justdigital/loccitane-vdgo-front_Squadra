@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { sendDataLayerEvent } from "./general.util";
 
 export interface IStepCreateUser {
@@ -30,7 +29,7 @@ export interface IStepAddress {
 }
 
 export interface SharedInfo {
-  headerTitle: string | Element | ReactNode;
+  headerTitle: string | any;
   submitButtonLabel: string | null;
   submitButtonAction: () => void
   submitButtonLoading: boolean;

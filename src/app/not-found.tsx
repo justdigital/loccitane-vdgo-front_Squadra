@@ -1,5 +1,4 @@
-'use client'
-
+'use client';
 import React from 'react';
 import ButtonDefault from "@/components/commons/button-default";
 import { useAppContext } from '@/contexts/app.context';

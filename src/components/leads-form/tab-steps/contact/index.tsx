@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react';
 import { Box } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
 import FormTextField from '@/components/commons/form-inputs/text-field';
-import { IFormInputs, validateStep } from '@/utils/form.util';
+import { IFormInputs, sendDataLayerFormEvent, validateStep } from '@/utils/form.util';
 import { checkBirthdateMatches, checkEmailIsUnavailable, checkIndicationCodeIsValid, putPersonalData } from '@/services/backend-comunication.service';
 import FormCheckbox from '@/components/commons/form-inputs/checkbox';
 import _ from 'lodash';
@@ -49,8 +49,10 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
     try {
       const data = _.pick(getValues(), ['birthdate', 'email', 'gender', 'isIndication', 'resellerCode']);
       await putPersonalData(userFormId as UUID, data);
+      sendDataLayerFormEvent('contato', 'success');
       onOk();
     } catch (e) {
+      sendDataLayerFormEvent('contato', 'error');
       console.error('Erro ao enviar dados para o servidor:', e)
     } finally {
       setValue('submitButtonLoading', false);

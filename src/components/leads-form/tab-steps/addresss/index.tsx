@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Controller, useFormContext } from "react-hook-form";
 import { fetchAddressByCep } from '@/services/fetch-cep';
 import FormTextField from '@/components/commons/form-inputs/text-field';
-import { IFormInputs, validateStep } from '@/utils/form.util';
+import { IFormInputs, sendDataLayerFormEvent, validateStep } from '@/utils/form.util';
 import { useAppContext } from '@/contexts/app.context';
 import _ from 'lodash';
 import { getStateCityList, getStateList, putAddressData } from '@/services/backend-comunication.service';
@@ -96,8 +96,10 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       data.state = ''+(data.state as any).id;
       data.city = ''+(data.city as any).id;
       await putAddressData(userFormId as UUID, data);
+      sendDataLayerFormEvent('endereco', 'success');
       onOk();
     } catch (e) {
+      sendDataLayerFormEvent('endereco', 'error');
       console.error('Erro ao enviar dados para o servidor:', e)
     } finally {
       setValue('submitButtonLoading', false);

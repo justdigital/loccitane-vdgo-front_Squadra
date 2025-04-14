@@ -18,10 +18,10 @@ const LikeButton: React.FC<LikeButtonProps> = ({ iconProps, videoUrl, videoTitle
   const toggleLike = () => {
     setLiked(!liked);
     sendDataLayerEvent({
-      'event': !liked ? 'curtiu o vídeo' : 'descurtiu o vídeo',
+      'event': 'select_content',
       'section_name': sectionName,
       'content_type': `video`,
-      'content_text': videoTitle,
+      'content_text': !liked ? 'Curtiu o vídeo: ' : 'Descurtiu o vídeo: ' +videoTitle,
       'video_url': videoUrl,
     });
   }

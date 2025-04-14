@@ -9,8 +9,7 @@ import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
 import ButtonDefault from '../commons/button-default';
 import TextOverlap from '../commons/text-overlap';
-// import TinySlider from "tiny-slider-react";
-// import 'tiny-slider/dist/tiny-slider.css';
+import useIsInViewport from '@/hooks/useIsInViewport_';
 
 interface HorizontalVideosSectionProps {
   sectionData: ISectionHorizontalVideos
@@ -22,6 +21,12 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
   const [isMuted, setIsMuted] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [cardItems, setCardItems] = useState(sectionData.cardItems);
+
+  const { isInViewport, elementRef } = useIsInViewport({
+    root: null, // Use o viewport como referência
+    rootMargin: "0px", // Margem ao redor do viewport
+    threshold: 0.3, // Percentual visível para considerar "dentro da viewport"
+  });
 
   const handleVideoClick = () => {
     setIsPaused(!isPaused);
@@ -35,43 +40,25 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
     }
   };
 
-  // const gotoSlide = (index: number) => {
-  //   // if (swiper) {
-  //   //   console.log('vai pro slide:', index);
-  //   //   swiper.slideTo(index, 300, false);
-  //   // }
-  // };
+  const onVideoVolumeChange = (e: any, volume: number, muted: boolean) => {
+    setIsMuted(muted);
+  };
 
-  // const settings = {
-  //   prevButton: false,
-  //   controls: false,
-  //   lazyload: true,
-  //   nav: false,
-  //   mouseDrag: true,
-  //   // items: 5,
-  //   loop: true,
-  //   // fixedWidth: 301,
-  //   center: true,
-  //   gutter: 5,
-  //   responsive: {
-  //     0: {
-  //       items: 1.5,
-  //       gutter: 5,
-  //     },
-  //     600: {
-  //       items: 5,
-  //       gutter: 10,
-  //     }
-  //   }
-  // };
+
+  // Coloca o player no mudo quando o elemento sai da viewport
+  useEffect(() => {
+    if (!isInViewport) {
+      setIsMuted(true);
+    }
+  }, [isInViewport]);
 
   useEffect(() => {
     if (cardItems.length > 7) {
       return;
     }
 
-    const rest = 8 - cardItems.length;
-    const newCardItems = [...cardItems, ...sectionData.cardItems.splice(0, rest)];
+    const fillableCount = 8 - cardItems.length;
+    const newCardItems = [...cardItems, ...sectionData.cardItems.reverse().splice(0, fillableCount)];
     setCardItems(newCardItems);
   }, [cardItems]);
 
@@ -81,7 +68,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
         <SectionsTitle title={sectionData.title} subtitle={sectionData.subtitle} />
       </div>
 
-      <div className={`${css['slider-wrapper']} mt-5 sm:mt-10`}>
+      <div ref={elementRef as any} className={`${css['slider-wrapper']} mt-5 sm:mt-10`}>
         <Swiper
           onSwiper={setSwiper}
           spaceBetween={15}
@@ -104,7 +91,6 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
           }}
           // onSlideChange={() => console.log('slide change')}
         >
-          {/* <TinySlider settings={settings}> */}
           {cardItems.map((item, index) => (
             <SwiperSlide key={index}>
               {({isActive}) => (
@@ -124,6 +110,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                       src={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop} 
                       aria-label={`Vídeo "${item.text}"`}
                       onVideoClick={handleVideoClick}
+                      onVideoVolumeChange={onVideoVolumeChange}
                     />
 
                     <div className={`${css['action-buttons']}`}>
@@ -153,7 +140,6 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
               )}
             </SwiperSlide>
           ))}
-          {/* </TinySlider> */}
         </Swiper>
       </div>
 

@@ -13,8 +13,9 @@ const Footer: React.FC<FooterProps> = ({ sectionData }) => {
 
   const handleSlideClick = (cardData: { text?: string, linkUrl?: string, buttonLink?: string }) => {
     sendDataLayerEvent({
-      'event': 'click_content',
+      'event': 'select_content',
       'section_name': 'footer',
+      'content_type': `link`,
       'content_text': getPlainText(cardData?.text) || cardData?.linkUrl || cardData?.buttonLink || 'Título',
     });
   };
