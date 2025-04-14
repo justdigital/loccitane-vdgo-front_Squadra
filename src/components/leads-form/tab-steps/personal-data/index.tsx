@@ -184,7 +184,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
           render={({ field }) =>
             <FormCheckbox
               field={field}
-              label="Desejo receber informativos da L’Occitane ai Brésil?"
+              label="Desejo receber informativos da L’Occitane au Brésil?"
             />
           }
         />
