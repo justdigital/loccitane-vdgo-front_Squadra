@@ -58,7 +58,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
                 spaceBetween: 20
               }
             }}
-            onSlideChange={() => console.log('slide change')}
+            //onSlideChange={() => console.log('slide change')}
           >
             {sectionData.cardItems.map((item, index) => (
               <SwiperSlide key={index}>
