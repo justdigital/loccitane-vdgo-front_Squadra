@@ -8,6 +8,7 @@ import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
 import VideoComponent, { VideoComponentRefType } from '../commons/video';
 import useIsInViewport from '@/hooks/useIsInViewport_';
+import ShareButton from '../commons/share-button';
 
 interface LargeVideoSectionProps {
   sectionData: ISectionLargeVideo;
@@ -110,31 +111,25 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
             />
           )}
 
-          {/* Botão de curtir */}
-          <LikeButton
-            className={`${css['btn-svg']} absolute top-5 right-4`}
-            videoTitle={sectionData.textTranscription || ''}
-            videoUrl={videoUrl || ''}
-            sectionName="video_largo_lp1"
-          />
-
-          {/* Botão de compartilhar */}
-          {/* <button 
-            className={`${css['btn-svg']} absolute top-20 right-4 bg-black/30 rounded-full p-2 backdrop-blur-sm`}
-            aria-label="Compartilhar vídeo"
-            onClick={() => {}}
-          >
-            <ReplyIcon 
-              className="w-8 h-8" 
-              style={{ 
-                transform: "scaleX(-1) rotate(360deg)",
-                color: "#FFFFFFFF"
-              }} 
-            />
-          </button> */}
-
-          {/* Botão Mudo */}
-          <MuteButton onClick={toggleMute} isMuted={isMuted} className={`${css['btn-svg']} absolute bottom-8 right-2.5`} />
+          <div className={`action-buttons flex sm:hidden absolute h-[92%] top-5 right-4 z-[3] bg-red flex-col gap-y-2`}>
+            <div className='grow flex flex-col gap-y-2'>
+              <LikeButton
+                className=""
+                videoTitle={sectionData.textTranscription || ''}
+                videoUrl={videoUrl || ''}
+                sectionName="video_largo_lp1"
+              />
+              <ShareButton
+                className=""
+                title={`Assista: ${sectionData.textTranscription || ''}`}
+                text={sectionData.textTranscription || ''}
+                url={videoUrl || ''}
+                sectionName="video_largo_lp1"
+              />
+            </div>
+            
+            <MuteButton className={`bottom-8 right-2.5 z-[3] self-end justify-self-end`} isMuted={isMuted} onClick={() => toggleMute()} />
+          </div>
         </div>
       </div>
     </div>
