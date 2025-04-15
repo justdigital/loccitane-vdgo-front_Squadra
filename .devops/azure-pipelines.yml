@@ -18,10 +18,10 @@ variables:
 
 stages:
 - stage: CI
-  displayName: 'Next.js building'
+  displayName: 'NextJS building'
   jobs:
   - job: Build
-    displayName: 'Build and Package FRONT'
+    displayName: 'Build and Package NextJS'
     pool:
       vmImage: $(poolVmImage)
     condition: |
@@ -31,16 +31,44 @@ stages:
     - template: azure-pipelines-templates/front-build.yml
 
 
-- stage: CD
-  displayName: "Deploy to Kubernetes"
+- stage: DEVELOPMENT
+  displayName: "Development"
   dependsOn: CI
+  condition: |
+    and(
+      succeeded(),
+      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+    )
   jobs:
-  - job: Deploy
-    displayName: "Deploy FRONT"
-    pool:
-      vmImage: $(poolVmImage)
-    condition: |
-      or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'),
-         eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-    steps:
-    - template: azure-pipelines-templates/front-deploy.yml
+  - deployment: DeployToDevelopmentEnv
+    displayName: "Deploy NextJS to Development Environment"
+    environment: 'development'
+    strategy:
+      runOnce:
+        deploy:
+          pool:
+            vmImage: $(poolVmImage)
+          steps:
+          - template: azure-pipelines-templates/front-deploy.yml
+
+
+- stage: PRODUCTION
+  displayName: "Production"
+  dependsOn: []
+  condition: |
+    and(
+      succeeded(),
+      eq(variables['Build.SourceBranch'], 'refs/heads/main'),
+      ne(variables['Build.Reason'], 'PullRequest')
+    )
+  jobs:
+  - deployment: DeployToProductionEnv
+    displayName: "Deploy NextJS to Production Environment"
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          pool:
+            vmImage: $(poolVmImage)
+          steps:
+          - template: azure-pipelines-templates/front-deploy.yml
