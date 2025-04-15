@@ -6,7 +6,7 @@ import { useAppFormContext } from '@/contexts/app-form.context';
 import { useFormContext } from 'react-hook-form';
 import { IFormInputs, sendDataLayerFormEvent } from '@/utils/form.util';
 import { useAppContext } from '@/contexts/app.context';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface StepSuccessProps {
   isTabActive?: boolean;
@@ -17,7 +17,6 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
   const {setFormButtonProps} = useAppFormContext();
   const {pagesUrls} = useAppContext();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const {
     watch, setValue
@@ -47,7 +46,7 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
   }, [isTabActive]);
 
   useEffect(() => {
-    sendDataLayerFormEvent('generate_lead', 'success', {lead_source: searchParams.get('utm_source')});
+    sendDataLayerFormEvent('conclusao', 'success');
   }, []);
 
   
