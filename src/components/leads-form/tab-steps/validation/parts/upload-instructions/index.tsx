@@ -8,7 +8,7 @@ import { useAppContext } from '@/contexts/app.context';
 import { InstructionsByDocumentType } from './instructions-by-document-type';
 import { useAppFormContext } from '@/contexts/app-form.context';
 import FormRadioButton from '@/components/commons/form-inputs/radio';
-import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 interface UploadInstructionsProps {
   isTabActive: boolean;
@@ -56,7 +56,7 @@ const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, bac
       return;
     }
     
-    const buttonLabel = !isMobileScreen ? 'Enviar arquivo' : (documentType === 'CNH_DIGITAL' ? 'Fazer Upload' : 'Tirar foto');
+    const buttonLabel = !isMobileScreen ? 'Enviar arquivo' : (['CNH_DIGITAL', 'RG_DIGITAL'].includes(documentType) ? 'Fazer Upload' : 'Tirar foto');
     setFormButtonProps({
       label: buttonLabel,
     });
@@ -113,9 +113,9 @@ const UploadInstructions: React.FC<UploadInstructionsProps> = ({isTabActive, bac
                   <li key={index}>{instruction}</li>
                 ))}
               </ul>
-              <a className={`${css['back-document-type-link']} block mt-2`} onClick={backToSelectDocumentType}>
-                <div className="inline-block mr-2">
-                  <KeyboardArrowLeftIcon className={`${css['icon-back']}`} />
+              <a className={`${css['back-document-type-link']} flex items-center mt-5`} onClick={backToSelectDocumentType}>
+                <div className={`${css['icon-back']} inline-block mr-2`}>
+                  <NavigateBeforeIcon />
                 </div>
                 Voltar
               </a>

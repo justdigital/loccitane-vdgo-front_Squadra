@@ -13,6 +13,7 @@ import { CircularProgress } from '@mui/material';
 import { UUID } from 'crypto';
 import { finishRegisterAndSendDocuments } from '@/services/backend-comunication.service';
 import UploadApiCredilink from './upload-api-credilink';
+import { useSearchParams } from 'next/navigation';
 
 interface UploadProps {
   isTabActive: boolean;
@@ -27,6 +28,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     setValue
   } = useFormContext<IFormInputs>();
 
+  const searchParams = useSearchParams();
   const {getUserFormId} = useAppContext();
   const {setFormButtonProps} = useAppFormContext();
   const { isMobileDevice } = useAppContext();
@@ -49,10 +51,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
   }, [documentTypeInstructions, isTakingDocumentBack]);
   
   const clickButton = useCallback(async () => {
-    // setValue('submitButtonLoading', true);
-    // sendGtmFormEvent('validacao_inicio', 'success');
     if (documentTypeInfo.hasDocumentBack && !isTakingDocumentBack) {
-      // console.log('vai capturar o verso', 'documentsUpload', documentsUpload);
       gotoTakeDocumentBack();
       return;
     }
@@ -65,12 +64,10 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
   const sendDocumentsToServer =  useCallback(async () => {
     setFormButtonProps({ loading: true });
     try {
-      sendDataLayerFormEvent('validacao_final', 'success');
       await finishRegisterAndSendDocuments(getUserFormId() as UUID, documentType, documentsUpload);
-      sendDataLayerFormEvent('conclusao', 'success');
+      sendDataLayerFormEvent('generate_lead', 'success', {lead_source: searchParams.get('utm_source')});
       gotoNextPart();
     } catch (e) {
-      sendDataLayerFormEvent('validacao_final', 'error');
       console.log(e);
     } finally {
       setFormButtonProps({ loading: false });
@@ -143,7 +140,6 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
       return;
     }
 
-    sendDataLayerFormEvent((!takingBack ? 'validacao_frente' : 'validacao_verso'), 'success'); 
     fileSelectorRef.current?.click();
   }, [documentTypeInfo, isMobileDevice]);
 

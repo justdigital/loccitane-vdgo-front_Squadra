@@ -92,10 +92,12 @@ export const validateStep = (step: 'personalData' | 'contactData' | 'address' | 
 }
 
 export const sendDataLayerFormEvent = (formStep: string, submitStatus: string, extraParams: object = {}) => {
-  sendDataLayerEvent({
+  const data = {
     'event': 'form_lead',
     'form_step': formStep,
     'submit_status': submitStatus,
     ...extraParams
-  });
+  };
+  // console.log('novo evento: ', data)
+  sendDataLayerEvent(data);
 }
