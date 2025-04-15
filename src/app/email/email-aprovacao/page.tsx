@@ -230,7 +230,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
                                                                 <div style="display: flex; align-items: center;">
-                                                                    <a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-04-25/?page=1" style="display: inline-block;">
+                                                                    <a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-05-25/" style="display: inline-block;">
 																		<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/revistaDigital.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=1X7ZQKEhxhITVw3cXRS6uK%2F1Dcyn9m3nsvkIiZdCU10%3D" width="26">
 																	</a>
                                                                     <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">REVISTA<BR>DIGITAL</span>
@@ -297,7 +297,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
                                                                 <div style="display: flex; align-items: center;">
-                                                                     <a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-04-25/?page=1" style="display: inline-block;">
+                                                                     <a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-05-25/" style="display: inline-block;">
 																		<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/revistaDigital.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=1X7ZQKEhxhITVw3cXRS6uK%2F1Dcyn9m3nsvkIiZdCU10%3D" width="26">
 																	</a>
                                                                     <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">REVISTA<BR>DIGITAL</span>
