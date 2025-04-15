@@ -1,0 +1,42 @@
+steps:
+- checkout: self
+
+- task: Docker@2
+  displayName: 'Build Docker Image'
+  inputs:
+    containerRegistry: $(containerRegistry)
+    repository: '$(Build.SourceBranchName)/$(Build.Repository.Name)'
+    command: 'build'
+    Dockerfile: '.devops/docker/Dockerfile'
+    buildContext: '.'
+    arguments: >-
+      --build-arg NEXT_PUBLIC_DRUPAL_BASE_URL=$(env_NEXT_PUBLIC_DRUPAL_BASE_URL)
+      --build-arg NEXT_IMAGE_DOMAIN=$(env_NEXT_IMAGE_DOMAIN)
+      --build-arg NEXT_GTM_CODE=$(env_NEXT_GTM_CODE)
+      --build-arg NEXT_API_BASE_URL=$(env_NEXT_API_BASE_URL)
+      --build-arg NEXT_CREDILINK_UNICO_HOSTNAME=$(env_NEXT_CREDILINK_UNICO_HOSTNAME)
+      --build-arg NEXT_CREDILINK_UNICO_HOSTKEY=$(env_NEXT_CREDILINK_UNICO_HOSTKEY)
+    tags: |
+      $(Build.BuildId)
+
+- task: Docker@2
+  displayName: 'Push Docker Image'
+  inputs:
+    containerRegistry: $(containerRegistry)
+    repository: '$(Build.SourceBranchName)/$(Build.Repository.Name)'
+    command: 'push'
+    tags: |
+      $(Build.BuildId)
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '.devops/helm'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@1
+  displayName: "Publish Helm Chart"
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    artifact: 'helm'
+    publishLocation: 'pipeline'

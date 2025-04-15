@@ -1,0 +1,53 @@
+.upload-confirmation-box{
+  color: $locci-coffee;
+
+  h2 {
+    font-weight: 700;
+    font-size: .75rem;
+    line-height: 1rem;
+
+    @media (screen(sm)) {
+      font-size: 1rem;
+    }
+  }
+
+  .uploaded-file-box {
+
+
+    .image-preview {
+      max-height: 150px;
+    }
+
+    .uploaded-file-actions {
+
+      ul {
+        margin: 0;
+        margin-left: 15px;
+        padding: 0;
+        list-style-type: disc;
+      }
+
+      .delete-button {
+        background-color: rgba(217, 217, 217, 0.3);
+        // padding: 10px 10px 15px;
+        font-size: 2rem;
+        width: 55px;
+        height: 49px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(217, 217, 217, 0.589);
+        }
+      }
+    }
+  }
+
+  p, .uploaded-file-actions {
+    font-size: .75rem;
+    line-height: 1rem;
+
+    @media (screen(sm)) {
+      font-size: .875rem;
+    }
+  }
+}

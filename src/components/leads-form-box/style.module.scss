@@ -1,0 +1,42 @@
+.banner-wrapper {
+  min-height: calc(100dvh - 118px);
+  background-image: var(--banner-url-mobile);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 40px 0;
+
+  @media (screen(md)) {
+    background-image: var(--banner-url-desktop);
+    padding: 50px 100px;
+    min-height: 720px;
+  }
+
+  .banner-text {
+    margin-bottom: 60px;
+    // color: white;
+    line-height: normal;
+
+    // p {
+    //   font-size: 1.25rem;
+    //   line-height: 1.25rem;
+    //   font-weight: 700;
+
+    //   @media (screen(md)) {
+    //     font-size: 2.25rem;
+    //     line-height: 2.5rem;
+    //   }
+    // }
+
+    // h2 {
+    //   font-size: 2.5rem;
+    //   line-height: 2.5rem;
+    //   font-weight: 600;
+
+    //   @media (screen(md)) {
+    //     font-size: 4rem;
+    //     line-height: 4.5rem;
+    //   }
+    // }
+  }
+}

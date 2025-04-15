@@ -1,0 +1,20 @@
+.fields-box {
+  // margin-top: 20px;
+
+  :global(.MuiTextField-root:not(:first-child)) {
+    margin-top: 35px !important;
+  }
+
+  .helper-text-link {
+    color: black;
+    text-decoration: underline;
+  }
+
+  .checkboxes-box {
+    margin-bottom: 10px;
+  
+    :global(label) {
+      margin-bottom: -10px;
+    }
+  }
+}

@@ -1,0 +1,74 @@
+trigger:
+  branches:
+    include:
+      - develop
+      - release
+      - main
+
+resources:
+- repo: self
+
+variables:
+  - group: general-pipeline
+
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/develop') }}:
+    - group: loccitane-vdgo-front-dev
+  - ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
+    - group: loccitane-vdgo-front-prd
+
+stages:
+- stage: CI
+  displayName: 'NextJS building'
+  jobs:
+  - job: Build
+    displayName: 'Build and Package NextJS'
+    pool:
+      vmImage: $(poolVmImage)
+    condition: |
+      or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'),
+         eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    steps:
+    - template: azure-pipelines-templates/front-build.yml
+
+
+- stage: DEVELOPMENT
+  displayName: "Development"
+  dependsOn: CI
+  condition: |
+    and(
+      succeeded(),
+      eq(variables['Build.SourceBranch'], 'refs/heads/develop')
+    )
+  jobs:
+  - deployment: DeployToDevelopmentEnv
+    displayName: "Deploy NextJS to Development Environment"
+    environment: 'development'
+    strategy:
+      runOnce:
+        deploy:
+          pool:
+            vmImage: $(poolVmImage)
+          steps:
+          - template: azure-pipelines-templates/front-deploy.yml
+
+
+- stage: PRODUCTION
+  displayName: "Production"
+  dependsOn: []
+  condition: |
+    and(
+      succeeded(),
+      eq(variables['Build.SourceBranch'], 'refs/heads/main'),
+      ne(variables['Build.Reason'], 'PullRequest')
+    )
+  jobs:
+  - deployment: DeployToProductionEnv
+    displayName: "Deploy NextJS to Production Environment"
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          pool:
+            vmImage: $(poolVmImage)
+          steps:
+          - template: azure-pipelines-templates/front-deploy.yml

@@ -1,0 +1,133 @@
+@mixin label-error {
+  position: absolute;
+  width: calc(100% - 20px);
+  font-size: 0.68rem;
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 0px;
+  bottom: -20px;
+}
+
+.input, .select {
+  display: block;
+  width: 100%;
+  font-family: var(--font-loccitane-sans);
+  border-radius: 0;
+  background-color: white;
+  color: rgba(34, 0, 0, 1);
+  font-size: 0.87rem;
+
+  & {
+    :global([disabled]) {
+      background-color: rgba(200, 197, 197, 0.1);
+    }
+  }
+
+  &.valid, &.invalid {
+    position: relative;
+
+    &.select:after {
+      right: 25px;
+    }
+
+    &:after {
+      content: " ";
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      right: 10px;
+      top: calc(50% - 12px);
+    }
+
+    &.valid {
+      &:after {
+        background-image: url(/assets/images/icons/check-circle.svg);
+      }
+      
+      :global(fieldset) {
+        border: 1px solid #51CF66 !important;
+      }
+    }
+
+    &.invalid {
+      &:after {
+        background-image: url(/assets/images/icons/cross-circle.svg);
+      }
+
+      :global(fieldset) {
+        border: 1px solid #d32f2f !important;
+      }
+    }
+  }
+
+  :global(label) {
+    color: rgba(200, 197, 197, 0.8) !important;
+
+    &[data-shrink="true"] {
+      color: rgba(15, 15, 15, 1) !important;
+    }
+  }
+
+  :global(fieldset) {
+    border: 1px solid #C8C5C5;
+  }
+
+  :global(.MuiInputBase-root) {
+    border-radius: 0;
+  }
+
+  :global(.MuiFormControl-root) {
+    position: relative;
+  }
+
+  :global(p.Mui-error) {
+    text-align: right;
+    @include label-error
+  }
+}
+
+.checkbox, .radio {
+  :global(.MuiFormControlLabel-root) {
+    margin-right: 0;
+  }
+
+  :global(.MuiCheckbox-root.Mui-disabled) {
+    opacity: 0.3;
+  }
+
+  :global(.MuiCheckbox-root) {
+    // padding: 9px 0 0;
+  }
+}
+
+.checkbox-error, .radio-error {
+  @include label-error;
+  width: calc(100% - 42px);
+  margin-left: 30px;
+  color: #d32f2f;
+
+  @media (screen(sm)) {
+    margin-left: 42px;
+  }
+}
+
+a.checkbox-label, a.radio-label {
+  text-decoration: underline;
+}
+
+.checkbox-label, .radio-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(85, 46, 13, 1);
+  margin-left: 0;
+  letter-spacing: -0.3px;
+
+  &.radio-label {
+    font-weight: 500;
+  }
+
+  @media (screen(sm)) {
+    margin-left: 10px;
+    font-size: 0.875rem;
+  }
+}

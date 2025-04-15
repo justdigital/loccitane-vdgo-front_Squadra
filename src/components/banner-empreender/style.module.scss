@@ -1,0 +1,63 @@
+.banner-wrapper {
+  position: relative;
+  display: block;
+  padding: 20px 0 0 0;
+  height: 340px;
+
+  @media (screen(md)) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 23px 0 58px 0;
+  }
+  
+
+  .container {
+    margin-left: auto;
+    z-index: 1;
+  }
+
+  .container .text{
+    max-height: 300px;
+    line-height: 40px;
+    margin-bottom: 10px;
+
+    @media (screen(md)) {
+      max-height: 230px;
+      overflow: hidden;
+      line-height: 63px;
+    }
+  }
+  
+  .button-default {
+    text-align: center;
+  }
+
+  .button-default button{
+    //width: 174px;
+    //font-size: 12px;
+    padding: 10.5px 22.5px;
+
+    @media (screen(md)) {
+      width: 277px;
+      padding: 12.5px 50px;
+      font-size: 16px;
+    }
+  }
+
+  &.has-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--banner-url-mobile);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    
+    @media (screen(md)) {
+      background-image: var(--banner-url-desktop);
+    }
+  }
+}

@@ -1,0 +1,81 @@
+.sectionContainer {
+  width: 100%;
+  padding-bottom: 75px;
+  background-color: #FFFFFF;
+
+
+  @media (screen(md)) {
+    padding: 33px 20px;
+  }
+}
+
+.footerContainer {
+  display: grid;
+  grid-template-areas:
+    "footerItens footerImage"
+    "footerBottom footerBottom";
+  grid-template-columns: 4fr 1fr;
+  gap: 2px;
+
+  @media (screen(md)) {
+    grid-template-areas:
+    "footerItens footerImage"
+    "footerBottom footerImage";
+  }
+}
+
+.footerContainer > div.footerItens {
+  grid-area: footerItens;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+
+  @media (screen(md)) {
+    flex-direction: row;
+    gap: 33px;
+    padding-top: 29px;
+  }
+}
+.footerContainer > div.footerImage {
+  grid-area: footerImage;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5px;
+
+  @media (screen(md)) {
+    align-items: center;
+  }
+}
+.footerContainer > div.footerBottom {
+  grid-area: footerBottom;
+  padding-top: 34px;
+}
+
+.columnContent{
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  gap: 11px;
+}
+
+.columnContent img{
+  min-width: 30px;
+  min-height: 30px;
+}
+
+.columnContent .columnText{
+  word-break: break-word;
+}
+
+.footerImage img {
+  height: 72px;
+  width: 72px;
+  object-fit: contain;
+  cursor: pointer;
+
+  @media (screen(md)) {
+    height: 167px;
+    width: 167px;
+  }
+}

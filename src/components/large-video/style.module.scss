@@ -1,0 +1,32 @@
+.section-container {
+  width: 100%;
+  margin: 0 auto;
+  font-family: Raleway;
+  background-color: #F7E4D2;
+}
+
+.transcription{
+  width: 205px;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 26px;
+}
+
+.transcription span{
+  display: inline-block;
+  font-size: 40px;
+  transform: rotate(180deg);
+}
+
+@media  (screen(sm)) {
+  
+  .transcription{
+    width: 458px;
+    font-size: 38px;
+    line-height: 40px;
+  }
+
+  .transcription span{
+    font-size: 60px;
+  }
+}

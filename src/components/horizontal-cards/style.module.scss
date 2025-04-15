@@ -1,0 +1,140 @@
+.section-wrapper {
+  background-color: #f6f7f7;
+
+  .slider-wrapper {
+    position: relative;
+    width: 100%;
+
+    :global(.swiper) {
+      min-width: 100%;
+    }
+
+    .navigation-button {
+      position: absolute;
+      z-index: 2;
+      display: none;
+
+      @media (screen(md)) {
+        display: block;
+      }
+
+      &> * {
+        color: rgba(0, 0, 0, 0.4);
+        width: 49px;
+        height: 49px;
+        border: 4px solid;
+        border-radius: 50%;
+      }
+
+      &.prev {
+        // margin-top: -23px;
+        left: -25px;
+      }
+
+      &.next {
+        right: -25px;
+      }
+    }
+
+    .card-item {
+      background-color: white;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 569px;
+      position: relative;
+
+      @media (screen(md)) {
+        padding-right: 20px;
+        height: 278px;
+      }
+
+      &.video-card {
+        padding-right: 0;
+      }
+
+      .play-button-box {
+        position: absolute;
+        border-radius: 20px;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        z-index: 2;
+
+        &> * {
+          // stroke: black;
+          // stroke-width: 0.1px;
+          transition: all .3s ease-in-out;
+        }
+
+        &:hover > * {
+          transform: scale(1.3);
+        }
+
+        &> * {
+          color: white;
+          width: 70px;
+          height: 70px;
+        }
+      }
+
+      .side-image {
+        height: 297px;
+        background-size: cover;
+        background-position: center center;
+        background-image: var(--image-mobile);
+
+        &.video-card {
+          height: 100%;
+        }
+
+        @media (screen(md)) {
+          height: auto;
+          background-image: var(--image-desktop);
+        }
+
+        video {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 20px;
+          position: relative;
+          z-index: 1;
+        }
+      }
+
+      .video-transcription {
+        width: 60%;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: 26px;
+
+        &::before {
+          content: ',,';
+          font-size: 40px;
+          transform: rotate(180deg);
+          display: inline-block;
+        }
+      }
+
+      .side-text {
+        padding: 20px;
+
+        @media (screen(md)) {
+          padding: 30px 15px 15px;
+        }
+
+        // &> * {
+        //   margin-bottom: 10px;
+        // }
+
+        .icone-link {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.video-modal {
+  max-height: 90dvh;
+}

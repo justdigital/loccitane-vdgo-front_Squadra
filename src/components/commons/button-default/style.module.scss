@@ -1,0 +1,22 @@
+.button {
+  font-size: 1rem;
+  font-weight: 600;
+  max-width: 337px;
+  min-width: 174px;
+  padding: 18px 55px;
+  border: 1px solid $locci-red ;
+  border-radius: 5px;
+  background-color: $locci-snow;
+  color: $locci-coffee;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    color: $locci-snow;
+    background-color: $locci-blush;
+    border: 1px solid $locci-coffee ;
+  }
+  @media (screen(md)) {
+    padding: 22px 40px;
+   }
+}

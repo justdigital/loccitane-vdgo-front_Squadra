@@ -1,0 +1,67 @@
+steps:
+- checkout: self
+
+- task: DownloadPipelineArtifact@2
+  displayName: 'Download Helm Chart Artifact'
+  inputs:
+    artifact: 'helm'
+    path: '$(System.DefaultWorkingDirectory)/helm'
+
+- script: |
+    cat > $(System.DefaultWorkingDirectory)/environment-values.yaml <<EOT
+    env:
+      NEXT_PUBLIC_DRUPAL_BASE_URL: $(env_NEXT_PUBLIC_DRUPAL_BASE_URL)
+      NEXT_IMAGE_DOMAIN: $(env_NEXT_IMAGE_DOMAIN)
+      NEXT_GTM_CODE: $(env_NEXT_GTM_CODE)
+      NEXT_API_BASE_URL: $(env_NEXT_API_BASE_URL)
+      NEXT_CREDILINK_UNICO_HOSTNAME: $(env_NEXT_CREDILINK_UNICO_HOSTNAME)
+      NEXT_CREDILINK_UNICO_HOSTKEY: $(env_NEXT_CREDILINK_UNICO_HOSTKEY)
+    livenessProbe:
+      tcpSocket:
+        port: 3000
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 1
+      successThreshold: 1
+      failureThreshold: 3
+    readinessProbe:
+      tcpSocket:
+        port: 3000
+      initialDelaySeconds: 5
+      periodSeconds: 10
+      timeoutSeconds: 1
+      successThreshold: 1
+      failureThreshold: 3
+    EOT
+    cat $(System.DefaultWorkingDirectory)/environment-values.yaml
+  displayName: 'Create environment-values.yaml'
+
+- task: HelmDeploy@0
+  displayName: 'Helm Upgrade'
+  inputs:
+    connectionType: 'Kubernetes Service Connection'
+    kubernetesServiceConnection: '$(kubernetesConn)'
+    namespace: '$(namespace)'
+    command: upgrade
+    chartName: '$(System.DefaultWorkingDirectory)/helm/$(helmChart)'
+    releaseName: '$(releaseName)'
+    overrideValues: |
+      image.repository=$(registry)/$(Build.SourceBranchName)/$(Build.Repository.Name)
+      image.tag=$(Build.BuildId)
+      replicas=$(replicas)
+      resources.requests.cpu=$(requests_cpu)
+      resources.requests.memory=$(requests_memory)
+      resources.limits.cpu=$(limits_cpu)
+      resources.limits.memory=$(limits_memory)
+      autoscaling.enabled=$(autoscaling)
+      autoscaling.minReplicas=$(autoscaling_min)
+      autoscaling.maxReplicas=$(autoscaling_max)
+      ingress.enabled=$(ingress_enabled)
+      ingress.className=nginx
+      ingress.hosts[0].host=$(ingress_host)
+      ingress.hosts[0].paths[0].path=$(ingress_path)
+      ingress.hosts[0].paths[0].pathType=ImplementationSpecific
+      ingress.tls[0].hosts[0]=$(ingress_host)
+      ingress.tls[0].secretName=$(ingress_tls_secret)
+      imagePullSecrets[0].name=$(imagepullsecrets)
+    valueFile: '$(System.DefaultWorkingDirectory)/environment-values.yaml'
