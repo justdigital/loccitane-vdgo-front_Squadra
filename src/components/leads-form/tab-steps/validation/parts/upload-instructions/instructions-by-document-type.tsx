@@ -2,6 +2,7 @@ export interface Intructions {
   title: string;
   subtitle: string;
   imageName: string;
+  imageClassName?: string
   instructions: React.ReactNode[];
   confirmationInstructions: React.ReactNode[];
 }
@@ -11,12 +12,13 @@ export interface InstructionsByDocumentType {
     hasDocumentBack: boolean,
     acceptedFileTypes: string,
     crediLinkDocumentTypes: string[];
+    subDocuments?: {value: string, label: string}[];
     desktop: Intructions,
     mobile: Intructions
   }
 };
 
-export const InstructionsByDocumentType: InstructionsByDocumentType = {
+const instructions: InstructionsByDocumentType = {
   'CNH': {
     hasDocumentBack: false,
     acceptedFileTypes: '.jpg, .jpeg, .pdf',
@@ -128,27 +130,33 @@ export const InstructionsByDocumentType: InstructionsByDocumentType = {
     hasDocumentBack: false,
     acceptedFileTypes: '.pdf',
     crediLinkDocumentTypes: [],
+    subDocuments: [
+      { value: 'CNH_DIGITAL', label: 'CNH Digital' },
+      { value: 'RG_DIGITAL', label: 'RG Digital' }
+    ],
     desktop: {
-      title: 'Instruções para Upload da CNH Digital',
-      subtitle: 'Para garantir a melhor qualidade, siga as nossas dicas:',
-      imageName: 'cnh-digital.png',
+      title: 'Instruções para RG ou CNH Digital',
+      subtitle: 'Para garantir a validação correta, escolha o tipo de documento que deseja enviar e  siga as orientações:',
+      imageName: 'rg-cnh-digital.png',
+      imageClassName: 'w-2/5',
       instructions: [
-        <>O documento deve ser baixado diretamente do aplicativo Carteira Digital de Trânsito (CDT) do Gov.br.</>,
+        <>Envie versões digitais oficiais, emitidas por aplicativos como Gov.br ou Carteira Digital.</>,
         <>Certifique-se de que o <strong>arquivo está sem modificações e dentro da validade.</strong></>,
-        <>Para continuar, faça o upload do <strong>arquivo PDF da sua CNH Digital.</strong></>
+        <>Envie o <strong>arquivo em PDF.</strong></>
       ],
       confirmationInstructions: [
         <>Se estiver tudo certo, <strong>conclua o envio.</strong> Caso queira enviar outro documento, clique no ícone da lixeira para remover o arquivo e fazer um novo upload.</>,
       ]
     },
     mobile: {
-      title: 'Instruções para CNH Digital',
+      title: 'Instruções para RG ou CNH Digital',
       subtitle: 'Para garantir a melhor qualidade, siga as nossas dicas:',
-      imageName: 'cnh-digital.png',
+      imageName: 'rg-cnh-digital.png',
+      imageClassName: 'w-2/5',
       instructions: [
-        <>O documento deve ser baixado diretamente do aplicativo Carteira Digital de Trânsito (CDT) do Gov.br.</>,
+        <>Envie versões digitais oficiais, emitidas por aplicativos como Gov.br ou Carteira Digital.</>,
         <>Certifique-se de que o <strong>arquivo está sem modificações e dentro da validade.</strong></>,
-        <>Para continuar, faça o upload do <strong>arquivo PDF da sua CNH Digital.</strong></>
+        <>Envie o <strong>arquivo em PDF.</strong></>
       ],
       confirmationInstructions: [
         <>Se estiver tudo certo, <strong>conclua o envio.</strong> Caso queira enviar outro documento, clique no ícone da lixeira para remover o arquivo e fazer um novo upload.</>,
@@ -156,3 +164,7 @@ export const InstructionsByDocumentType: InstructionsByDocumentType = {
     }
   }
 };
+
+instructions['RG_DIGITAL'] = instructions['CNH_DIGITAL'];
+
+export const InstructionsByDocumentType = instructions;

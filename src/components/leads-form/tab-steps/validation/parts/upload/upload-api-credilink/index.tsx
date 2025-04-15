@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form';
 import { IFormInputs } from '@/utils/form.util';
 
 interface UploadApiCredilinkProps {
-  onSucess: (base64Content: string) => void;
+  onSucess: (base64Content: string, isTakingDocumentBack: boolean) => void;
   onError: (error: string) => void;
 }
 
@@ -24,23 +24,21 @@ const UploadApiCredilink: React.FC<UploadApiCredilinkProps & RefAttributes<any>>
     ;
   }
 
-  const prepareAndOpenCamera = (documentTypeCrediLink: string) => {
+  const prepareAndOpenCamera = (documentTypeCrediLink: string, isTakingDocumentBack: boolean) => {
     const { UnicoCheckBuilder, SDKEnvironmentTypes, DocumentCameraTypes } = unicoWebFrameRef.current;
     const unicoCameraBuilder = new UnicoCheckBuilder();
     unicoCameraBuilder.setResourceDirectory("/assets/vendor/unico/resources");
     unicoCameraBuilder.setModelsPath("/assets/vendor/unico/models");
     unicoCameraBuilder.setEnvironment(SDKEnvironmentTypes.UAT);
-    // unicoCameraBuilder.setTheme(unicoTheme);
     const unicoCamera = unicoCameraBuilder.build();
 
-    // console.log('DocumentCameraTypes[documentTypeCrediLink]', DocumentCameraTypes[documentTypeCrediLink]);
     unicoCamera.prepareDocumentCamera(
       sdkConfig.current, 
       DocumentCameraTypes[documentTypeCrediLink]
     ).then((cameraOpener: any) => {
       cameraOpener.open({
         on: {
-          success: onSuccessTakingDocumentPhoto,
+          success: (data: any) => onSuccessTakingDocumentPhoto(data.base64, isTakingDocumentBack),
           error: onErrorTakingDocumentPhoto
         }
       });
@@ -49,14 +47,14 @@ const UploadApiCredilink: React.FC<UploadApiCredilinkProps & RefAttributes<any>>
     });
   }
 
-  const openCamera = async (documentTypeCrediLink: string) => {
+  const openCamera = async (documentTypeCrediLink: string, isTakingDocumentBack: boolean) => {
     await configSdk();
-    prepareAndOpenCamera(documentTypeCrediLink);
+    prepareAndOpenCamera(documentTypeCrediLink, isTakingDocumentBack);
   }
 
-  const onSuccessTakingDocumentPhoto = (data: any) => {
+  const onSuccessTakingDocumentPhoto = (base64Content: string, isTakingDocumentBack: boolean) => {
     setIsCameraOpen(false);
-    onSucess(data.base64);
+    onSucess(base64Content, isTakingDocumentBack);
   }
 
   const onErrorTakingDocumentPhoto = (error: any) => {
@@ -64,66 +62,10 @@ const UploadApiCredilink: React.FC<UploadApiCredilinkProps & RefAttributes<any>>
     onError(error);
   }
 
-  // const initSdk = async () => {
-  //   console.log('chegou na função');
-  //   setIsCameraOpen(true);
-
-  //   const UnicoWebframe = await import('unico-webframe');
-  //   console.log('chegou aqui');
-  //   const { UnicoCheckBuilder, SDKEnvironmentTypes, SelfieCameraTypes, UnicoThemeBuilder, DocumentCameraTypes, UnicoConfig, LocaleTypes } = UnicoWebframe;
-
-  //   // console.log('UnicoWebframe', UnicoWebframe);
-  //   const config = new UnicoConfig()
-  //     // .setProjectNumber("13557531040735768969")
-  //     // .setProjectId("")
-  //     // .setMobileSdkAppId("")
-  //     .setHostname("http://localhost:8080")
-  //     .setHostKey("r001-06a56722-87ef-49b6-a71b-3e05c74f9898")
-  //     // .setHostInfo("nRMqSJJeWMZ0K4n9Dxs/Zhb5RslAxes+pmH0gJgmVtay02cX8aTbdzfZ4ln40v1Q")
-
-  //     const unicoTheme = new UnicoThemeBuilder()
-  //       .setColorSilhouetteSuccess("#0384fc")
-  //       .setColorSilhouetteError("#D50000")
-  //       .setColorSilhouetteNeutral("#fcfcfc")
-  //       .setBackgroundColor("#dff1f5")
-  //       .setColorText("#0384fc")
-  //       .setBackgroundColorComponents("#0384fc")
-  //       .setColorTextComponents("#dff1f5")
-  //       .setBackgroundColorButtons("#0384fc")
-  //       .setColorTextButtons("#dff1f5")
-  //       .setBackgroundColorBoxMessage("#fff")
-  //       .setColorTextBoxMessage("#000")
-  //       .setColorCancelButton("#0384fc")
-  //       .setColorProgressBar("#0384fc")
-  //       .setHtmlPopupLoading(`<div style="position: absolute; top: 45%; right: 50%; transform:
-  //       translate(50%, -50%); z-index: 10; text-align: center;">Carregando...</div>`)
-  //       .setFontFamily("Arial, sans-serif") // v3.19.2+
-  //       .build();
-      
-  //   const unicoCameraBuilder = new UnicoCheckBuilder();
-  //   unicoCameraBuilder.setResourceDirectory("/assets/vendor/unico/resources");
-  //   unicoCameraBuilder.setModelsPath("/assets/vendor/unico/models");
-  //   unicoCameraBuilder.setEnvironment(SDKEnvironmentTypes.UAT);
-  //   unicoCameraBuilder.setTheme(unicoTheme);
-  //   const unicoCamera = unicoCameraBuilder.build();
-  //   console.log('e aqui');
-
-  //   unicoCamera.prepareDocumentCamera(
-  //     config, 
-  //     DocumentCameraTypes.CNH
-  //   ).then(cameraOpener => {
-  //     console.log('cameraOpener', Object.keys(DocumentCameraTypes));
-  //     cameraOpener.open(() => {});
-  //   }).catch(error => {
-  //     console.error(error);
-  //     // confira na aba "Referências" sobre os erros possíveis
-  //   });
-  // };
-
   useImperativeHandle(ref, () => ({
-    openSdkCamera(documentTypeCrediLink: string) {
+    openSdkCamera(documentTypeCrediLink: string, isTakingDocumentBack: boolean) {
       setIsCameraOpen(true);
-      openCamera(documentTypeCrediLink);
+      openCamera(documentTypeCrediLink, isTakingDocumentBack);
     }
   }));
 

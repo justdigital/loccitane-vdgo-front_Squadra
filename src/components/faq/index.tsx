@@ -6,12 +6,12 @@ import { useState } from 'react';
 import { Add, Remove } from '@mui/icons-material';
 import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 
-interface AccordionProps {
+interface FaqProps {
   sectionData: ISectionAccordion;
   className?: string;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ sectionData }) => {
+const Faq: React.FC<FaqProps> = ({ sectionData }) => {
 
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -91,4 +91,4 @@ const Accordion: React.FC<AccordionProps> = ({ sectionData }) => {
   );
 };
 
-export default Accordion;
+export default Faq;

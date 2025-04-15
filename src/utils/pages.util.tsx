@@ -6,7 +6,7 @@ import VerticalRectangularCard from '@/components/vertical-rectangular-card';
 import BannerEmpreender from '@/components/banner-empreender';
 import Testimonials from '@/components/testimonials';
 import HorizontalCardsSection from '@/components/horizontal-cards';
-import Accordion from '@/components/accordion';
+import Faq from '@/components/faq';
 import LeadsFormBox from '@/components/leads-form-box';
 import HorizontalVideosSection from '@/components/horizontal-videos';
 import BannerStepExplain from '@/components/banner-step-explain';
@@ -45,7 +45,7 @@ export const getPageAvailableSections = (sections: any[]) => {
       case 'comentarios':
         return <Testimonials sectionData={section} key={index} />;
       case 'accordion':
-        return <Accordion sectionData={section} key={index} />;
+        return <Faq sectionData={section} key={index} />;
       case 'banner_lp2_part1':
         return <BannerStepExplain sectionData={section} key={index} />;
       case 'section_banner_lp2_part_2':

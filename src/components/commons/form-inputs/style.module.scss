@@ -86,7 +86,7 @@
   }
 }
 
-.checkbox {
+.checkbox, .radio {
   :global(.MuiFormControlLabel-root) {
     margin-right: 0;
   }
@@ -100,7 +100,7 @@
   }
 }
 
-.checkbox-error {
+.checkbox-error, .radio-error {
   @include label-error;
   width: calc(100% - 42px);
   margin-left: 30px;
@@ -111,16 +111,20 @@
   }
 }
 
-a.checkbox-label {
+a.checkbox-label, a.radio-label {
   text-decoration: underline;
 }
 
-.checkbox-label {
+.checkbox-label, .radio-label {
   font-size: 0.75rem;
   font-weight: 600;
   color: rgba(85, 46, 13, 1);
   margin-left: 0;
   letter-spacing: -0.3px;
+
+  &.radio-label {
+    font-weight: 500;
+  }
 
   @media (screen(sm)) {
     margin-left: 10px;

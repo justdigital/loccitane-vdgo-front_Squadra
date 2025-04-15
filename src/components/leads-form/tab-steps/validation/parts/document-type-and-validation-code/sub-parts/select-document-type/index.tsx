@@ -37,8 +37,8 @@ const StepValidationSelectDocument: React.FC<StepValidationSelectDocumentProps> 
       documentType: 'RG_NOVO'
     },
     {
-      name: 'CNH Digital',
-      image: '/assets/images/document-types/digital-cnh.jpg',
+      name: 'RG ou CNH Digital',
+      image: '/assets/images/document-types/rg-cnh-digital.png',
       documentType: 'CNH_DIGITAL'
     }
   ];
