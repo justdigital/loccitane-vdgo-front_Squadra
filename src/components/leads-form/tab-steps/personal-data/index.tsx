@@ -21,10 +21,12 @@ interface StepPersonalDataProps {
 }
 
 const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabActive}) => {
+
   const {
     getSectionData
   } = useAppContext();
 
+  const {showDefaultFormError} = useAppFormContext();
   const [modalOpen, setModalOpen] = useState(false);
 
   const {
@@ -39,48 +41,46 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
   const {setUserFormId, pagesUrls} = useAppContext();
   const [disableFormFields, setDisableFormFields] = useState(false);
 
-  const sendDataToServer = async (onOk: () => void) => {
-    try {
-      const data = _.pick(getValues(), ['fullName', 'documentNumber', 'cellphoneNumber', 'authorizeExposeCellNumbers', 'acceptReceiveInfo', 'acceptTerms']);
-      const uuid = await createUser(data);
-      setUserFormId(uuid);
-      sendDataLayerFormEvent('dados_pessoais', 'success');
-      onOk();
-    } catch (e) {
-      console.error('Erro ao enviar dados para o servidor:', e)
-      sendDataLayerFormEvent('dados_pessoais', 'error'); 
-    } finally {
-      setValue('submitButtonLoading', false);
-    }
+  const sendDataToServer = async () => {
+    const data = _.pick(getValues(), ['fullName', 'documentNumber', 'cellphoneNumber', 'authorizeExposeCellNumbers', 'acceptReceiveInfo', 'acceptTerms']);
+    const uuid = await createUser(data);
+    setUserFormId(uuid);
   };
   
   const clickButton = useCallback(async () => {
-    setFormButtonProps({loading: true})
-    await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
-    if (validateStep('personalData', getFieldState)) {
-      sendDataToServer(() => gotoNextStep());
+    try {
+      setFormButtonProps({loading: true});
+      await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
+      if (validateStep('personalData', getFieldState)) {
+        await sendDataToServer();
+        sendDataLayerFormEvent('dados_pessoais', 'success');
+        gotoNextStep();
+      }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e: any) {
+      setFormButtonProps({loading: false});
+      sendDataLayerFormEvent('dados_pessoais', 'error'); 
+      showDefaultFormError();
     }
   }, [getFieldState]);
 
   const checkCpfAvailability = useCallback(async (cpf: string) => {
-    try {
-      const isUnavailable = await checkCpfIsUnavailable(cpf);
-      if (isUnavailable) {
-        setDisableFormFields(true);
+    const isUnavailable = await checkCpfIsUnavailable(cpf);
+    if (isUnavailable) {
+      setDisableFormFields(true);
+
+      if (isTabActive) {
         setFormButtonProps({
           label: 'Fazer login',
           action: () => window.open(pagesUrls.externalLogin, '_blank')
         });
-        return 'O CPF já está em uso';
       }
-
-      setDisableFormFields(false);
-      return true;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e: any) {
-      return true;
+      return false;
     }
-  }, []);
+
+    setDisableFormFields(false);
+    return true;
+  }, [isTabActive]);
 
   useEffect(() => {
     if (!isTabActive) {
@@ -127,14 +127,24 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
           validate: {
             checkCpfIsValid: async (cpf) => {
               try {
-                return (await checkCpfIsValid(cpf)) && true
+                (await checkCpfIsValid(cpf));
+                return true;
               // eslint-disable-next-line @typescript-eslint/no-unused-vars
-              } catch (e) {
-                return 'CPF inválido. Digite um CPF válido.'
+              } catch (e: any) {
+                if (e.response.data === 'CPF inválido.') {
+                  return 'CPF inválido. Digite um CPF válido.';
+                }
+
+                return 'Houve um erro ao verificar o CPF. Tente novamente.';
               }
             },
             checkCpfAvailability: async (cpf) => {
-              return await checkCpfAvailability(cpf)
+              try {
+                return (await checkCpfAvailability(cpf));
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              } catch (e) {
+                return 'Houve um erro ao verificar se o CPF está disponível. Tente novamente.'
+              }
             }
           }
         }}
@@ -145,7 +155,15 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
             label="CPF"
             mask="000.000.000-00"
             specificErrorTemplate={{
-              checkCpfAvailability: <a href={pagesUrls.externalLogin} target='_blank' className={`${css['helper-text-link']}`}>Este CPF já está cadastrado. Clique aqui para fazer login</a>
+              checkCpfAvailability: (
+                <>
+                  {fieldState.error?.message ? fieldState.error.message : (
+                    <a href={pagesUrls.externalLogin} target='_blank' className={`${css['helper-text-link']}`}>
+                      Este CPF já está cadastrado. Clique aqui para fazer login
+                    </a>
+                  )}
+                </>
+              )
             }}
           />
         }

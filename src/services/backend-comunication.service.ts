@@ -15,7 +15,7 @@ export async function checkCpfIsUnavailable(cpf: string): Promise<boolean> {
   return (await axios.get(url.toString()))?.data
 }
 
-export async function checkCpfIsValid(cpf: string): Promise<boolean> {
+export async function checkCpfIsValid(cpf: string): Promise<string> {
   const urlParams = new URLSearchParams({cpf})
   const url = new URL(API_URL + '/Cadastro/ValidarCpf/?' + urlParams)
   return (await axios.get(url.toString()))?.data

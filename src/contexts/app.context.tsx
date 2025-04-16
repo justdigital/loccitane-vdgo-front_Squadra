@@ -43,8 +43,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const pagesUrls = {
     externalLogin: 'https://revendedor.loccitaneaubresil.com',
-    lp1: typeof window !== 'undefined' ? `${window.location.origin}/lp1` : '',
-    lp2: typeof window !== 'undefined' ? `${window.location.origin}/lp2` : '',
+    lp1: typeof window !== 'undefined' ? `${window.location.origin}/` : '',
+    lp2: typeof window !== 'undefined' ? `${window.location.origin}/primeiropedido` : '',
   };
 
   const theme = useTheme();
