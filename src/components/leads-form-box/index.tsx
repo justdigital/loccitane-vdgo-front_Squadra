@@ -20,8 +20,8 @@ interface LeadsFormHeaderProps {
 const LeadsFormBox: React.FC<LeadsFormHeaderProps> = ({sectionData, termsAndConditionsSectionData, headerSectionData, footerSectionData}) => {
 
   const {
-      updateSectionData
-    } = useAppContext();
+    updateSectionData
+  } = useAppContext();
 
   const formChildElement = useRef(null);
 
@@ -47,7 +47,7 @@ const LeadsFormBox: React.FC<LeadsFormHeaderProps> = ({sectionData, termsAndCond
 
   return (
     <div className={`${css['banner-wrapper']} relative`} style={bannersUrls as React.CSSProperties}>
-      <TextOverlap />
+      <TextOverlap className="hidden sm:block" />
       <div
         className={`container w-full h-full flex flex-col sm:items-stretch md:flex-row space-y-4 md:space-y-0 md:space-x-4`}
       >

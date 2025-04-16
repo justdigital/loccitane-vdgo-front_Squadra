@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import css from './style.module.scss';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { sendGTMEvent } from '@next/third-parties/google';
+import { sendDataLayerEvent } from '@/utils/general.util';
 
 interface LikeButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconProps?: any;
@@ -17,13 +17,12 @@ const LikeButton: React.FC<LikeButtonProps> = ({ iconProps, videoUrl, videoTitle
 
   const toggleLike = () => {
     setLiked(!liked);
-    sendGTMEvent({
-      'event': !liked ? 'curtiu o vídeo' : 'descurtiu o vídeo',
+    sendDataLayerEvent({
+      'event': 'select_content',
       'section_name': sectionName,
       'content_type': `video`,
-      'content_text': videoTitle,
+      'content_text': !liked ? 'Curtiu o vídeo: ' : 'Descurtiu o vídeo: ' +videoTitle,
       'video_url': videoUrl,
-      'page_url': window.location.href
     });
   }
 

@@ -54,8 +54,8 @@ const TermsAndConditions: React.FC<TermsAndConditionsProps> = ({
           </div>
           {/* Texto */}    
           {sectionData?.terms?.text && (
-          <div className={`${css.text}`}
-            dangerouslySetInnerHTML={{ __html: sectionData?.terms?.text }} />
+            <div className={`${css.text}`}
+              dangerouslySetInnerHTML={{ __html: sectionData?.terms?.text }} />
           )}
           <Footer sectionData={sectionData.footer} />
         </div>

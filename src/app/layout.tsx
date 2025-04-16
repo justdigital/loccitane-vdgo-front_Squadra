@@ -5,6 +5,7 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import "./globals.css";
 import { AppProvider } from "@/contexts/app.context";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import '../../src/styles/drupal/drupalGlobals.css';
 
 const ralewayfont = Raleway({
   variable: "--font-raleway",
@@ -53,7 +54,9 @@ export default function RootLayout({
   return (
     <html lang="pt_BR">
       <head>
-      <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow" />
+        <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
         <meta
           httpEquiv="Content-Security-Policy"
           content="

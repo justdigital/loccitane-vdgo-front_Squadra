@@ -146,9 +146,8 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
                 </form>
               </main>
             </>
-           )
-           : <></>
-         }
+          ) : <></>
+          }
         </FormProvider>
         {getFormButtonProps().label && (
           <div className={`${css['footer-button']}`}>

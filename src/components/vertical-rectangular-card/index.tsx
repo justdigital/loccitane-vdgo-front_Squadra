@@ -3,45 +3,27 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import css from './style.module.scss';
 import ButtonDefault from '../commons/button-default';
-//import { usePathname } from 'next/navigation';
 import ISectionVerticalRectangularCard from '@/interfaces/section-vertical-rectangular-card';
 import Image from 'next/image';
 import SectionsTitle from '../commons/sections-title';
-import { sendGTMEvent } from '@next/third-parties/google';
-import { getPlainText } from '@/utils/general.util';
+import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 interface VerticalRectangularCardProps {
   sectionData: ISectionVerticalRectangularCard;
   className?: string;
 }
 
 const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ sectionData }) => {
-/*
-  const pathname = usePathname();
-  const isLandingPage1 = pathname.includes('/lp1');
-
-  const handleButtonClick = (url?: string) => {
-    if (!url) return;
-    
-    if (isLandingPage1) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-  };
-*/
 
   const handleSlideClick = (cardData: { text?: string, linkUrl?: string }) => {
-      //const visibleCard = document.querySelector(`.${css.btnIcon}[aria-hidden="false"]`);
-      //const cardName = visibleCard?.querySelector(`.${css.linkUrl}`)?.textContent;
+    //const visibleCard = document.querySelector(`.${css.btnIcon}[aria-hidden="false"]`);
+    //const cardName = visibleCard?.querySelector(`.${css.linkUrl}`)?.textContent;
 
-      sendGTMEvent({
-        'event': 'select_content',
-        'section_name': 'cards_informativos',
-        'content_type': 'card_info',
-        //'content_text': cardName || 'Título',
-        'content_text': getPlainText(cardData.text)?.substring(0, 30) || cardData.linkUrl || 'Título',
-        'page_url': window.location.href
-      });
+    sendDataLayerEvent({
+      'event': 'select_content',
+      'section_name': 'cards_informativos',
+      'content_type': 'card_info',
+      'content_text': getPlainText(cardData.text) || cardData.linkUrl || 'Título',
+    });
   };
 
   return (
@@ -49,7 +31,7 @@ const VerticalRectangularCard: React.FC<VerticalRectangularCardProps> = ({ secti
       id='vertical-rectangular-card' 
       className={`${css.sectionContainer} md:px-8 py-8`}
       style={{ backgroundColor: sectionData.bgColor }}
-      >
+    >
       <div className={`container mx-auto w-full`}>
         <SectionsTitle title={sectionData.text} />
         

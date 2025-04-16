@@ -1,13 +1,9 @@
 'use client';
 import React, { forwardRef, RefAttributes, SyntheticEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { sendGTMEvent } from '@next/third-parties/google';
-import { getPlainText } from '@/utils/general.util';
+import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 
 type ProgressTracked = {
   [key: string]: {tracked: boolean, progressName?: number, eventName: string};
-  // '25%': {tracked: boolean, eventName: string};
-  // '50%': {tracked: boolean, eventName: string};
-  // '75%': {tracked: boolean, eventName: string};
 };
 
 interface VideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
@@ -18,7 +14,9 @@ interface VideoProps extends React.VideoHTMLAttributes<HTMLVideoElement> {
   onVideoClick?: (e: SyntheticEvent<HTMLVideoElement, Event>) => void;
   onVideoPause?: (e: SyntheticEvent<HTMLVideoElement, Event>) => void;
   onVideoPlay?: (e: SyntheticEvent<HTMLVideoElement, Event>) => void;
+  onVideoVolumeChange?: (e: SyntheticEvent<HTMLVideoElement, Event>, volume: number, muted: boolean) => void;
   doPlay?: boolean;
+  runsMuteOtherVideos?: boolean;
 }
 
 export interface VideoComponentRefType {
@@ -32,8 +30,10 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
   onVideoClick,
   onVideoPause,
   onVideoPlay,
+  onVideoVolumeChange,
   videoText,
   doPlay,
+  runsMuteOtherVideos = true,
   ...props
 }, ref) => {
 
@@ -53,11 +53,10 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
       event: eventName,
       video_title: videoText ? getPlainText(videoText) : 'Vídeo sem título',
       video_url: props.src,
-      page_url: window.location.href,
       ...(progress && { video_progress: `${progress.toFixed(0)}%`})
     };
 
-    sendGTMEvent(eventData)
+    sendDataLayerEvent(eventData)
   }, [videoText, props.src]);
 
   const handleVideoProgress = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
@@ -70,7 +69,7 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
     Object.keys(progressTracked).forEach((key: string) => {
       const percent = parseInt(key);
       if (progress >= percent && !(progressTracked as any)[key].tracked) {
-        console.log('chegou em ', progressTracked[key].progressName || percent);
+        // console.log('chegou em ', progressTracked[key].progressName || percent);
         setProgressTracked(prev => ({ ...prev, [key]: {...prev[key], tracked: true} }));
         pushToDataLayer(progressTracked[key].eventName, progressTracked[key].progressName || percent);
 
@@ -88,14 +87,6 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
   }
 
   const handleVideoEnd = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
-    // pushToDataLayer('video_complete');
-    // Object.keys(progressTracked).forEach((key) => progressTracked[key] = {...progressTracked[key], tracked: false});
-    // setProgressTracked(progressTracked);
-    // setProgressTracked(prev => ({
-    //   ...prev,
-    //   ...{Object.keys(prev).map((key) => ({...prev[key], tracked: false}))
-    // }));
-
     if (onVideoEnd)
       onVideoEnd(e);
   };
@@ -114,6 +105,22 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
     if (onVideoPlay)
       onVideoPlay(e);
   };
+
+  const handleVideoVolumeChange = (e: SyntheticEvent<HTMLVideoElement, Event>) => {
+    if (onVideoVolumeChange) {
+      onVideoVolumeChange(e, e.currentTarget.volume, e.currentTarget.muted);
+    }
+  }
+
+  const muteAllOthersVideosFromHtml = () => {
+    document.querySelectorAll('video:not(.inactive)').forEach((video) => {
+      const htmlVideo = video as HTMLVideoElement;
+      // console.log(videoRef.current, htmlVideo);
+      if (htmlVideo !== videoRef.current) {
+        htmlVideo.muted = true;
+      }
+    });
+  }
 
   React.useImperativeHandle(ref, () => ({
     videoNativeElement: videoRef.current,
@@ -141,7 +148,7 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
   }));
 
   useEffect(() => {
-    if (!videoRef.current) {
+    if (!videoRef.current || typeof doPlay === 'undefined'){
       return;
     }
 
@@ -153,18 +160,26 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
     videoRef.current.pause();
   }, [doPlay]);
 
+  useEffect(() => {
+    if (!props.muted && runsMuteOtherVideos) {
+      muteAllOthersVideosFromHtml();
+    }
+  }, [props.muted, runsMuteOtherVideos]);
+
 
   return (
     <video
       ref={videoRef}
       {...props}
       playsInline
+      aria-label={getPlainText(props['aria-label'])}
       controlsList="nodownload nofullscreen noremoteplayback"
       disablePictureInPicture
       onPlay={handleVideoPlay}
       onPause={handleVideoPause}
       onEnded={handleVideoEnd}
       onTimeUpdate={handleVideoProgress}
+      onVolumeChange={handleVideoVolumeChange}
       // onLoadedMetadata={handleVideoStart}
       onClick={handleVideoClick}
       // muted={isMuted}

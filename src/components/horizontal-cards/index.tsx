@@ -8,6 +8,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { Modal } from '@mui/material';
 import CardItem from './card-item';
+import VideoComponent from '../commons/video';
 
 interface HorizontalCardsSectionProps {
   sectionData: ISectionHorizontalCards
@@ -18,6 +19,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
   const [swiper, setSwiper] = useState<SwiperClass>({} as SwiperClass);
   const [modalOpen, setModalOpen] = useState(false);
   const [videoUrl, setVideoUrl] = useState('');
+  const [videoTitle, setVideoTitle] = useState('');
 
   const moveSlide = (to: 'next' | 'prev') => {
     if (to === 'next') {
@@ -33,8 +35,9 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
     setModalOpen(false);
   }
 
-  const openModal = (videoUrl: string) => {
+  const openModal = (videoUrl: string, title: string) => {
     setVideoUrl(videoUrl);
+    setVideoTitle(title);
     setModalOpen(true);
   }
 
@@ -58,11 +61,11 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
                 spaceBetween: 20
               }
             }}
-            onSlideChange={() => console.log('slide change')}
+            // onSlideChange={() => console.log('slide change')}
           >
             {sectionData.cardItems.map((item, index) => (
               <SwiperSlide key={index}>
-                <CardItem item={item} openModal={() => openModal(item.videosUrls?.urlDesktop as string)} />
+                <CardItem item={item} openModal={() => openModal(item.videosUrls?.urlDesktop as string, item.videosUrls?.altText as string)} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -79,7 +82,22 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
         aria-describedby="modal-modal-description"
         className="flex items-center justify-center h-screen"
       >
-        <video
+        <>
+          <VideoComponent
+            videoText={videoTitle}
+            className={`${css['video-modal']} w-[90dvw] sm:w-[60dvw] h-auto`}
+            loop
+            playsInline
+            autoPlay
+            controls={true}
+            controlsList="nodownload nofullscreen noremoteplayback"
+            disablePictureInPicture
+            src={videoUrl} 
+            poster=""
+            aria-label="Vídeo"
+          />
+        </>
+        {/* <video
           className={`${css['video-modal']} w-[90dvw] sm:w-[60dvw] h-auto`}
           loop
           playsInline
@@ -92,7 +110,7 @@ const HorizontalCardsSection: React.FC<HorizontalCardsSectionProps> = ({sectionD
           aria-label="Vídeo"
         >
             Seu navegador não suporta vídeos HTML5.
-        </video>
+        </video> */}
       </Modal>
     </div>
   );

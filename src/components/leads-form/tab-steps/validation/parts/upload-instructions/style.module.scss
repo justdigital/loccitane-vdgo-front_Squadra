@@ -76,6 +76,16 @@
     font-size: .6875rem;
     line-height: 1rem;
     text-decoration: underline;
+
+    .icon-back {
+      // background-color: $locci-red;
+      font-size: 1.7rem;
+      color: black;
+      border-radius: 50%;
+      border: 1px solid $locci-red;
+      padding: 3px;
+      // display: table;
+    }
   }
 
 }

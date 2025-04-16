@@ -2,9 +2,7 @@
 import 'swiper/css';
 import css from './style.module.scss';
 import ISectionFooter from '@/interfaces/section-footer';
-//import Image from 'next/image';
-import { sendGTMEvent } from '@next/third-parties/google';
-import { getPlainText } from '@/utils/general.util';
+import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 
 interface FooterProps {
   sectionData: ISectionFooter;
@@ -13,14 +11,13 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ sectionData }) => {
 
-  const handleSlideClick = (cardData: { text?: string, linkUrl?: string }) => {
-      sendGTMEvent({
-        'event': 'click_content',
-        'section_name': 'footer',
-        'content_text': getPlainText(cardData.text)?.substring(0, 100) || cardData.linkUrl || 'Título',
-        //'cta_name': cardName || 'Nome',
-        'page_url': window.location.href
-      });
+  const handleSlideClick = (cardData: { text?: string, linkUrl?: string, buttonLink?: string }) => {
+    sendDataLayerEvent({
+      'event': 'select_content',
+      'section_name': 'footer',
+      'content_type': `link`,
+      'content_text': getPlainText(cardData?.text) || cardData?.linkUrl || cardData?.buttonLink || 'Título',
+    });
   };
 
   return (
@@ -31,7 +28,7 @@ const Footer: React.FC<FooterProps> = ({ sectionData }) => {
           {sectionData.cardItems.map((card, index) => (
             <div 
               className={`${css.columnContent}`} 
-              onClick={() => card.buttonLink && window.open(card.buttonLink, '_self') && handleSlideClick(card)}
+              onClick={() => card.buttonLink && (handleSlideClick(card), window.open(card.buttonLink, '_self'))}
               key={index}
             >
               {card.imagesUrls && (
@@ -54,7 +51,10 @@ const Footer: React.FC<FooterProps> = ({ sectionData }) => {
         </div>
 
         {/* Logo */}
-        <div className={`${css.footerImage}`} onClick={() => sectionData.buttonLink && window.open(sectionData.buttonLink, '_self')}>
+        <div 
+          className={`${css.footerImage}`} 
+          onClick={() => sectionData.buttonLink && (handleSlideClick({ buttonLink: sectionData.buttonLink }), window.open(sectionData.buttonLink, '_self'))}
+        >
           {sectionData.imagesUrls && (
             <picture>
               <source media="(min-width: 768px)" srcSet={sectionData.imagesUrls.desktop} />

@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import css from './style.module.scss';
-import { sendGTMEvent } from '@next/third-parties/google';
+import { sendDataLayerEvent } from '@/utils/general.util';
 
 interface ButtonDefaultProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
@@ -28,11 +28,10 @@ const ButtonDefault: React.FC<ButtonDefaultProps> = ({
 
     // Disparar evento do dataLayer se eventData estiver definido
     if (eventData) {
-      sendGTMEvent({
+      sendDataLayerEvent({
         'event': eventData.eventName,
         'section_name': eventData.sectionName,
         'cta_name': eventData.ctaName || label,
-        'page_url': window.location.href,
         ...(eventData.customData || {})
       });
     }

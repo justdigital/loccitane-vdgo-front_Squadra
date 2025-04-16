@@ -4,20 +4,16 @@ import css from './style.module.scss';
 import { Box } from '@mui/material';
 import { Controller, useFormContext } from "react-hook-form";
 import FormTextField from '@/components/commons/form-inputs/text-field';
-import { IFormInputs, validateStep } from '@/utils/form.util';
+import { IFormInputs, sendDataLayerFormEvent, validateStep } from '@/utils/form.util';
 import FormCheckbox from '@/components/commons/form-inputs/checkbox';
 import TermsAndConditions from '@/components/modals/terms-and-conditions';
 import { checkCpfIsUnavailable, checkCpfIsValid, createUser } from '@/services/backend-comunication.service';
 import _ from 'lodash';
 import { useAppContext } from '@/contexts/app.context';
 import { useAppFormContext } from '@/contexts/app-form.context';
-/*
-import type { 
-  ISectionTermsAndConditions,
-  ISectionFooter,
-  ISectionHeader 
-} from '@/interfaces';
-*/
+import ISectionTermsAndConditions from '@/interfaces/section-terms-and-conditions';
+import ISectionFooter from '@/interfaces/section-footer';
+import ISectionHeader from '@/interfaces/section-header';
 
 interface StepPersonalDataProps {
   gotoNextStep: () => void;
@@ -48,9 +44,11 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
       const data = _.pick(getValues(), ['fullName', 'documentNumber', 'cellphoneNumber', 'authorizeExposeCellNumbers', 'acceptReceiveInfo', 'acceptTerms']);
       const uuid = await createUser(data);
       setUserFormId(uuid);
+      sendDataLayerFormEvent('dados_pessoais', 'success');
       onOk();
     } catch (e) {
       console.error('Erro ao enviar dados para o servidor:', e)
+      sendDataLayerFormEvent('dados_pessoais', 'error'); 
     } finally {
       setValue('submitButtonLoading', false);
     }
@@ -77,12 +75,11 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
       }
 
       setDisableFormFields(false);
+      return true;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e: any) {
-      return 'CPF inválido. Digite um CPF válido.'
+      return true;
     }
-
-    return true
   }, []);
 
   useEffect(() => {
@@ -187,7 +184,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
           render={({ field }) =>
             <FormCheckbox
               field={field}
-              label="Desejo receber informativos da L’Occitane ai Brésil?"
+              label="Desejo receber informativos da L’Occitane au Brésil?"
             />
           }
         />
@@ -213,9 +210,9 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
         isOpen={modalOpen} 
         onClose={() => setModalOpen(false)}
         sectionData={{
-          terms: getSectionData<ISectionTermsAndConditions>("terms"), 
-          footer: getSectionData<ISectionFooter>("footer"), 
-          header: getSectionData<ISectionHeader>("header")
+          terms: getSectionData<ISectionTermsAndConditions>("terms") as ISectionTermsAndConditions, 
+          footer: getSectionData<ISectionFooter>("footer") as ISectionFooter, 
+          header: getSectionData<ISectionHeader>("header") as ISectionHeader
         }} 
       />
     </div>

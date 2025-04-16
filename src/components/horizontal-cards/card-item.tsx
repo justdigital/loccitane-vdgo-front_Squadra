@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import css from './style.module.scss';
 import ISectionHorizontalCards from '@/interfaces/section-horizontal-cards';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
@@ -8,8 +8,9 @@ import { useAppContext } from '@/contexts/app.context';
 import Image from 'next/image';
 import VideoComponent, { VideoComponentRefType } from '../commons/video';
 import TextOverlap from '../commons/text-overlap';
-import { sendGTMEvent } from '@next/third-parties/google';
-import { getPlainText } from '@/utils/general.util';
+import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
+import useIsInViewport from '@/hooks/useIsInViewport_';
+import ShareButton from '../commons/share-button';
 
 interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
@@ -18,7 +19,12 @@ interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
 
-  const videoRef = React.useRef<VideoComponentRefType>(null);
+  const { isInViewport, elementRef } = useIsInViewport({
+    root: null, // Use o viewport como referência
+    rootMargin: "0px", // Margem ao redor do viewport
+    threshold: 0.3, // Percentual visível para considerar "dentro da viewport"
+  });
+  const videoRef = useRef<VideoComponentRefType>(null);
   const [isMuted, setIsMuted] = useState(true);
   const hasResetOnUnmute = useRef(false); // Novo ref para controle
   const { isMobileScreen: isMobile } = useAppContext();
@@ -43,6 +49,10 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
     }
   };
 
+  const onVideoVolumeChange = (e: any, volume: number, muted: boolean) => {
+    setIsMuted(muted);
+  };
+
   const handleVideoClick = () => {
     videoRef.current?.togglePlay();
   };
@@ -52,19 +62,24 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
     //   return;
     // }
 
-    const textPlain = getPlainText(item.text)?.substring(0, 100) || item.linkUrl || 'Título'; 
-    sendGTMEvent({
+    const textPlain = getPlainText(item.text) || item.linkUrl || 'Título'; 
+    sendDataLayerEvent({
       'event': 'select_content',
       'section_name': 'cards_horizontais_lp1',
       'content_type': `card__${textPlain}`,
       'content_text': textPlain,
-      'page_url': window.location.href
     });
   };
 
+  useEffect(() => {
+    if (!isInViewport) {
+      setIsMuted(true);
+    }
+  }, [isInViewport]);
+
   return (
     <a href={item.linkUrl} onClick={handleCardClick} target="_blank" rel="noopener noreferrer">
-      <div className={`${css['card-item']} ${isVideoCard && css['video-card']} ${props.className} flex flex-col sm:flex-row`}>
+      <div ref={elementRef as any} className={`${css['card-item']} ${isVideoCard && css['video-card']} ${props.className} flex flex-col sm:flex-row`}>
         {isVideoCard && !isMobile && (
           <div className={`${css['play-button-box']} flex items-center justify-center`} onClick={() => openModal(videoUrl || '')}>
             <PlayCircleOutlineIcon />
@@ -93,6 +108,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
               poster={isMobile ? item.imagesUrls?.mobile : item.imagesUrls?.desktop}
               aria-label="Vídeo"
               onVideoClick={handleVideoClick}
+              onVideoVolumeChange={onVideoVolumeChange}
             />
           )}
         </div>
@@ -109,7 +125,38 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
           </div>
         )}
 
+        {isVideoCard && item.videosUrls?.altText && isMuted && (
+          <TextOverlap>
+            <div
+              className={`${css['video-transcription']} w-[70%] absolute z-[3] bottom-8 left-5 text-white`}
+              dangerouslySetInnerHTML={{ __html: `${item.videosUrls?.altText}` }}
+            />
+          </TextOverlap>
+        )}
+        
         {isVideoCard && (
+          <div className={`action-buttons flex sm:hidden absolute h-[92%] top-5 right-4 z-[3] bg-red flex-col gap-y-2`}>
+            <div className='grow flex flex-col gap-y-2'>
+              <LikeButton
+                className=""
+                videoTitle={item.videosUrls?.altText || ''}
+                videoUrl={videoUrl || ''}
+                sectionName="cards_horizontais_lp1"
+              />
+              <ShareButton
+                className=""
+                title={`Assista: ${item.videosUrls?.altText || ''}`}
+                text={item.videosUrls?.altText || ''}
+                url={videoUrl || ''}
+                sectionName="cards_horizontais_lp1"
+              />
+            </div>
+            
+            <MuteButton className={`bottom-8 right-2.5 z-[3] self-end justify-self-end`} isMuted={isMuted} onClick={() => toggleMute()} />
+          </div>
+        )}
+
+        {/* {isVideoCard && (
           <div className='action-buttons'>
 
             {item.videosUrls?.altText && isMuted && (
@@ -129,7 +176,7 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
             />
             <MuteButton onClick={() => toggleMute()} isMuted={isMuted} className={`absolute bottom-8 right-2.5 z-[3] sm:hidden`} />
           </div>
-        )}
+        )} */}
       </div>
     </a>
   );

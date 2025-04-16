@@ -9,7 +9,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import css from './style.module.scss';
 import ISectionTestimonials from '@/interfaces/section-testimonials';
-import { sendGTMEvent } from '@next/third-parties/google';
+import { sendDataLayerEvent } from '@/utils/general.util';
 
 interface TestimonialsProps {
   sectionData: ISectionTestimonials;
@@ -46,20 +46,20 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
 
 
     if (diff > 10) {
-        touchPositionRef.current = null;
-        if (nextButtonRef.current) {
-            nextButtonRef.current.click();
-        }
-        return;
+      touchPositionRef.current = null;
+      if (nextButtonRef.current) {
+        nextButtonRef.current.click();
+      }
+      return;
     }
 
     if (diff < -10) {
-        if (prevButtonRef.current) {
-            prevButtonRef.current.click();
-        }
-        return;
+      if (prevButtonRef.current) {
+        prevButtonRef.current.click();
+      }
+      return;
     }
-};
+  };
 
   const moveItem = (direction: number) => {
     direction = direction || 1;
@@ -135,16 +135,18 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   };
   
   /* Datalayer */
-  const handleSlideClick = () => {
-      const visibleCard = document.querySelector(`.${css.item}[aria-hidden="false"]`);
-      const cardName = visibleCard?.querySelector(`.${css.textName}`)?.textContent;
+  const handleSlideClick = (
+    //cardData: { title?: string, text?: string },
+  ) => {
+    const visibleCard = document.querySelector(`.${css.item}[aria-hidden="false"]`);
+    const cardName = visibleCard?.querySelector(`.${css.textName}`)?.textContent;
 
-      sendGTMEvent({
-        'event': 'cta_interaction',
-        'section_name': 'depoimentos',
-        'cta_name': cardName || 'Nome',
-        'page_url': window.location.href
-      });
+    sendDataLayerEvent({
+      'event': 'cta_interaction',
+      'section_name': 'depoimentos',
+      'cta_name': cardName || 'Nome',
+      //'content_text': getPlainText(cardData.text),
+    });
   };
 
   return (
@@ -281,13 +283,13 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
         </div>
 
         <div 
-        ref={nextButtonRef}
-        className={`${css.customNext} absolute top-1/2 z-10 cursor-pointer max-sm:hidden`}
-        //onClick={() => moveItem(1)}
-        onClick={() => {
-          moveItem(1);
-          handleSlideClick();
-        }}
+          ref={nextButtonRef}
+          className={`${css.customNext} absolute top-1/2 z-10 cursor-pointer max-sm:hidden`}
+          //onClick={() => moveItem(1)}
+          onClick={() => {
+            moveItem(1);
+            handleSlideClick();
+          }}
         >
           <NavigateNextIcon 
             style={{

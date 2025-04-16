@@ -1,152 +1,79 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import css from './style.module.scss';
-//import ReplyIcon from '@mui/icons-material/Reply';
 import ISectionLargeVideo from '@/interfaces/section-video';
 import { useAppContext } from '@/contexts/app.context';
 import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
+import VideoComponent, { VideoComponentRefType } from '../commons/video';
+import useIsInViewport from '@/hooks/useIsInViewport_';
+import ShareButton from '../commons/share-button';
 
 interface LargeVideoSectionProps {
   sectionData: ISectionLargeVideo;
   className?: string;
 }
 
-type ProgressTracked = {
-  '10%': boolean;
-  '25%': boolean;
-  '50%': boolean;
-  '75%': boolean;
-};
-
 const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) => {
   const { isMobileScreen: isMobile } = useAppContext();
 
+  const { isInViewport, elementRef } = useIsInViewport({
+    root: null, // Use o viewport como referência
+    rootMargin: "0px", // Margem ao redor do viewport
+    threshold: 0.3, // Percentual visível para considerar "dentro da viewport"
+  });
+
   const [videoUrl, setVideoUrl] = useState<string>(sectionData.videosUrls.urlDesktop);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<VideoComponentRefType>(null);
   const [isMuted, setIsMuted] = useState(true); // Começa mudo por padrão
   const [isPaused, setIsPaused] = useState(true); // Começa pausado
   const hasResetOnUnmute = useRef(false); // Novo ref para controle
-  const [progressTracked, setProgressTracked] = useState<ProgressTracked>({
-    '10%': false,
-    '25%': false,
-    '50%': false,
-    '75%': false
-  });
 
-  // Funções de tracking
-  const pushToDataLayer = useCallback((eventName: string, progress?: string) => {
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: eventName,
-      video_title: sectionData.videosUrls.altText || 'Vídeo sem título',
-      video_url: videoUrl,
-      page_url: window.location.href,
-      ...(progress && { video_progress: progress })
-    });
-  }, [sectionData.videosUrls.altText, videoUrl]);
-  
-  // Handlers de eventos do vídeo
-  const handleVideoStart = useCallback(() => {
-    if (!isMobile) pushToDataLayer('video_start');
-  }, [isMobile, pushToDataLayer]);
+  const onVideoVideoPause = () => {
+    setIsPaused(true);
+  };
 
-  const handleVideoProgress = useCallback(() => {
-    if (!videoRef.current) return;
-    
-    const duration = videoRef.current.duration;
-    const currentTime = videoRef.current.currentTime;
-    const progress = (currentTime / duration) * 100;
+  const onVideoVideoPlay = () => {
+    setIsPaused(false);
+  };
 
-    const checkProgress = (percent: number, key: keyof ProgressTracked) => {
-      if (progress >= percent && !progressTracked[key]) {
-        setProgressTracked(prev => ({ ...prev, [key]: true }));
-        pushToDataLayer('video_progress', key);
-      }
-    };
-
-    checkProgress(10, '10%');
-    checkProgress(25, '25%');
-    checkProgress(50, '50%');
-    checkProgress(75, '75%');
-  }, [progressTracked, pushToDataLayer]);
-  
-  const handleVideoEnd = useCallback(() => {
-    pushToDataLayer('video_complete');
-    setProgressTracked({
-      '10%': false,
-      '25%': false,
-      '50%': false,
-      '75%': false
-    });
-  }, [pushToDataLayer]);
-  
-  useEffect(() => {
-    const videoElement = videoRef.current;
-    if (!videoElement) return;
-
-    const handlePlay = () => setIsPaused(false);
-    const handlePause = () => setIsPaused(true);
-
-    videoElement.addEventListener('play', handlePlay);
-    videoElement.addEventListener('pause', handlePause);
-
-    const handleVideoUrl = () => {
-      setVideoUrl(isMobile ? sectionData.videosUrls.urlMobile : sectionData.videosUrls.urlDesktop);
-      hasResetOnUnmute.current = false; // Resetar ao mudar de vídeo ou tamanho de tela
-    };
-
-    handleVideoUrl();
-    window.addEventListener('resize', handleVideoUrl);
-
-    // Event listeners de vídeo
-    videoElement.addEventListener('play', handleVideoStart);
-    videoElement.addEventListener('timeupdate', handleVideoProgress);
-    videoElement.addEventListener('ended', handleVideoEnd);
-
-    return () => {
-      window.removeEventListener('resize', handleVideoUrl);
-      videoElement.removeEventListener('play', handleVideoStart);
-      videoElement.removeEventListener('timeupdate', handleVideoProgress);
-      videoElement.removeEventListener('ended', handleVideoEnd);
-      videoElement.removeEventListener('play', handlePlay);
-      videoElement.removeEventListener('pause', handlePause);
-    };
-  }, [
-    sectionData.videosUrls.urlMobile,
-    sectionData.videosUrls.urlDesktop,
-    handleVideoStart,
-    handleVideoProgress,
-    handleVideoEnd
-  ]);
+  const onVideoVolumeChange = (e: any, volume: number, muted: boolean) => {
+    setIsMuted(muted);
+  };
 
   const handleVideoClick = () => {
-    //if (!isMobile) return;
     if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-        setIsPaused(false);
-      } else {
-        videoRef.current.pause();
-        setIsPaused(true);
-      }
+      videoRef.current.togglePlay();
     }
   };
 
   const toggleMute = () => {
     if (videoRef.current) {
-      const wasMuted = videoRef.current.muted;
-      videoRef.current.muted = !wasMuted;
+      const videoElement = videoRef.current.videoNativeElement;
+      const wasMuted = videoElement.muted;
+      videoElement.muted = !wasMuted;
       setIsMuted(!wasMuted);
   
       if (isMobile && wasMuted && !hasResetOnUnmute.current) {
-        videoRef.current.currentTime = 0; // Volta para o início
+        videoElement.currentTime = 0; // Volta para o início
         hasResetOnUnmute.current = true;
-        videoRef.current.play(); // inicia a reprodução ao desmutar
+        videoElement.play(); // inicia a reprodução ao desmutar
       }
     }
   };
+  
+  useEffect(() => {
+    setVideoUrl(isMobile ? sectionData.videosUrls.urlMobile : sectionData.videosUrls.urlDesktop);
+    hasResetOnUnmute.current = false; // Resetar ao mudar de vídeo ou tamanho de tela
+  }, [isMobile]);
+
+  // Coloca o player no mudo quando o elemento sai da viewport
+  useEffect(() => {
+    if (!isInViewport) {
+      setIsMuted(true);
+    }
+  }, [isInViewport]);
 
   return (
     <div id='large-video' className={`${css['section-container']} py-8`}>
@@ -156,24 +83,26 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
         )}
         <hr className="w-[65px] h-1 mx-auto my-[22px] bg-[#C02031]" />
         
-        <div className={`relative z-0`}>
-          <video
-            className="rounded-[20px] sm:block sm:w-full sm:rounded-none min-h-[260px] sm:min-h-[unset] xl:max-h-[607px]"
+        <div className={`relative z-0`} ref={elementRef as any}>
+          <VideoComponent
             ref={videoRef}
+            videoText={sectionData.videosUrls.altText}
             autoPlay={isMobile}
+            className="rounded-[20px] sm:block sm:w-full sm:rounded-none min-h-[260px] sm:min-h-[unset] xl:max-h-[607px]"
             loop
             playsInline
+            muted={isMuted}
             controls={!isMobile}
             controlsList="nodownload nofullscreen noremoteplayback"
             disablePictureInPicture
-            onClick={handleVideoClick}
-            muted={isMuted}
-            src={videoUrl}
+            src={videoUrl} 
             poster={sectionData.videosUrls.posterImage} // Imagem antes do click
             aria-label={sectionData.videosUrls.altText || 'Vídeo'} // Texto alternativo
-          >
-            Seu navegador não suporta vídeos HTML5.
-          </video>
+            onVideoClick={handleVideoClick}
+            onVideoPause={onVideoVideoPause}
+            onVideoPlay={onVideoVideoPlay}
+            onVideoVolumeChange={onVideoVolumeChange}
+          />
 
           {sectionData.textTranscription && ((isMobile && isMuted) || (!isMobile && isPaused)) &&(
             <div
@@ -182,31 +111,25 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
             />
           )}
 
-          {/* Botão de curtir */}
-          <LikeButton
-            className={`${css['btn-svg']} absolute top-5 right-4`}
-            videoTitle={sectionData.textTranscription || ''}
-            videoUrl={videoUrl || ''}
-            sectionName="video_largo_lp1"
-          />
-
-          {/* Botão de compartilhar */}
-          {/* <button 
-            className={`${css['btn-svg']} absolute top-20 right-4 bg-black/30 rounded-full p-2 backdrop-blur-sm`}
-            aria-label="Compartilhar vídeo"
-            onClick={() => {}}
-          >
-            <ReplyIcon 
-              className="w-8 h-8" 
-              style={{ 
-                transform: "scaleX(-1) rotate(360deg)",
-                color: "#FFFFFFFF"
-              }} 
-            />
-          </button> */}
-
-          {/* Botão Mudo */}
-          <MuteButton onClick={toggleMute} isMuted={isMuted} className={`${css['btn-svg']} absolute bottom-8 right-2.5`} />
+          <div className={`action-buttons flex sm:hidden absolute h-[92%] top-5 right-4 z-[3] bg-red flex-col gap-y-2`}>
+            <div className='grow flex flex-col gap-y-2'>
+              <LikeButton
+                className=""
+                videoTitle={sectionData.textTranscription || ''}
+                videoUrl={videoUrl || ''}
+                sectionName="video_largo_lp1"
+              />
+              <ShareButton
+                className=""
+                title={`Assista: ${sectionData.textTranscription || ''}`}
+                text={sectionData.textTranscription || ''}
+                url={videoUrl || ''}
+                sectionName="video_largo_lp1"
+              />
+            </div>
+            
+            <MuteButton className={`bottom-8 right-2.5 z-[3] self-end justify-self-end`} isMuted={isMuted} onClick={() => toggleMute()} />
+          </div>
         </div>
       </div>
     </div>

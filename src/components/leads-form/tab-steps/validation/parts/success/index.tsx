@@ -4,7 +4,7 @@ import css from './style.module.scss';
 import { CircularProgress } from '@mui/material';
 import { useAppFormContext } from '@/contexts/app-form.context';
 import { useFormContext } from 'react-hook-form';
-import { IFormInputs } from '@/utils/form.util';
+import { IFormInputs, sendDataLayerFormEvent } from '@/utils/form.util';
 import { useAppContext } from '@/contexts/app.context';
 import { useRouter } from 'next/navigation';
 
@@ -42,8 +42,12 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
       label: undefined,
     });
     setValue('headerTitle', <div className="sm:text-center grow">Você conseguiu!<br />Etapa concluída com sucesso.</div>);
-    setTimeout(() => router.push(pagesUrls.lp2), 3000)
+    setTimeout(() => router.push(pagesUrls.lp2), (20 * 1000));
   }, [isTabActive]);
+
+  useEffect(() => {
+    sendDataLayerFormEvent('conclusao', 'success');
+  }, []);
 
   
   return (

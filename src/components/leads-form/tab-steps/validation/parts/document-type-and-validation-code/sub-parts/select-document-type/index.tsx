@@ -24,22 +24,22 @@ const StepValidationSelectDocument: React.FC<StepValidationSelectDocumentProps> 
     {
       name: 'RG',
       image: '/assets/images/document-types/rg.jpg',
-      documentType: 'RG'
+      documentTypes: ['RG']
     },
     {
       name: 'CNH',
       image: '/assets/images/document-types/cnh.png',
-      documentType: 'CNH'
+      documentTypes: ['CNH']
     },
     {
       name: 'RG modelo novo',
       image: '/assets/images/document-types/new-rg.jpg',
-      documentType: 'RG_NOVO'
+      documentTypes: ['RG_NOVO']
     },
     {
-      name: 'CNH Digital',
-      image: '/assets/images/document-types/digital-cnh.jpg',
-      documentType: 'CNH_DIGITAL'
+      name: 'RG ou CNH Digital',
+      image: '/assets/images/document-types/rg-cnh-digital.png',
+      documentTypes: ['CNH_DIGITAL', 'RG_DIGITAL']
     }
   ];
 
@@ -59,12 +59,12 @@ const StepValidationSelectDocument: React.FC<StepValidationSelectDocumentProps> 
 
       <div className={`mt-2 w-5/6 m-auto flex flex-wrap justify-between items-center`}>
 
-        {documentTypes.map(({image, name, documentType}: any, index) => (
+        {documentTypes.map(({image, name, documentTypes}: any, index) => (
           <div key={index}
-            onClick={() => setDocumentType(documentType)}
-            className={`${css['document-type-box']} ${(documentType === selectedDocumentType && css['selected'])} p-2 flex flex-col justify-end items-center`}
+            onClick={() => setDocumentType(documentTypes[0])}
+            className={`${css['document-type-box']} ${(documentTypes.includes(selectedDocumentType) && css['selected'])} p-2 flex flex-col justify-end items-center`}
           >
-            <Image src={image} className={`${css['document-sample']}`} width={149} height={112} alt="RG" />
+            <Image src={image} className={`${css['document-sample']}`} width={149} height={112} alt={name} />
             <p className='p-1'>{name}</p>
           </div>
         ))}
