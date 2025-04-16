@@ -4,6 +4,9 @@ import React, { createContext, useContext, useState, ReactNode, useCallback } fr
 interface AppFormContextProps {
   getFormButtonProps: () => Partial<ButtonProps>;
   setFormButtonProps: (props: Partial<ButtonProps>) => void;
+  getFormError: () => string | null;
+  setFormError: (error: string | null) => void;
+  showDefaultFormError: () => void;
 }
 
 interface ButtonProps {
@@ -13,7 +16,7 @@ interface ButtonProps {
   disabled: boolean;
 }
 
-const AppFormContext = createContext<AppFormContextProps>({getFormButtonProps: () => ({label: '', action: () => {}, loading: false, disabled: false}), setFormButtonProps: () => {}});
+const AppFormContext = createContext<AppFormContextProps>({} as AppFormContextProps);
 
 export const useAppFormContext = () => {
   const context = useContext(AppFormContext);
@@ -29,6 +32,7 @@ interface AppFormProviderProps {
 
 export const AppFormProvider: React.FC<AppFormProviderProps> = ({ children }) => {
   const [buttonProps, updateButtonProps] = useState<Partial<ButtonProps>>({label: '', action: () => {}, loading: false, disabled: false});
+  const [formError, setFormError] = useState<string | null>(null);
 
   const getFormButtonProps = useCallback(() => {
     return buttonProps;
@@ -38,9 +42,17 @@ export const AppFormProvider: React.FC<AppFormProviderProps> = ({ children }) =>
     updateButtonProps(currState => ({...currState, loading: false, disabled: false, ...props}));
   }
 
+  const showDefaultFormError = useCallback(() => {
+    setFormError('Houve um erro. Tente novamente');
+  }, []);
+
+  const getFormError = useCallback(() => {
+    return formError;
+  }, [formError]);
+
 
   return (
-    <AppFormContext.Provider value={{ getFormButtonProps, setFormButtonProps }}>
+    <AppFormContext.Provider value={{ getFormButtonProps, setFormButtonProps, getFormError, setFormError, showDefaultFormError }}>
       {children}
     </AppFormContext.Provider>
   );

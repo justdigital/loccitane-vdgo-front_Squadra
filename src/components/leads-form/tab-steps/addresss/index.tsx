@@ -20,7 +20,7 @@ interface StepAddressProps {
 const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) => {
 
   const {getUserFormId} = useAppContext();
-  const {setFormButtonProps} = useAppFormContext();
+  const {setFormButtonProps, showDefaultFormError} = useAppFormContext();
 
   const {
     control,
@@ -88,29 +88,27 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
     }
   };
 
-  const sendDataToServer = async (onOk: () => void) => {
-    setValue('submitButtonLoading', true);
-
-    try {
-      const data = _.pick(getValues(), ['cep', 'address', 'addressNumber', 'addressAdditionalInfo', 'addressReference', 'neighborhood', 'city', 'state']);
-      data.state = ''+(data.state as any).id;
-      data.city = ''+(data.city as any).id;
-      await putAddressData(userFormId as UUID, data);
-      sendDataLayerFormEvent('endereco', 'success');
-      onOk();
-    } catch (e) {
-      sendDataLayerFormEvent('endereco', 'error');
-      console.error('Erro ao enviar dados para o servidor:', e)
-    } finally {
-      setValue('submitButtonLoading', false);
-    }
+  const sendDataToServer = async () => {
+    const data = _.pick(getValues(), ['cep', 'address', 'addressNumber', 'addressAdditionalInfo', 'addressReference', 'neighborhood', 'city', 'state']);
+    data.state = ''+(data.state as any).id;
+    data.city = ''+(data.city as any).id;
+    await putAddressData(userFormId as UUID, data);
   };
 
   const clickButton = useCallback(async () => {
-    setFormButtonProps({loading: true})
-    await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
-    if (validateStep('address', getFieldState)) {
-      sendDataToServer(() => gotoNextStep());
+    try {
+      setFormButtonProps({loading: true})
+      await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
+      if (validateStep('address', getFieldState)) {
+        await sendDataToServer();
+        sendDataLayerFormEvent('endereco', 'success');
+        gotoNextStep();
+      }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      setFormButtonProps({loading: false});
+      sendDataLayerFormEvent('endereco', 'error'); 
+      showDefaultFormError();
     }
   }, [getFieldState, userFormId, gotoNextStep]);
 

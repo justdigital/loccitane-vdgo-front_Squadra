@@ -8,7 +8,7 @@ interface FormTextFieldProps {
   fieldState?: any;
   mask?: string;
   maxLength?: number;
-  specificErrorTemplate?: {[arbitrary: string]: string | React.ReactNode};
+  specificErrorTemplate?: {[arbitrary: string]: string | React.ReactNode | React.FC<any>};
 }
 
 const FormTextField: React.FC<FormTextFieldProps & TextFieldProps> = ({

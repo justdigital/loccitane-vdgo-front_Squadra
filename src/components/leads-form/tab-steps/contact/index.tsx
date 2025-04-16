@@ -21,7 +21,7 @@ interface StepContactProps {
 const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) => {
 
   const {getUserFormId, pagesUrls} = useAppContext();
-  const {setFormButtonProps} = useAppFormContext();
+  const {setFormButtonProps, showDefaultFormError} = useAppFormContext();
   const {
   } = useFormContext<IFormInputs>();
 
@@ -44,26 +44,25 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
     { value: 3, label: 'Prefiro não informar' }
   ];
 
-  const sendDataToServer = async (onOk: () => void) => {
-
-    try {
-      const data = _.pick(getValues(), ['birthdate', 'email', 'gender', 'isIndication', 'resellerCode']);
-      await putPersonalData(userFormId as UUID, data);
-      sendDataLayerFormEvent('contato', 'success');
-      onOk();
-    } catch (e) {
-      sendDataLayerFormEvent('contato', 'error');
-      console.error('Erro ao enviar dados para o servidor:', e)
-    } finally {
-      setValue('submitButtonLoading', false);
-    }
+  const sendDataToServer = async () => {
+    const data = _.pick(getValues(), ['birthdate', 'email', 'gender', 'isIndication', 'resellerCode']);
+    await putPersonalData(userFormId as UUID, data);
   };
   
   const clickButton = useCallback(async () => {
-    setFormButtonProps({loading: true})
-    await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
-    if (validateStep('contactData', getFieldState)) {
-      sendDataToServer(() => gotoNextStep());
+    try {
+      setFormButtonProps({loading: true})
+      await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
+      if (validateStep('contactData', getFieldState)) {
+        await sendDataToServer();
+        sendDataLayerFormEvent('contato', 'success');
+        gotoNextStep();
+      }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (e) {
+      setFormButtonProps({loading: false});
+      sendDataLayerFormEvent('contato', 'error'); 
+      showDefaultFormError();
     }
   }, [getFieldState, userFormId]);
   
@@ -90,7 +89,12 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
             pattern: {value: /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/, message: 'Data de nascimento inválida. Use o formato DD/MM/AAAA.'},
             validate: {
               checkBirthdateMatches: async (birthdate) => {
-                return !(await checkBirthdateMatches(cpf, birthdate)) ? 'A data de nascimento não confere com o CPF' : true
+                try {
+                  return !(await checkBirthdateMatches(cpf, birthdate)) ? 'A data de nascimento não confere com o CPF' : true
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                } catch (e) {
+                  return 'Erro ao validar a data de nascimento. Tente novamente.';
+                }
               }
             }
           }}
@@ -115,7 +119,14 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
                 message: 'E-mail inválido'
               },
               validate: {
-                checkEmailAvailability: async (email) => (await checkEmailIsUnavailable(email)) ? 'E-mail já em uso' : true
+                checkEmailAvailability: async (email) => {
+                  try {
+                    return !!(await checkEmailIsUnavailable(email)) ? false : true
+                  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                  } catch (e) {
+                    return 'Houve um erro ao verificar o e-mail. Tente novamente.';
+                  }
+                }
               }
             }
           }
@@ -126,7 +137,15 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
               type="email"
               label="E-mail"
               specificErrorTemplate={{
-                checkEmailAvailability: <a href={pagesUrls.externalLogin} target='_blank' className={`${css['helper-text-link']}`}>Este e-mail já está cadastrado. Clique aqui para fazer login</a>
+                checkEmailAvailability: (
+                  <>
+                    {fieldState.error?.message ? fieldState.error.message : (
+                      <a href={pagesUrls.externalLogin} target='_blank' className={`${css['helper-text-link']}`}>
+                        Este e-mail já está cadastrado. Clique aqui para fazer login
+                      </a>
+                    )}
+                  </>
+                )
               }}
             />
           }

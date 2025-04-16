@@ -1,7 +1,7 @@
 "use client";
 import React, { forwardRef, RefAttributes, useCallback, useEffect, useImperativeHandle, useState } from 'react';
 import css from './style.module.scss';
-import { Tabs, Tab } from '@mui/material';
+import { Tabs, Tab, Alert } from '@mui/material';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import StepAddress from './tab-steps/addresss';
 import { IFormInputs } from '@/utils/form.util';
@@ -48,12 +48,13 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
       // cep: '40296370',
       // // state: "29",
       // // city: '2927408',
+      // emailCodeConfirmation: '12345',
       // addressNumber: '123',
-      // isCodeValidated: false
+      // isCodeValidated: true
     }
   });
 
-  const {getFormButtonProps} = useAppFormContext();
+  const {getFormButtonProps, getFormError, setFormError} = useAppFormContext();
 
   const {
     handleSubmit,
@@ -107,12 +108,26 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   
   return (
     <div className={`${css['modal-wrapper']} ${css['form-hidden']}`} data-visible={+mobileFormVisible}>
-      <div className={`${css['form-box']} flex flex-col flex-1 bg-white`}>
+      <div className={`${css['form-box']} relative flex flex-col flex-1 bg-white`}>
         <header className="flex items-center text-left sm:text-center">
           {headerTitle || defaultHeader}
           <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block sm:hidden'><CloseIcon /></a>
         </header>
         <FormProvider {...methods}>
+
+          {getFormError() && (
+            <div className="absolute w-full top-[100px] left-0 z-10">
+              <Alert
+                onClose={() => setFormError(null)}
+                severity="warning"
+                variant="filled"
+                className="mx-auto w-[90%]"
+              >
+                {getFormError()}
+              </Alert>
+            </div>
+          )}
+
           {tab ? (
             <>
               <Tabs
