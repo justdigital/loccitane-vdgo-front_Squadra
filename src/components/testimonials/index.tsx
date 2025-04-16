@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { Flip } from 'gsap/Flip';
 import React from 'react';
@@ -9,7 +9,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import css from './style.module.scss';
 import ISectionTestimonials from '@/interfaces/section-testimonials';
-import { sendDataLayerEvent } from '@/utils/general.util';
+import { sendGTMEvent } from "@next/third-parties/google";
 
 interface TestimonialsProps {
   sectionData: ISectionTestimonials;
@@ -21,12 +21,14 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   const nextButtonRef = useRef<HTMLDivElement>(null);
   const prevButtonRef = useRef<HTMLDivElement>(null);
   const touchPositionRef = useRef<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   
   useEffect(() => {
     gsap.registerPlugin(Flip);
     /* Força o click para aparecer UM primeiro slide */
     const requestId = requestAnimationFrame(() => {
       if (prevButtonRef.current) {
+        prevButtonRef.current.setAttribute('data-programmatic-click', 'true');
         prevButtonRef.current.click();
       }
     });
@@ -135,18 +137,25 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
   };
   
   /* Datalayer */
+  const toggleSlide = (index: number) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  };
+
   const handleSlideClick = (
-    //cardData: { title?: string, text?: string },
+    index: number
   ) => {
     const visibleCard = document.querySelector(`.${css.item}[aria-hidden="false"]`);
     const cardName = visibleCard?.querySelector(`.${css.textName}`)?.textContent;
+    const isProgrammaticClick = prevButtonRef.current?.getAttribute('data-programmatic-click') === 'true';
 
-    sendDataLayerEvent({
-      'event': 'cta_interaction',
-      'section_name': 'depoimentos',
-      'cta_name': cardName || 'Nome',
-      //'content_text': getPlainText(cardData.text),
-    });
+    if (!isProgrammaticClick) {
+      sendGTMEvent({
+        'section_name': 'depoimentos',
+        'content_type': `depoimento_${index + 1}`,
+        'content_text': cardName || 'Nome',
+      });
+    }
+    prevButtonRef.current?.removeAttribute('data-programmatic-click');
   };
 
   return (
@@ -265,10 +274,11 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
         <div 
           ref={prevButtonRef}
           className={`${css.customPrev} absolute top-1/2 z-10 cursor-pointer max-sm:hidden`}
-          //onClick={() => moveItem(-1)}
           onClick={() => {
             moveItem(-1);
-            handleSlideClick();
+            const prevIndex = activeIndex === 0 ? sectionData.cardItems.length - 1 : (activeIndex || 1) - 1;
+            toggleSlide(prevIndex);
+            handleSlideClick(prevIndex);
           }}
         >
           <NavigateBeforeIcon 
@@ -285,10 +295,11 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
         <div 
           ref={nextButtonRef}
           className={`${css.customNext} absolute top-1/2 z-10 cursor-pointer max-sm:hidden`}
-          //onClick={() => moveItem(1)}
           onClick={() => {
             moveItem(1);
-            handleSlideClick();
+            const nextIndex = ((activeIndex || 0) + 1) % sectionData.cardItems.length;
+            toggleSlide(nextIndex);
+            handleSlideClick(nextIndex);
           }}
         >
           <NavigateNextIcon 
