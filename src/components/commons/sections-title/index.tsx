@@ -14,7 +14,7 @@ const SectionsTitle: React.FC<SectionsTitleProps> = ({ title, subtitle, leftAlig
         <div dangerouslySetInnerHTML={{ __html: title }} />
       )}
 
-      <hr className={`w-[65px] h-1 ${!leftAligned ? 'mx-auto' : ''} my-[22px] bg-[#C02031]`} />
+      <hr className={`w-[65px] h-[3px] ${!leftAligned ? 'mx-auto' : ''} my-[22px] bg-[#C02031]`} />
 
       {subtitle && (
         <div dangerouslySetInnerHTML={{ __html: subtitle }} />
