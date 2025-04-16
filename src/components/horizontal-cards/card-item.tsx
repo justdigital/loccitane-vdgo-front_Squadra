@@ -15,9 +15,10 @@ import ShareButton from '../commons/share-button';
 interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
   openModal: (videoUrl: string) => void;
+  index: number;
 }
 
-const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
+const CardItem: React.FC<CardItemsProps> = ({ item, openModal, index = 0, ...props }) => {
 
   const { isInViewport, elementRef } = useIsInViewport({
     root: null, // Use o viewport como referência
@@ -57,16 +58,16 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
     videoRef.current?.togglePlay();
   };
 
+  /* Datalayer */
   const handleCardClick = () => {
-    // if (!item.linkUrl) {
-    //   return;
-    // }
+    const textPlain = (getPlainText(item.text) || item.linkUrl || 'Título').slice(0, 40); 
 
-    const textPlain = getPlainText(item.text) || item.linkUrl || 'Título'; 
+    const cardIndex = typeof index === 'number' ? index + 1 : 1;
+    
     sendDataLayerEvent({
       'event': 'select_content',
       'section_name': 'cards_horizontais_lp1',
-      'content_type': `card__${textPlain}`,
+      'content_type': `card__${cardIndex}`,
       'content_text': textPlain,
     });
   };
@@ -78,7 +79,15 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
   }, [isInViewport]);
 
   return (
-    <a href={item.linkUrl} onClick={handleCardClick} target="_blank" rel="noopener noreferrer">
+    <a 
+      href={item.linkUrl} 
+      onClick={() => {
+        //toggleSlide(index);
+        handleCardClick();
+      }}
+      target="_blank" 
+      rel="noopener noreferrer"
+    >
       <div ref={elementRef as any} className={`${css['card-item']} ${isVideoCard && css['video-card']} ${props.className} flex flex-col sm:flex-row`}>
         {isVideoCard && !isMobile && (
           <div className={`${css['play-button-box']} flex items-center justify-center`} onClick={() => openModal(videoUrl || '')}>
