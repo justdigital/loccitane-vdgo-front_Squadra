@@ -150,6 +150,7 @@ const Testimonials: React.FC<TestimonialsProps> = ({ sectionData }) => {
 
     if (!isProgrammaticClick) {
       sendGTMEvent({
+        'event': 'select_content',
         'section_name': 'depoimentos',
         'content_type': `depoimento_${index + 1}`,
         'content_text': cardName || 'Nome',
