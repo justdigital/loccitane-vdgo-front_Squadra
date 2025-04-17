@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const allowedSources = process.env.NEXT_ALLOWED_DOMAINS_SOURCE || '[]';
+const allowedSources = process.env.NEXT_ALLOWED_DOMAINS_SOURCE || '';
 
 const nextConfig: NextConfig = {
   sassOptions: {
@@ -30,9 +30,9 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    remotePatterns: ((JSON.parse(allowedSources) as any[]) || []).reduce((acc, domain) => {
+    remotePatterns: allowedSources.split(',').reduce((acc, domain) => {
       const obj = {
-        hostname: domain,
+        hostname: domain.trim(),
         pathname: '/**'
       };
       (acc as any[]).push(

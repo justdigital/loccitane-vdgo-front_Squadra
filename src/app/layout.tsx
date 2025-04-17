@@ -52,8 +52,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const sourcesAllowed = (JSON.parse(process.env.NEXT_ALLOWED_DOMAINS_SOURCE as string) as any[]).map((domain) => {
-    return `${domain} *.${domain}`;
+  const sourcesAllowed = process.env.NEXT_ALLOWED_DOMAINS_SOURCE?.split(',').map((domain) => {
+    return `${domain.trim()} *.${domain.trim()}`;
   }
   ).join(' ');
   return (
