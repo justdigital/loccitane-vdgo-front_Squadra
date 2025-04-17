@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const allowedSources = process.env.NEXT_ALLOWED_DOMAINS_SOURCE || '[]';
+
 const nextConfig: NextConfig = {
   sassOptions: {
     additionalData: `
@@ -28,55 +30,18 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'loccitane-vdgo-cms.lndo.site',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'vdgo-cms-dev.squadra.com.br',
-        pathname: '/**',
-      },
-      {
-        protocol: 'http',
-        hostname: '**',
-      }
-    ],
+    remotePatterns: ((JSON.parse(allowedSources) as any[]) || []).reduce((acc, domain) => {
+      const obj = {
+        hostname: domain,
+        pathname: '/**'
+      };
+      (acc as any[]).push(
+        {...obj, protocol: 'http'},
+        {...obj, protocol: 'https'}
+      );
 
-    /*
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'loccitane-vdgo-cms.lndo.site',
-        port: '',
-        pathname: '/**',
-        search: '',
-      },
-      {
-        protocol: 'https',
-        hostname: 'loccitane-vdgo-cms.lndo.site',
-        port: '',
-        pathname: '/**',
-        search: '',
-      },
-      {
-        protocol: 'http',
-        hostname: 'vdgo-cms-dev.squadra.com.br',
-        port: '',
-        pathname: '/**',
-        search: '',
-      },
-      {
-        protocol: 'https',
-        hostname: 'vdgo-cms-dev.squadra.com.br',
-        port: '',
-        pathname: '/**',
-        search: '',
-      },
-    ],
-    */
+      return acc;
+    }, []),
   },
 };
 
