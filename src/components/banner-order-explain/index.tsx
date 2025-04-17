@@ -5,14 +5,15 @@ import ButtonDefault from '../commons/button-default';
 import Image from 'next/image';
 import SectionsTitle from '../commons/sections-title';
 import ISectionBannerOrderExplain from '@/interfaces/section-banner-order-explain';
-import useWindowWidth from '@/hooks/useWindowWidth';
+import { useAppContext } from '@/contexts/app.context';
 
 const BannerOrderExplain = (props: {
   sectionData: ISectionBannerOrderExplain
 }) => {
   const { sectionData } = props;
-  const windowWidth = useWindowWidth() || 0;
-  const isMobile = windowWidth < 640;
+
+  const {isMobileScreen: isMobile} = useAppContext()
+
 
   return (
     <div className="bg-[#F6F7F7] lg:pb-6">
@@ -25,14 +26,14 @@ const BannerOrderExplain = (props: {
               width: "158px",
               height: "116px",
             }}/>
-            <p dangerouslySetInnerHTML={{ __html: sectionData.textDescription }} />
+            <div dangerouslySetInnerHTML={{ __html: sectionData?.textDescription }} />
           </div>
           <div className='mx-auto lg:mx-0 mt-[20px]'>
             <ButtonDefault
               style={{ 
                 padding: "7px 20px", 
-                width: isMobile? "230px" : "337px",
-                height: isMobile? "50px" : "60px"
+                width: isMobile ? "230px" : "337px",
+                height: isMobile ? "50px" : "60px"
               }}
               label={sectionData.linkTitle}
               rel="noopener noreferrer"
@@ -50,7 +51,7 @@ const BannerOrderExplain = (props: {
           </div>
         </div>
         <div className="hidden lg:block lg:w-6/12 w-[158px] h-auto order-1 lg:order-2 relative">
-          <Image src={isMobile? sectionData.imagesUrls.mobile : sectionData.imagesUrls.desktop} width={158} height={158} alt="image-banner-order-explain" className='w-full h-auto' />
+          <Image src={isMobile ? sectionData.imagesUrls.mobile : sectionData.imagesUrls.desktop} width={158} height={158} alt="image-banner-order-explain" className='w-full h-auto' />
         </div>
       </div>
     </div>

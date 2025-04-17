@@ -51,6 +51,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const sourcesAllowed = (JSON.parse(process.env.NEXT_ALLOWED_DOMAINS_SOURCE as string) as any[]).map((domain) => {
+    return `${domain} *.${domain}`;
+  }
+  ).join(' ');
   return (
     <html lang="pt_BR">
       <head>
@@ -59,16 +64,17 @@ export default function RootLayout({
         <link rel="stylesheet" href={`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}modules/custom/custom_ckeditor_styles/css/editor-styles.css`} />
         <meta
           httpEquiv="Content-Security-Policy"
-          content="
-              script-src 'self' 'unsafe-eval' *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.lndo.site; 
-              worker-src 'self' blob:; 
-              child-src 'self' blob:;
-              style-src 'self' 'unsafe-inline' *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
-              font-src 'self' data: https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
-              img-src 'self' data: blob: *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site bsnonprodvdgobrsa.blob.core.windows.net bsprodvdgobrsa.blob.core.windows.net;
-              media-src 'self' data: *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.lndo.site;
-              object-src 'self' blob: data:;
-              script-src-elem 'self' 'unsafe-inline' blob: *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.lndo.site"
+          content={`
+            script-src 'self' 'unsafe-eval' *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app; 
+            worker-src 'self' blob:; 
+            child-src 'self' blob:;
+            style-src 'self' 'unsafe-inline' ${sourcesAllowed} *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app;
+            font-src 'self' data: https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
+            img-src 'self' data: blob: ${sourcesAllowed} *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app bsnonprodvdgobrsa.blob.core.windows.net bsprodvdgobrsa.blob.core.windows.net;
+            media-src 'self' data: ${sourcesAllowed} *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br;
+            object-src 'self' blob: data:;
+            script-src-elem 'self' 'unsafe-inline' blob: ${sourcesAllowed} *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app
+          `}
         />
       </head>
       <body

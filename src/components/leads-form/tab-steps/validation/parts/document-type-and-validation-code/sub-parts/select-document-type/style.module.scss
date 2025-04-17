@@ -13,7 +13,7 @@
     border: 1px solid $locci-red;
     flex-basis: calc(50% - 5px);
     margin: 5px 0;
-    min-height: 90px;
+    height: 94px;
     cursor: pointer;
 
     &.selected {
@@ -25,7 +25,7 @@
     }
 
     img.document-sample {
-      max-width: 50%;
+      max-width: 60%;
       // width: 60px;
       max-height: 50px;
     }

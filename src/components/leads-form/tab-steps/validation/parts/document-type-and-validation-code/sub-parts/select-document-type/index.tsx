@@ -32,13 +32,13 @@ const StepValidationSelectDocument: React.FC<StepValidationSelectDocumentProps> 
       documentTypes: ['CNH']
     },
     {
-      name: 'RG modelo novo',
+      name: 'CIN - RG modelo novo ',
       image: '/assets/images/document-types/new-rg.jpg',
       documentTypes: ['RG_NOVO']
     },
     {
       name: 'RG ou CNH Digital',
-      image: '/assets/images/document-types/rg-cnh-digital.png',
+      image: '/assets/images/document-types/digital-cnh.jpg',
       documentTypes: ['CNH_DIGITAL', 'RG_DIGITAL']
     }
   ];
@@ -57,7 +57,7 @@ const StepValidationSelectDocument: React.FC<StepValidationSelectDocumentProps> 
       
       <p className='text-center'>Agora, selecione o tipo de <strong>documento oficial com foto.</strong></p>
 
-      <div className={`mt-2 w-5/6 m-auto flex flex-wrap justify-between items-center`}>
+      <div className={`mt-2 w-full sm:w-[80%] m-auto flex flex-wrap justify-between items-center`}>
 
         {documentTypes.map(({image, name, documentTypes}: any, index) => (
           <div key={index}

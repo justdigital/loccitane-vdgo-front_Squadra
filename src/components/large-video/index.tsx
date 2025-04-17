@@ -8,7 +8,6 @@ import LikeButton from '../commons/like-button';
 import MuteButton from '../commons/mute-button';
 import VideoComponent, { VideoComponentRefType } from '../commons/video';
 import useIsInViewport from '@/hooks/useIsInViewport_';
-import ShareButton from '../commons/share-button';
 
 interface LargeVideoSectionProps {
   sectionData: ISectionLargeVideo;
@@ -119,13 +118,13 @@ const LargeVideoSection: React.FC<LargeVideoSectionProps> = ({ sectionData }) =>
                 videoUrl={videoUrl || ''}
                 sectionName="video_largo_lp1"
               />
-              <ShareButton
+              {/* <ShareButton
                 className=""
                 title={`Assista: ${sectionData.textTranscription || ''}`}
                 text={sectionData.textTranscription || ''}
                 url={videoUrl || ''}
                 sectionName="video_largo_lp1"
-              />
+              /> */}
             </div>
             
             <MuteButton className={`bottom-8 right-2.5 z-[3] self-end justify-self-end`} isMuted={isMuted} onClick={() => toggleMute()} />

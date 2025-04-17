@@ -10,7 +10,6 @@ import VideoComponent, { VideoComponentRefType } from '../commons/video';
 import TextOverlap from '../commons/text-overlap';
 import { getPlainText, sendDataLayerEvent } from '@/utils/general.util';
 import useIsInViewport from '@/hooks/useIsInViewport_';
-import ShareButton from '../commons/share-button';
 
 interface CardItemsProps extends React.HTMLAttributes<HTMLDivElement> {
   item: ISectionHorizontalCards['cardItems'][number];
@@ -143,13 +142,13 @@ const CardItem: React.FC<CardItemsProps> = ({ item, openModal, ...props }) => {
                 videoUrl={videoUrl || ''}
                 sectionName="cards_horizontais_lp1"
               />
-              <ShareButton
+              {/* <ShareButton
                 className=""
                 title={`Assista: ${item.videosUrls?.altText || ''}`}
                 text={item.videosUrls?.altText || ''}
                 url={videoUrl || ''}
                 sectionName="cards_horizontais_lp1"
-              />
+              /> */}
             </div>
             
             <MuteButton className={`bottom-8 right-2.5 z-[3] self-end justify-self-end`} isMuted={isMuted} onClick={() => toggleMute()} />

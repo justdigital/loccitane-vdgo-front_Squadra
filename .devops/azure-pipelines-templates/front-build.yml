@@ -16,6 +16,7 @@ steps:
       --build-arg NEXT_API_BASE_URL=$(env_NEXT_API_BASE_URL)
       --build-arg NEXT_CREDILINK_UNICO_HOSTNAME=$(env_NEXT_CREDILINK_UNICO_HOSTNAME)
       --build-arg NEXT_CREDILINK_UNICO_HOSTKEY=$(env_NEXT_CREDILINK_UNICO_HOSTKEY)
+      --build-arg NEXT_ALLOWED_DOMAINS_SOURCE=$(NEXT_ALLOWED_DOMAINS_SOURCE)
     tags: |
       $(Build.BuildId)
 

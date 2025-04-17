@@ -10,7 +10,6 @@ import MuteButton from '../commons/mute-button';
 import ButtonDefault from '../commons/button-default';
 import TextOverlap from '../commons/text-overlap';
 import useIsInViewport from '@/hooks/useIsInViewport_';
-import ShareButton from '../commons/share-button';
 
 interface HorizontalVideosSectionProps {
   sectionData: ISectionHorizontalVideos
@@ -29,8 +28,10 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
     threshold: 0.3, // Percentual visível para considerar "dentro da viewport"
   });
 
-  const handleVideoClick = () => {
-    setIsPaused(!isPaused);
+  const handleVideoClick = (isActive: boolean) => {
+    if (isActive) {
+      setIsPaused(!isPaused);
+    }
   };
 
   const toggleMute = () => {
@@ -96,7 +97,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
             <SwiperSlide key={index}>
               {({isActive}) => (
                 <div key={index}>
-                  <div className={`${css['video-item']} relative`}>
+                  <div className={`${css['video-item']} relative`} onClick={() => handleVideoClick(isActive)}>
                     <VideoComponent
                       // ref={videoRef}
                       runsMuteOtherVideos={false}
@@ -110,8 +111,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                       controlsList="nodownload nofullscreen noremoteplayback"
                       disablePictureInPicture
                       src={item.videosUrls?.urlDesktop} 
-                      aria-label={`Vídeo "${item.text}"`}
-                      onVideoClick={handleVideoClick}
+                      // onVideoClick={() => handleVideoClick(isActive)}
                       onVideoVolumeChange={onVideoVolumeChange}
                     />
 
@@ -134,13 +134,13 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                             videoUrl={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop || ''}
                             sectionName="videos_horizontais_lp2"
                           />
-                          <ShareButton
+                          {/* <ShareButton
                             className=""
                             title={`Assista: ${item.videosUrls?.altText || ''}`}
                             text={item.videosUrls?.altText || ''}
                             url={item.videosUrls?.urlMobile || item.videosUrls?.urlDesktop || ''}
                             sectionName="videos_horizontais_lp2"
-                          />
+                          /> */}
                         </div>
                         
                         <MuteButton className={`bottom-8 right-2.5 z-[3] self-end justify-self-end`} isMuted={isMuted} onClick={() => toggleMute()} />

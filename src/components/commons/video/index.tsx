@@ -172,7 +172,6 @@ const VideoComponent: React.FC<VideoProps & RefAttributes<any>> = forwardRef(({
       ref={videoRef}
       {...props}
       playsInline
-      aria-label={getPlainText(props['aria-label'])}
       controlsList="nodownload nofullscreen noremoteplayback"
       disablePictureInPicture
       onPlay={handleVideoPlay}

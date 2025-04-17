@@ -5,13 +5,14 @@ import css from "./styles.module.scss";
 import Image from "next/image";
 import React from "react";
 import useWindowWidth from "@/hooks/useWindowWidth";
+import { useAppContext } from '@/contexts/app.context';
 
 const BannerStepExplain = (props: {
   sectionData: ISectionBannerStepExplain
 }) => {
   const { sectionData } = props;
   const windowWidth = useWindowWidth() || 0;
-  const isMobile = windowWidth < 640;
+  const {isMobileScreen: isMobile} = useAppContext();
   const whiteBoxWith = {
     1280: "50.5vw",
     1366: "47.5vw",
