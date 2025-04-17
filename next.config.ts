@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
     NEXT_API_BASE_URL: process.env.NEXT_API_BASE_URL,
     NEXT_CREDILINK_UNICO_HOSTNAME: process.env.NEXT_CREDILINK_UNICO_HOSTNAME,
     NEXT_CREDILINK_UNICO_HOSTKEY: process.env.NEXT_CREDILINK_UNICO_HOSTKEY,
+    NEXT_LINK_PORTAL_TSHIELD: process.env.NEXT_LINK_PORTAL_TSHIELD,
   },
   eslint: {
     // Ignora erros de ESLint durante o build

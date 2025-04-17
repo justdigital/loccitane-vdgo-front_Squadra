@@ -76,7 +76,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                 <tr class="desktop-only">
                                     <td align="left" style="padding-left: 10px; padding-right: 50px;">
                                         <p style="font-size: 16px; width: 246px">Verifiquei alguma inconsistência no documento enviado. Para garantir a aprovação, peço que você o reenvie  de forma legível.</p>
-                                        <a href="https://portalh.tshield.com.br/analise/LOCCITANE/linkfixo" target="_blank"
+                                        <a href="${process.env.NEXT_LINK_PORTAL_TSHIELD}" target="_blank"
                                            style="text-decoration: none; color: inherit; display: block; padding-top:40px;padding-bottom:40px">
                                             <table width="232" height="49" cellpadding="0" cellspacing="0" border="0"
                                                    style="background-color: #C02031; color: #ffffff; text-align: center; height: 59px;">
@@ -97,7 +97,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                 <tr class="mobile-only">
                                     <td align="left" style="padding-left: 10px; padding-right: 50px;">
                                         <p style="width: 246px">Verifiquei alguma inconsistência no documento enviado. Para garantir a aprovação, peço que você o reenvie  de forma legível.</p>
-                                        <a href="https://portalh.tshield.com.br/analise/LOCCITANE/linkfixo" target="_blank"
+                                        <a href="${process.env.NEXT_LINK_PORTAL_TSHIELD}" target="_blank"
                                            style="text-decoration: none; color: inherit; display: block; padding-top:40px;padding-bottom:40px">
                                             <table width="232" height="49" cellpadding="0" cellspacing="0" border="0"
                                                    style="background-color: #C02031; color: #ffffff; text-align: center; height: 59px;">
