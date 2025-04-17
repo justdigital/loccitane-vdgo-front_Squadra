@@ -20,6 +20,7 @@ env:
   NEXT_CREDILINK_UNICO_HOSTNAME: "null"
   NEXT_CREDILINK_UNICO_HOSTKEY: "null"
   NEXT_ALLOWED_DOMAINS_SOURCE: "null"
+  NEXT_LINK_PORTAL_TSHIELD: "null"
   
 imagePullSecrets: []
 nameOverride: ""
