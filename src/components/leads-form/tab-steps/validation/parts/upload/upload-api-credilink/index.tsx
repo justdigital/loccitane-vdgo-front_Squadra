@@ -29,8 +29,8 @@ const UploadApiCredilink: React.FC<UploadApiCredilinkProps & RefAttributes<any>>
     const unicoCameraBuilder = new UnicoCheckBuilder();
     unicoCameraBuilder.setResourceDirectory("/assets/vendor/unico/resources");
     unicoCameraBuilder.setModelsPath("/assets/vendor/unico/models");
-    console.log('process.env.NODE_ENV', process.env.NODE_ENV);
-    unicoCameraBuilder.setEnvironment(process.env.NODE_ENV === 'production' ? SDKEnvironmentTypes.PROD : SDKEnvironmentTypes.UAT);
+    unicoCameraBuilder.setEnvironment(SDKEnvironmentTypes.UAT);
+    // unicoCameraBuilder.setEnvironment(process.env.NODE_ENV === 'production' ? SDKEnvironmentTypes.PROD : SDKEnvironmentTypes.UAT);
     const unicoCamera = unicoCameraBuilder.build();
 
     unicoCamera.prepareDocumentCamera(
