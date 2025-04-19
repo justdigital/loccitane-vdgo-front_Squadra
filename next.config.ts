@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 // const allowedSources = process.env.NEXT_ALLOWED_DOMAINS_SOURCE || '';
-const allowedSources = "loccitane-vdgo-cms.lndo.site,vdgo-cms-dev.squadra.com.br,revehml.squadra.com.br,revehml.loccitaneaubresil.com,reve.loccitaneaubresil.com";
+// const allowedSources = "loccitane-vdgo-cms.lndo.site,vdgo-cms-dev.squadra.com.br,revehml.squadra.com.br,revehml.loccitaneaubresil.com,reve.loccitaneaubresil.com";
 
 const nextConfig: NextConfig = {
   sassOptions: {
@@ -32,18 +32,28 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    remotePatterns: allowedSources.split(',').reduce((acc, domain) => {
-      const obj = {
-        hostname: domain.trim(),
-        pathname: '/**'
-      };
-      (acc as any[]).push(
-        {...obj, protocol: 'http'},
-        {...obj, protocol: 'https'}
-      );
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
+    ],
+    // remotePatterns: allowedSources.split(',').reduce((acc, domain) => {
+    //   const obj = {
+    //     hostname: domain.trim(),
+    //     pathname: '/**'
+    //   };
+    //   (acc as any[]).push(
+    //     {...obj, protocol: 'http'},
+    //     {...obj, protocol: 'https'}
+    //   );
 
-      return acc;
-    }, []),
+    //   return acc;
+    // }, []),
   },
 };
 
