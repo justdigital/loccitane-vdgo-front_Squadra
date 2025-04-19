@@ -52,10 +52,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const sourcesAllowed = process.env.NEXT_ALLOWED_DOMAINS_SOURCE?.split(',').map((domain) => {
+  // const sourcesAllowed = process.env.NEXT_ALLOWED_DOMAINS_SOURCE?.split(',').map((domain) => {
+  const sourcesAllowed = "loccitane-vdgo-cms.lndo.site,vdgo-cms-dev.squadra.com.br,revehml.squadra.com.br,revehml.loccitaneaubresil.com,reve.loccitaneaubresil.com".split(',').map((domain) => {
     return `${domain.trim()} *.${domain.trim()}`;
   }
   ).join(' ');
+  
   return (
     <html lang="pt_BR">
       <head>

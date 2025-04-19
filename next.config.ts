@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
-const allowedSources = process.env.NEXT_ALLOWED_DOMAINS_SOURCE || '';
+// const allowedSources = process.env.NEXT_ALLOWED_DOMAINS_SOURCE || '';
+const allowedSources = "loccitane-vdgo-cms.lndo.site,vdgo-cms-dev.squadra.com.br,revehml.squadra.com.br,revehml.loccitaneaubresil.com,reve.loccitaneaubresil.com";
 
 const nextConfig: NextConfig = {
   sassOptions: {
