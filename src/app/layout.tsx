@@ -22,6 +22,11 @@ const ernestEmily = localFont({
   variable: '--font-ernest-emily',
 });
 
+const ernestEmilyCaps = localFont({
+  src: '../../public/assets/fonts/ErnestandEmilyCaps.woff2',
+  variable: '--font-ErnestandEmilyCaps',
+});
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_DRUPAL_BASE_URL}/api/node/17`);
@@ -78,7 +83,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} ${ernestEmily.variable} antialiased`}
+        className={`${ralewayfont.className} ${ralewayfont.variable} ${loccitaneSans.variable} ${ernestEmily.variable} ${ernestEmilyCaps.variable} antialiased`}
       >
         <AppRouterCacheProvider>
           <AppProvider>
