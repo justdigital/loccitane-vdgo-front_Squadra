@@ -22,7 +22,7 @@ const BannerStepExplain = (props: {
   return (
     <div className="banner-step-explain pb-[28px] bg-[#F6F7F7] flex flex-col lg:flex-row justify-start items-center">
       <div className="lg:w-5/12 w-full">
-        <Image src={isMobile ? sectionData.imagesUrls.mobile : sectionData.imagesUrls.desktop} alt="image-banner" width={375} height={320} className="w-full h-auto" />
+        <Image src={isMobile ? sectionData.imagesUrls.mobile : sectionData.imagesUrls.desktop} alt="image-banner" width={1024} height={1024} quality={100} className="w-full h-auto" />
       </div>
       <div className="lg:w-[53%] w-full relative"
         style={{
@@ -39,7 +39,10 @@ const BannerStepExplain = (props: {
           {sectionData.cardItems.map((item) => (
             <div key={item.id + item.text} className="w-[102px] lg:w-36 flex flex-col gap-4">
               <div className="flex justify-center items-center">
-                <Image src={item.imageUrl} alt="image-card" width={62} height={44} />
+                <Image src={item.imageUrl} alt="image-card" width={512} height={512} quality={100} style={{
+                  width: "58px",
+                  height: "auto"
+                }}/>
               </div>
               <div dangerouslySetInnerHTML={{ __html: item.text }} />
             </div>

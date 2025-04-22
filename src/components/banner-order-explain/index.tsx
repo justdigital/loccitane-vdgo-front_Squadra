@@ -22,7 +22,7 @@ const BannerOrderExplain = (props: {
           <SectionsTitle title={sectionData.text} leftAligned={!isMobile} />
 
           <div>
-            <Image className='lg:hidden float-left mr-[14px] relative top-[4px] object-cover' width={158} height={107} src={isMobile? sectionData.imagesUrls.mobile : sectionData.imagesUrls.desktop} alt="image-banner-order-explain" style={{
+            <Image className='lg:hidden float-left mr-[14px] relative top-[4px] object-cover' width={1024} height={1024} quality={100} src={isMobile? sectionData.imagesUrls.mobile : sectionData.imagesUrls.desktop} alt="image-banner-order-explain" style={{
               width: "158px",
               height: "116px",
             }}/>
@@ -51,7 +51,7 @@ const BannerOrderExplain = (props: {
           </div>
         </div>
         <div className="hidden lg:block lg:w-6/12 w-[158px] h-auto order-1 lg:order-2 relative">
-          <Image src={isMobile ? sectionData.imagesUrls.mobile : sectionData.imagesUrls.desktop} width={158} height={158} alt="image-banner-order-explain" className='w-full h-auto' />
+          <Image src={isMobile ? sectionData.imagesUrls.mobile : sectionData.imagesUrls.desktop} width={1024} height={1024} quality={100} alt="image-banner-order-explain" className='w-full h-auto' />
         </div>
       </div>
     </div>
