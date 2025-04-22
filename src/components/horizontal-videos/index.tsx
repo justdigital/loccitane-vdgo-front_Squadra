@@ -28,8 +28,8 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
     threshold: 0.3, // Percentual visível para considerar "dentro da viewport"
   });
 
-  const handleVideoClick = (isActive: boolean) => {
-    if (isActive) {
+  const handleVideoClick = (e: any, isActive: boolean) => {
+    if (isActive && e.target.tagName !== 'path') {
       setIsPaused(!isPaused);
     }
   };
@@ -97,7 +97,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
             <SwiperSlide key={index}>
               {({isActive}) => (
                 <div key={index}>
-                  <div className={`${css['video-item']} relative`} onClick={() => handleVideoClick(isActive)}>
+                  <div className={`${css['video-item']} relative`} onClick={(e) => handleVideoClick(e, isActive)}>
                     <VideoComponent
                       // ref={videoRef}
                       runsMuteOtherVideos={false}

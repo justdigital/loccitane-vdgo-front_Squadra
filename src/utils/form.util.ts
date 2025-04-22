@@ -39,6 +39,7 @@ export interface SharedInfo {
   isCodeValidated: boolean;
   validationCodeSent: boolean;
   validationCodeResent: boolean;
+  emailAdressValidationSent: string;
   documentsUpload: UploadFile[];
   sentAtDate: string;
   sentAtTime: string;

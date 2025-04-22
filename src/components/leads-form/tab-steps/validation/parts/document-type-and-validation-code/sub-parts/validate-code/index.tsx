@@ -23,20 +23,25 @@ const StepValidationEmailCode: React.FC<StepValidationEmailCodeProps> = ({isTabA
     getValues
   } = useFormContext<IFormInputs>();
 
-  const {email, isCodeValidated} = watch();
+  const {email, emailAdressValidationSent, isCodeValidated} = watch();
   const [isResendingCode, setIsResendingCode] = useState(false);
 
   const sendCode = async (resending = false) => {
     const callable = resending ? resendValidationCode : sendValidationCode;
     const valueKey = resending ? 'validationCodeResent' : 'validationCodeSent';
 
-    if (!resending && !!getValues(valueKey)) {
+    if (!resending && !!getValues(valueKey) && emailAdressValidationSent === email) {
       return;
     }
 
     try {
       setIsResendingCode(resending ? true : false);
       await callable(getUserFormId() as UUID);
+
+      if (!resending) {
+        setValue('emailAdressValidationSent', email);
+      }
+
       setValue(valueKey, true);
     } catch (error) {
       console.log(error);
@@ -46,7 +51,6 @@ const StepValidationEmailCode: React.FC<StepValidationEmailCodeProps> = ({isTabA
   };
 
   const checkConfirmationCodeIsValid = async (value: string) => {
-    console.log('isCodeValidated', isCodeValidated)
     if (isCodeValidated) {
       return true;
     }
