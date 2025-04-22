@@ -61,3 +61,15 @@
     }
   }
 }
+
+.buttonDefault{
+  width: 174px;
+  height: 35px;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  @media (screen(md)) {
+    width: 277px;
+    height: 44px;
+  }
+}

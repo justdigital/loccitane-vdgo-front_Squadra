@@ -159,7 +159,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
           <div className="mt-10" dangerouslySetInnerHTML={{__html: sectionData.text1}}></div>
           <div className="mt-5" dangerouslySetInnerHTML={{__html: sectionData.text2}}></div>
 
-          <ButtonDefault className="mx-auto mt-5 block" label={sectionData.buttonTitle} href={sectionData.buttonLinkUrl} />
+          <ButtonDefault className={`${css['buttonDefault']} mx-auto mt-5 block`} label={sectionData.buttonTitle} href={sectionData.buttonLinkUrl} />
         </div>
       </div>
     </div>
