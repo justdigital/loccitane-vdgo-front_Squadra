@@ -60,3 +60,15 @@
   padding-top: 6px;
   line-height: 19px;
 }
+
+.buttonDefault{
+  width: 230px;
+  height: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+
+  @media (screen(md)) {
+    width: 337px;
+    height: 60px;
+  }
+}
