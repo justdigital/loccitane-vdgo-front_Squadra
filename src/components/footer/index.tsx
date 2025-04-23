@@ -13,6 +13,15 @@ const Footer: React.FC<FooterProps> = ({ sectionData }) => {
 
   const handleSlideClick = (cardData: { text?: string, linkUrl?: string, buttonLink?: string }) => {
     sendDataLayerEvent({
+      'event': 'click_contact',
+      'section_name': 'footer',
+      'content_type': `link`,
+      'content_text': getPlainText(cardData?.text) || cardData?.linkUrl || cardData?.buttonLink || 'Título',
+    });
+  };
+
+  const handleSlideClickLogo = (cardData: { text?: string, linkUrl?: string, buttonLink?: string }) => {
+    sendDataLayerEvent({
       'event': 'select_content',
       'section_name': 'footer',
       'content_type': `link`,
@@ -53,7 +62,7 @@ const Footer: React.FC<FooterProps> = ({ sectionData }) => {
         {/* Logo */}
         <div 
           className={`${css.footerImage}`} 
-          onClick={() => sectionData.buttonLink && (handleSlideClick({ buttonLink: sectionData.buttonLink }), window.open(sectionData.buttonLink, '_self'))}
+          onClick={() => sectionData.buttonLink && (handleSlideClickLogo({ buttonLink: sectionData.buttonLink }), window.open(sectionData.buttonLink, '_self'))}
         >
           {sectionData.imagesUrls && (
             <picture>

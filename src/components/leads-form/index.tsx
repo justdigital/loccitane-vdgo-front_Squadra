@@ -34,23 +34,23 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
       authorizeExposeCellNumbers: true,
       acceptReceiveInfo: true,
 
-      submitButtonAction: () => {},
-      submitButtonLoading: false,
-      fullName: 'Jorge Luis',
-      documentNumber: '04084092584',
-      cellphoneNumber: '71999999999',
-      birthdate: '10/03/1992',
-      acceptTerms: true,
-      email: 'jorge.malaquias@squadra.com.br',
-      gender: "2",
-      isIndication: false,
-      documentType: 'RG',
-      cep: '40296370',
-      // state: "29",
-      // city: '2927408',
-      emailCodeConfirmation: '12345',
-      addressNumber: '123',
-      isCodeValidated: true
+      // submitButtonAction: () => {},
+      // submitButtonLoading: false,
+      // fullName: 'Jorge Luis',
+      // documentNumber: '04084092584',
+      // cellphoneNumber: '71999999999',
+      // birthdate: '10/03/1992',
+      // acceptTerms: true,
+      // email: 'jorge.malaquias@squadra.com.br',
+      // gender: "2",
+      // isIndication: false,
+      // documentType: 'RG',
+      // cep: '40296370',
+      // // state: "29",
+      // // city: '2927408',
+      // emailCodeConfirmation: '12345',
+      // addressNumber: '123',
+      // isCodeValidated: true
     }
   });
 
@@ -92,7 +92,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
 
 
   useEffect(() => {
-    gotoNextStep(4);
+    gotoNextStep();
   }, []);
 
 

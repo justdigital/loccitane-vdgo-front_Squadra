@@ -4,7 +4,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import css from './style.module.scss';
 import { useFormContext } from 'react-hook-form';
-import { DocumentType, IFormInputs, sendDataLayerFormEvent } from '@/utils/form.util';
+import { DocumentType, IFormInputs } from '@/utils/form.util';
 import { useAppContext } from '@/contexts/app.context';
 import { useAppFormContext } from '@/contexts/app-form.context';
 import { InstructionsByDocumentType } from '../upload-instructions/instructions-by-document-type';
@@ -14,6 +14,7 @@ import { UUID } from 'crypto';
 import { finishRegisterAndSendDocuments } from '@/services/backend-comunication.service';
 import UploadApiCredilink from './upload-api-credilink';
 import { useSearchParams } from 'next/navigation';
+import { sendDataLayerEvent } from '@/utils/general.util';
 
 interface UploadProps {
   isTabActive: boolean;
@@ -65,7 +66,12 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     setFormButtonProps({ loading: true });
     try {
       await finishRegisterAndSendDocuments(getUserFormId() as UUID, documentType, documentsUpload);
-      sendDataLayerFormEvent('generate_lead', 'success', {lead_source: searchParams.get('utm_source')});
+      
+      sendDataLayerEvent({
+        event: 'generate_lead',
+        lead_source: searchParams.get('utm_source')
+      });
+
       gotoNextPart();
     } catch (e) {
       console.log(e);
