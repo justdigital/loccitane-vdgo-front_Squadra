@@ -29,7 +29,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
   });
 
   const handleVideoClick = (e: any, isActive: boolean) => {
-    if (isActive && e.target.tagName !== 'path') {
+    if (isActive && !e.target.closest('button')) {
       setIsPaused(!isPaused);
     }
   };
@@ -111,7 +111,7 @@ const HorizontalVideosSection: React.FC<HorizontalVideosSectionProps> = ({sectio
                       controlsList="nodownload nofullscreen noremoteplayback"
                       disablePictureInPicture
                       src={item.videosUrls?.urlDesktop} 
-                      // onVideoClick={() => handleVideoClick(isActive)}
+                      // onVideoClick={(e) => handleVideoClick(e, isActive)}
                       onVideoVolumeChange={onVideoVolumeChange}
                     />
 
