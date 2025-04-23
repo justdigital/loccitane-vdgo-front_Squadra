@@ -73,7 +73,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 
                     <tr style="background-color: #FFF4F2">
                         <td align="center" style="padding-top: 30px;">
-                            <p style="font-size: 16px; padding-left: 50px; padding-right: 50px; line-height: 1.2;">Esses são os seus dados de acesso para o Portal Reve:</p>
+                            <p style="font-size: 16px; padding-left: 50px; padding-right: 50px; line-height: 1.2;">Esses são os seus dados de acesso para o ESCRITÓRIO DIGITAL:</p>
                         </td>
                     </tr>
 
@@ -101,7 +101,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                        style="background-color: #C02031; color: #ffffff; text-align: center; height: 59px;">
                                     <tr>
                                         <td align="center" valign="middle" style="font-size: 16px; line-height: 1.1;">
-                                            Acesse o Portal Reve
+                                            Acesse o ESCRITÓRIO DIGITAL
                                         </td>
                                     </tr>
                                 </table>
@@ -225,7 +225,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                                     <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
                                                                     </a>
-                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">PORTAL<BR>REVE</span>
+                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">ESCRITÓRIO<BR>DIGITAL</span>
                                                                 </div>
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
@@ -292,7 +292,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                                     <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
                                                                     </a>
-                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">PORTAL<BR>REVE</span>
+                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">ESCRITÓRIO<BR>DIGITAL</span>
                                                                 </div>
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
