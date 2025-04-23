@@ -1,7 +1,7 @@
 "use client";
 
 import ISectionBannerStepExplain from "@/interfaces/section-banner-step-explain";
-import css from "./styles.module.scss";
+// import css from "./styles.module.scss";
 import Image from "next/image";
 import React from "react";
 import useWindowWidth from "@/hooks/useWindowWidth";
@@ -33,7 +33,7 @@ const BannerStepExplain = (props: {
                   : whiteBoxWith["1920"],
         }}>
         <div className="flex flex-col absolute justify-center items-center lg:items-start mx-[31px] lg:mx-auto lg:w-[107%] h-[50vh] lg:h-auto top-[-37vh] lg:top-0 mb-4 lg:relative lg:left-[-40px] border-[3px] border-[#C02031]">
-          <div className={`${css['banner-text-content']} p-[10px_14px_18px] mt-auto lg:p-9 bg-white w-full`} dangerouslySetInnerHTML={{ __html: sectionData.text }} />
+          <div className={`p-[10px_14px_18px] mt-auto lg:p-9 bg-white w-full`} dangerouslySetInnerHTML={{ __html: sectionData.text }} />
         </div>
         <div className="px-4 pt-[8rem] lg:max-w-[47.5vw] lg:px-0 lg:pt-0 flex flex-row justify-end lg:gap-12 gap-[13px]">
           {sectionData.cardItems.map((item) => (
