@@ -30,7 +30,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
 
   const searchParams = useSearchParams();
   const {getUserFormId} = useAppContext();
-  const {setFormButtonProps} = useAppFormContext();
+  const {setFormButtonProps, setFormError} = useAppFormContext();
   const { isMobileDevice } = useAppContext();
 
   const uploadSdkRef = useRef(null);
@@ -94,11 +94,16 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
   }, [documentsUpload]);
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.length) {
+    if (!e.target?.files?.length) {
       removeSelectedFile();
       return;
     }
     const file = e.target.files[0];
+
+    if (!file.type.includes('image/') && !file.type.includes('application/pdf')) {
+      setFormError('Tipo de arquivo não suportado. Por favor, envie um arquivo de imagem ou PDF.');
+      removeSelectedFile();
+    }
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -120,7 +125,9 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
 
     setSelectedFileType(null);
     setSelectedFileContent(undefined);
-    fileSelectorRef.current!.value = '';
+    if (fileSelectorRef.current) {
+      fileSelectorRef.current!.value = '';
+    }
 
     // if (!isGoingTakeDocumentBack && !isTakingDocumentBack) {
     backToSelectDocumentType();

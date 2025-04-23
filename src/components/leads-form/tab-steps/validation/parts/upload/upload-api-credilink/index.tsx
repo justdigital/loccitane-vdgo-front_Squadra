@@ -19,10 +19,10 @@ const UploadApiCredilink: React.FC<UploadApiCredilinkProps & RefAttributes<any>>
     unicoWebFrameRef.current = await import('unico-webframe');
     const { UnicoConfig } = unicoWebFrameRef.current;
     sdkConfig.current = new UnicoConfig()
-      // .setHostname(process.env.NEXT_CREDILINK_UNICO_HOSTNAME)
-      // .setHostKey(process.env.NEXT_CREDILINK_UNICO_HOSTKEY)
-      .setHostname('https://reve.loccitaneaubresil.com')
-      .setHostKey('r001-090193de-1a0d-4207-a574-23b64f81de55')
+      .setHostname(process.env.NEXT_CREDILINK_UNICO_HOSTNAME)
+      .setHostKey(process.env.NEXT_CREDILINK_UNICO_HOSTKEY)
+      // .setHostname('https://reve.loccitaneaubresil.com')
+      // .setHostKey('r001-090193de-1a0d-4207-a574-23b64f81de55')
     ;
   }
 
@@ -32,8 +32,8 @@ const UploadApiCredilink: React.FC<UploadApiCredilinkProps & RefAttributes<any>>
     unicoCameraBuilder.setResourceDirectory("/assets/vendor/unico/resources");
     unicoCameraBuilder.setModelsPath("/assets/vendor/unico/models");
     console.log('SDKEnvironmentTypes', SDKEnvironmentTypes);
-    unicoCameraBuilder.setEnvironment(SDKEnvironmentTypes.PROD);
-    // unicoCameraBuilder.setEnvironment(process.env.NODE_ENV === 'production' ? SDKEnvironmentTypes.PROD : SDKEnvironmentTypes.UAT);
+    // unicoCameraBuilder.setEnvironment(SDKEnvironmentTypes.PROD);
+    unicoCameraBuilder.setEnvironment(process.env.NEXT_ENV === 'production' ? SDKEnvironmentTypes.PROD : SDKEnvironmentTypes.UAT);
     const unicoCamera = unicoCameraBuilder.build();
 
     unicoCamera.prepareDocumentCamera(
