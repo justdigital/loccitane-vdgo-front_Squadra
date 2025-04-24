@@ -43,11 +43,11 @@ stages:
   - deployment: DeployToDevelopmentEnv
     displayName: "Deploy NextJS to Development Environment"
     environment: 'development'
+    pool:
+      name: $(poolVmImage)
     strategy:
       runOnce:
         deploy:
-          pool:
-            name: $(poolVmImage)
           steps:
           - template: azure-pipelines-templates/front-deploy.yml
 
@@ -65,10 +65,10 @@ stages:
   - deployment: DeployToProductionEnv
     displayName: "Deploy NextJS to Production Environment"
     environment: 'production'
+    pool:
+      name: $(poolVmImage)
     strategy:
       runOnce:
         deploy:
-          pool:
-            name: $(poolVmImage)
           steps:
           - template: azure-pipelines-templates/front-deploy.yml
