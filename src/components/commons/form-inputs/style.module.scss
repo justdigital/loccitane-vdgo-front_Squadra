@@ -8,6 +8,10 @@
   bottom: -20px;
 }
 
+.autocomplete :global(svg) {
+  display: none;
+}
+
 .input, .select {
   display: block;
   width: 100%;

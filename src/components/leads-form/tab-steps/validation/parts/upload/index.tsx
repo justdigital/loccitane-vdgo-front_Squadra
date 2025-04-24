@@ -31,7 +31,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
 
   const searchParams = useSearchParams();
   const {getUserFormId} = useAppContext();
-  const {setFormButtonProps, setFormError} = useAppFormContext();
+  const {setFormButtonProps, setFormError, showDefaultFormError} = useAppFormContext();
   const { isMobileDevice } = useAppContext();
 
   const uploadSdkRef = useRef(null);
@@ -50,7 +50,26 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     const key = isTakingDocumentBack ? 1 : 0;
     return documentTypeInstructions.confirmationInstructions[key];
   }, [documentTypeInstructions, isTakingDocumentBack]);
-  
+
+  const sendDocumentsToServer =  useCallback(async () => {
+    setFormButtonProps({ loading: true });
+    try {
+      await finishRegisterAndSendDocuments(getUserFormId() as UUID, documentType, documentsUpload);
+
+      sendDataLayerEvent({
+        event: 'generate_lead',
+        lead_source: searchParams.get('utm_source')
+      });
+
+      gotoNextPart();
+    } catch (e) {
+      console.log(e);
+      showDefaultFormError();
+    } finally {
+      setFormButtonProps({ loading: false });
+    }
+  }, [documentType, documentsUpload, getUserFormId]);
+
   const clickButton = useCallback(async () => {
     if (documentTypeInfo.hasDocumentBack && !isTakingDocumentBack) {
       gotoTakeDocumentBack();
@@ -61,24 +80,6 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
       sendDocumentsToServer();
     }
   }, [isTakingDocumentBack, documentTypeInfo, InstructionsByDocumentType, documentsUpload]);
-
-  const sendDocumentsToServer =  useCallback(async () => {
-    setFormButtonProps({ loading: true });
-    try {
-      await finishRegisterAndSendDocuments(getUserFormId() as UUID, documentType, documentsUpload);
-      
-      sendDataLayerEvent({
-        event: 'generate_lead',
-        lead_source: searchParams.get('utm_source')
-      });
-
-      gotoNextPart();
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setFormButtonProps({ loading: false });
-    }
-  }, [documentType, documentsUpload, getUserFormId]);
 
   const estractBase64Content = (base64Content: string) => {
     const base64 = base64Content.split(',')[1];
