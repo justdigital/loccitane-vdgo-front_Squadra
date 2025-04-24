@@ -91,7 +91,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
 
   const sendDataToServer = async () => {
     const data = _.pick(getValues(), ['cep', 'address', 'addressNumber', 'addressAdditionalInfo', 'addressReference', 'neighborhood', 'city', 'state']);
-    data.state = ''+(data.state as any).value;
+    data.state = ''+(data.state as any);
     data.city = ''+(data.city as any).value;
     await putAddressData(userFormId as UUID, data);
   };
