@@ -118,9 +118,9 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   return (
     <div className={`${css['modal-wrapper']} ${css['form-hidden']}`} data-visible={+mobileFormVisible}>
       <div className={`${css['form-box']} relative flex flex-col flex-1 bg-white`}>
-        <header className="flex items-center text-left sm:text-center">
+        <header className="flex items-center text-left md:text-center">
           {headerTitle || defaultHeader}
-          <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block sm:hidden'><CloseIcon /></a>
+          <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block md:hidden'><CloseIcon /></a>
         </header>
         <FormProvider {...methods}>
 

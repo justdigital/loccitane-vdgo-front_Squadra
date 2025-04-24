@@ -14,7 +14,10 @@
 
   .banner-text {
     margin-bottom: 60px;
-    line-height: 3rem;
-    
+    line-height: 2rem;
+
+    @media (screen(md)) {
+      line-height: 3rem;
+    }
   }
 }

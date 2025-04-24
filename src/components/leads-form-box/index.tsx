@@ -51,7 +51,7 @@ const LeadsFormBox: React.FC<LeadsFormHeaderProps> = ({sectionData, termsAndCond
       <div
         className={`container w-full h-full flex flex-col sm:items-stretch md:flex-row space-y-4 md:space-y-0 md:space-x-4`}
       >
-        <div className={`flex justify-end sm:hidden relative`}>
+        <div className={`flex justify-end md:hidden relative`}>
           <Button label="Cadastre-se agora" onClick={openMobileForm} />
         </div>
         <div
