@@ -11,6 +11,7 @@ import { UUID } from 'crypto';
 import FormAutoComplete from '@/components/commons/form-inputs/autocomplete';
 import css from './style.module.scss';
 import { useAppFormContext } from '@/contexts/app-form.context';
+import FormSelect from '@/components/commons/form-inputs/select';
 
 interface StepAddressProps {
   gotoNextStep: () => void;
@@ -34,8 +35,8 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
   
   const userFormId = getUserFormId();
 
-  const [stateList, setStateList] = useState<{id: number, label: string}[]>([]);
-  const [cityList, setCityList] = useState<{id: number, label: string}[]>([]);
+  const [stateList, setStateList] = useState<{value: number | string, label: string}[]>([]);
+  const [cityList, setCityList] = useState<{value: number, label: string}[]>([]);
   const [cityFilterInputValue, setCityFilterInputValue] = useState('');
 
   const cepPattern = /^[0-9]{5}-[0-9]{3}$/;
@@ -73,9 +74,9 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       setValue('neighborhood', data.bairro);
 
       const foundState = stateList.find(state => state.label === data.uf);
-      setValue('state', foundState as any);
+      setValue('state', (foundState as any).value);
 
-      const cities = await fetchCityList(data.localidade, foundState?.id);
+      const cities = await fetchCityList(data.localidade, foundState?.value as number);
       const foundCity = cities?.find(city => city.label === data.localidade);
       setValue('city', foundCity as any);
 
@@ -90,8 +91,8 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
 
   const sendDataToServer = async () => {
     const data = _.pick(getValues(), ['cep', 'address', 'addressNumber', 'addressAdditionalInfo', 'addressReference', 'neighborhood', 'city', 'state']);
-    data.state = ''+(data.state as any).id;
-    data.city = ''+(data.city as any).id;
+    data.state = ''+(data.state as any).value;
+    data.city = ''+(data.city as any).value;
     await putAddressData(userFormId as UUID, data);
   };
 
@@ -113,12 +114,12 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
   }, [getFieldState, userFormId, gotoNextStep]);
 
   const fetchCityList = async (cityFilter: any, stateId?: number) => {
-    stateId = stateId || (state as any)?.id;
+    stateId = stateId || (state as any);
     if (!stateId || !cityFilter) {
       return;
     }
     const result = await getStateCityList(stateId, cityFilter);
-    const cities = result.map(({id, nome}) => ({id, label: nome}));
+    const cities = result.map(({id, nome}) => ({value: id, label: nome}));
     setCityList(cities);
     return cities;
   };
@@ -159,7 +160,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       setStateList(
         result
           .sort((a, b) => a.nome.localeCompare(b.nome))
-          .map(({id, sigla}) => ({id, label: sigla}))
+          .map(({id, sigla}) => ({value: id, label: sigla}))
       );
     })();
   }, []);
@@ -225,12 +226,18 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
             control={control}
             rules={{ required: 'Obrigatório' }}
             render={({ field, fieldState }) =>
-              <FormAutoComplete
+              <FormSelect
                 field={field}
                 fieldState={fieldState}
-                options={stateList}
+                items={stateList as any}
                 label="Estado"
               />
+              // <FormAutoComplete
+              //   field={field}
+              //   fieldState={fieldState}
+              //   options={stateList}
+              //   label="Estado"
+              // />
             }
           />
         </div>

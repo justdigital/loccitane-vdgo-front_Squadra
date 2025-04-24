@@ -11,6 +11,7 @@ import StepPersonalData from './tab-steps/personal-data';
 import StepContact from './tab-steps/contact';
 import StepValidation from './tab-steps/validation';
 import { useAppFormContext } from '@/contexts/app-form.context';
+import { useSearchParams } from 'next/navigation';
 
 const CustomTabPanel = ({ children, value, index }: { children: React.ReactNode, value: number, index: number }) => {
   return (
@@ -27,6 +28,8 @@ interface LeadsFormProps {
 
 const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({}, ref) => {
 
+  const searchParams = useSearchParams();
+
   const methods = useForm<IFormInputs>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -34,23 +37,25 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
       authorizeExposeCellNumbers: true,
       acceptReceiveInfo: true,
 
-      // submitButtonAction: () => {},
-      // submitButtonLoading: false,
-      // fullName: 'Jorge Luis',
-      // documentNumber: '04084092584',
-      // cellphoneNumber: '71999999999',
-      // birthdate: '10/03/1992',
-      // acceptTerms: true,
-      // email: 'jorge.malaquias@squadra.com.br',
-      // gender: "2",
-      // isIndication: false,
-      // documentType: 'RG',
-      // cep: '40296370',
-      // // state: "29",
-      // // city: '2927408',
-      // emailCodeConfirmation: '12345',
-      // addressNumber: '123',
-      // isCodeValidated: true
+      ...(searchParams.get('test') && {
+        submitButtonAction: () => {},
+        submitButtonLoading: false,
+        fullName: 'Fulano da Silva',
+        documentNumber: '71699992002',
+        cellphoneNumber: '71999999999',
+        birthdate: '01/01/2001',
+        acceptTerms: true,
+        email: 'fulano.silva@squadra.com.br',
+        gender: "2",
+        isIndication: false,
+        documentType: 'RG',
+        cep: '01015030',
+        // state: "29",
+        // city: '2927408',
+        emailCodeConfirmation: '12345',
+        addressNumber: '123',
+        isCodeValidated: true
+      })
     }
   });
 
@@ -60,7 +65,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     handleSubmit,
     watch,
     reset,
-    getValues,
+    getValues
   } = methods;
   const onSubmit: SubmitHandler<IFormInputs> = (data) => console.log(data)
 
@@ -93,6 +98,10 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
 
   useEffect(() => {
     gotoNextStep();
+
+    if (searchParams.get('test')) {
+      gotoNextStep(4);
+    }
   }, []);
 
 
@@ -109,9 +118,9 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   return (
     <div className={`${css['modal-wrapper']} ${css['form-hidden']}`} data-visible={+mobileFormVisible}>
       <div className={`${css['form-box']} relative flex flex-col flex-1 bg-white`}>
-        <header className="flex items-center text-left sm:text-center">
+        <header className="flex items-center text-left md:text-center">
           {headerTitle || defaultHeader}
-          <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block sm:hidden'><CloseIcon /></a>
+          <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block md:hidden'><CloseIcon /></a>
         </header>
         <FormProvider {...methods}>
 
