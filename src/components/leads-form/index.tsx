@@ -49,7 +49,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
         gender: "2",
         isIndication: false,
         documentType: 'RG',
-        cep: '01015030',
+        // cep: '01015030',
         // state: "29",
         // city: '2927408',
         emailCodeConfirmation: '12345',
@@ -175,7 +175,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
         </FormProvider>
         {getFormButtonProps().label && (
           <div className={`${css['footer-button']}`}>
-            <Button label={getFormButtonProps().label || ''} disabled={!!getFormButtonProps().disabled} onClick={getFormButtonProps().action} isLoading={getFormButtonProps().loading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
+            <Button label={getFormButtonProps().label || ''} disabled={!!getFormButtonProps().disabled || getFormButtonProps().loading} onClick={getFormButtonProps().action} isLoading={getFormButtonProps().loading} type='button' buttonClasses={`w-full ${css['submit-button']}`} />
           </div>
         )}
       </div>
