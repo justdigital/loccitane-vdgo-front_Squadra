@@ -73,7 +73,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 
                     <tr style="background-color: #FFF4F2">
                         <td align="center" style="padding-top: 30px;">
-                            <p style="font-size: 16px; padding-left: 50px; padding-right: 50px; line-height: 1.2;">Esses são os seus dados de acesso para o ESCRITÓRIO DIGITAL:</p>
+                            <p style="font-size: 16px; padding-left: 50px; padding-right: 50px; line-height: 1.2;">Esses são os seus dados de acesso para o ESCRITÓRIO VIRTUAL:</p>
                         </td>
                     </tr>
 
@@ -101,7 +101,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                        style="background-color: #C02031; color: #ffffff; text-align: center; height: 59px;">
                                     <tr>
                                         <td align="center" valign="middle" style="font-size: 16px; line-height: 1.1;">
-                                            Acesse o ESCRITÓRIO DIGITAL
+                                            Acesse o ESCRITÓRIO VIRTUAL
                                         </td>
                                     </tr>
                                 </table>
@@ -221,28 +221,28 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                     <table>
                                                         <tr>
                                                             <td align="center">
-                                                                <div style="display: flex; align-items: center;">
-                                                                    <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block;">
+                                                                <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block; text-decoration: none;">
+                                                                    <div style="display: flex; align-items: center;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
-                                                                    </a>
-                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">ESCRITÓRIO<BR>DIGITAL</span>
+                                                                        <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">ESCRITÓRIO<BR>VIRTUAL</span>
                                                                 </div>
+                                                                </a>
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
-                                                                <div style="display: flex; align-items: center;">
-                                                                    <a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-05-25/" style="display: inline-block;">
+                                                                <a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-05-25/" style="display: inline-block; text-decoration: none;">
+                                                                    <div style="display: flex; align-items: center;">
 																		<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/revistaDigital.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=1X7ZQKEhxhITVw3cXRS6uK%2F1Dcyn9m3nsvkIiZdCU10%3D" width="26">
-																	</a>
-                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">REVISTA<BR>DIGITAL</span>
-                                                                </div>
+                                                                        <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">REVISTA<BR>DIGITAL</span>
+                                                                    </div>
+                                                                </a>
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
-                                                                <div style="display: flex; align-items: center;">
-                                                                    <a href="https://api.whatsapp.com/send?phone=5511975743863" style="display: inline-block;">
+                                                                <a href="https://api.whatsapp.com/send?phone=5511975743863" style="display: inline-block; text-decoration: none;">
+                                                                    <div style="display: flex; align-items: center;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/whatsapp.png?sv=2025-05-05&se=2125-03-27T14%3A23%3A53Z&sr=b&sp=r&sig=0ay2iUshuemzFG0XH7%2Bg1hvYAskRX9N8TTZzesxFP7k%3D" width="24">
-                                                                    </a>
-                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">FALE<BR>CONOSCO</span>
-                                                                </div>
+                                                                        <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">FALE<BR>CONOSCO</span>
+                                                                    </div>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -288,28 +288,28 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 													<table>
                                                         <tr>
                                                             <td align="center">
-                                                                <div style="display: flex; align-items: center;">
-                                                                    <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block;">
+                                                                <a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block; text-decoration: none;">
+                                                                    <div style="display: flex; align-items: center;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
-                                                                    </a>
-                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">ESCRITÓRIO<BR>DIGITAL</span>
-                                                                </div>
+                                                                        <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">ESCRITÓRIO<BR>VIRTUAL</span>
+                                                                    </div>
+                                                                </a>
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
-                                                                <div style="display: flex; align-items: center;">
-                                                                     <a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-05-25/" style="display: inline-block;">
+                                                                <a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-05-25/" style="display: inline-block; text-decoration: none;">
+                                                                    <div style="display: flex; align-items: center;">
 																		<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/revistaDigital.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=1X7ZQKEhxhITVw3cXRS6uK%2F1Dcyn9m3nsvkIiZdCU10%3D" width="26">
-																	</a>
-                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">REVISTA<BR>DIGITAL</span>
-                                                                </div>
+                                                                        <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">REVISTA<BR>DIGITAL</span>
+                                                                    </div>
+                                                                </a>
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
-                                                                <div style="display: flex; align-items: center;">
-                                                                    <a href="https://api.whatsapp.com/send?phone=5511975743863" style="display: inline-block;">
+                                                                <a href="https://api.whatsapp.com/send?phone=5511975743863" style="display: inline-block; text-decoration: none;">
+                                                                    <div style="display: flex; align-items: center;">
                                                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/whatsapp.png?sv=2025-05-05&se=2125-03-27T14%3A23%3A53Z&sr=b&sp=r&sig=0ay2iUshuemzFG0XH7%2Bg1hvYAskRX9N8TTZzesxFP7k%3D" width="24">
-                                                                    </a>
-                                                                    <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">FALE<BR>CONOSCO</span>
-                                                                </div>
+                                                                        <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">FALE<BR>CONOSCO</span>
+                                                                    </div>
+                                                                </a>
                                                             </td>
                                                         </tr>
                                                     </table>

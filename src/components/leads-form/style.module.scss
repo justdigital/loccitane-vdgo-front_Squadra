@@ -8,7 +8,7 @@
   padding: 5px;
   transition: .5s, height .1s;
 
-  @media (screen(sm)) {
+  @media (screen(md)) {
     visibility: visible !important;
     position: static;
     width: auto;
@@ -49,7 +49,7 @@
   transition: .3s;
   transition-delay: left 2s;
 
-  @media (screen(sm)) {
+  @media (screen(md)) {
     position: static;
     min-height: 620px;
   }

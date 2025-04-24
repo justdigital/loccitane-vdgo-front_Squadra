@@ -11,6 +11,7 @@ export interface InstructionsByDocumentType {
   [key: string]: {
     hasDocumentBack: boolean,
     acceptedFileTypes: string,
+    invalidFileTypeAlert?: string;
     crediLinkDocumentTypes: string[];
     subDocuments?: {value: string, label: string}[];
     desktop: Intructions,
@@ -21,7 +22,8 @@ export interface InstructionsByDocumentType {
 const instructions: InstructionsByDocumentType = {
   'CNH': {
     hasDocumentBack: false,
-    acceptedFileTypes: '.jpg, .jpeg, .pdf',
+    acceptedFileTypes: '.jpg, .jpeg, .png',
+    invalidFileTypeAlert: 'Tipo de arquivo não suportado. Por favor, envie um arquivo de imagem',
     crediLinkDocumentTypes: ['CNH'],
     desktop: {
       title: 'Instruções para Upload da CNH',
@@ -31,7 +33,7 @@ const instructions: InstructionsByDocumentType = {
         <>O <strong>documento deve estar aberto</strong>, exibindo todas as informações necessárias, conforme ilustração ao lado.</>,
         <>A imagem precisa estar <strong>bem iluminada, sem sombras ou reflexos</strong> que dificultem a leitura.</>,
         <>Os <strong>dados devem estar legíveis</strong> e sem cortes.</>,
-        <>Você pode fazer o upload do arquivo nos formatos <strong>JPG, PNG ou PDF.</strong></>
+        <>Você pode fazer o upload do arquivo nos formatos <strong>JPG ou PNG.</strong></>
       ],
       confirmationInstructions: [
         <>Se estiver tudo certo, envie o arquivo. Caso contrário, clique no ícone da lixeira para remover o arquivo e fazer um novo upload.</>
@@ -55,7 +57,8 @@ const instructions: InstructionsByDocumentType = {
 
   'RG': {
     hasDocumentBack: true,
-    acceptedFileTypes: '.jpg, .jpeg, .pdf',
+    acceptedFileTypes: '.jpg, .jpeg, .png',
+    invalidFileTypeAlert: 'Tipo de arquivo não suportado. Por favor, envie um arquivo de imagem.',
     crediLinkDocumentTypes: [ "RG_FRENTE", "RG_VERSO" ],
     desktop: {
       title: 'Instruções para Upload do RG',
@@ -65,7 +68,7 @@ const instructions: InstructionsByDocumentType = {
         <><strong>Envie dois arquivos:</strong> frente e verso do documento.</>,
         <>O documento deve estar totalmente visível para melhor qualidade da imagem.</>,
         <>Certifique-se de que os <strong>dados estejam legíveis,</strong> sem cortes, sombras ou reflexos.</>,
-        <>Você pode fazer o upload do arquivo nos formatos <strong>JPG, PNG ou PDF.</strong></>
+        <>Você pode fazer o upload do arquivo nos formatos <strong>JPG ou PNG.</strong></>
       ],
       confirmationInstructions: [
         <>Se estiver tudo certo, <strong>fotografe o verso do documento.</strong> Caso contrário, clique na lixeira e tire uma nova foto!</>,
@@ -92,7 +95,8 @@ const instructions: InstructionsByDocumentType = {
 
   'RG_NOVO': {
     hasDocumentBack: true,
-    acceptedFileTypes: '.jpg, .jpeg, .pdf',
+    acceptedFileTypes: '.jpg, .jpeg, .png',
+    invalidFileTypeAlert: 'Tipo de arquivo não suportado. Por favor, envie um arquivo de imagem.',
     crediLinkDocumentTypes: [ "RG_FRENTE_NOVO", "RG_VERSO_NOVO" ],
     desktop: {
       title: 'Instruções para Upload do Novo RG (CIN - Carteira de Identidade Nacional)',
@@ -102,7 +106,7 @@ const instructions: InstructionsByDocumentType = {
         <><strong>Envie dois arquivos:</strong> frente e verso do documento.</>,
         <>O documento deve estar totalmente visível para melhor qualidade da imagem.</>,
         <>Certifique-se de que os <strong>dados estejam legíveis,</strong> sem cortes, sombras ou reflexos.</>,
-        <>Você pode fazer o upload do arquivo nos formatos <strong>JPG, PNG ou PDF.</strong></>
+        <>Você pode fazer o upload do arquivo nos formatos <strong>JPG ou PNG.</strong></>
       ],
       confirmationInstructions: [
         <>Se estiver tudo certo, <strong>fotografe o verso do documento.</strong> Caso contrário, clique na lixeira e tire uma nova foto!</>,
@@ -129,6 +133,7 @@ const instructions: InstructionsByDocumentType = {
   'CNH_DIGITAL': {
     hasDocumentBack: false,
     acceptedFileTypes: '.pdf',
+    invalidFileTypeAlert: 'Tipo de arquivo não suportado. Por favor, envie um arquivo PDF.',
     crediLinkDocumentTypes: [],
     subDocuments: [
       { value: 'CNH_DIGITAL', label: 'CNH Digital' },

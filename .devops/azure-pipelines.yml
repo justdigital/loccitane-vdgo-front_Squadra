@@ -23,7 +23,7 @@ stages:
   - job: Build
     displayName: 'Build and Package NextJS'
     pool:
-      vmImage: $(poolVmImage)
+      name: $(poolVmImage)
     condition: |
       or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'),
          eq(variables['Build.SourceBranch'], 'refs/heads/main'))
@@ -47,7 +47,7 @@ stages:
       runOnce:
         deploy:
           pool:
-            vmImage: $(poolVmImage)
+            name: $(poolVmImage)
           steps:
           - template: azure-pipelines-templates/front-deploy.yml
 
@@ -69,6 +69,6 @@ stages:
       runOnce:
         deploy:
           pool:
-            vmImage: $(poolVmImage)
+            name: $(poolVmImage)
           steps:
           - template: azure-pipelines-templates/front-deploy.yml
