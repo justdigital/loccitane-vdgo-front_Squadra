@@ -13,6 +13,8 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
     <title>Validação de Cadastro</title>
     <style>
         @media only screen and (max-width: 600px) {
@@ -42,7 +44,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
     <table style="width: 100%">
         <tr style="background-color: #FFF4F2;">
             <td style="padding-top: 30px"> 
-                <table align="center" width="700" cellpadding="0" cellspacing="0" style="background-color: #FFF4F2; overflow: hidden;">
+                <table align="center" width="100%" style="max-width: 700px;" cellpadding="0" cellspacing="0" style="background-color: #FFF4F2; overflow: hidden;">
                     <!-- Banner -->
                     <tr>
                         <td align="center">
@@ -101,7 +103,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/BANNER_CADASTRO_NAO_AUTORIZADO.png?sv=2025-05-05&se=2125-04-02T15%3A02%3A40Z&sr=b&sp=r&sig=R3DfUs7mePje8%2BT2nwnOI98aekbE3KJSkdlgr74F%2B5E%3D" width="249" height="415" style="display: block; max-width: 100%;">
                                     </td>
                                 </tr>
-                                <tr class="mobile-only">
+                                <tr class="mobile-only" style="display: none; width: 100%; max-width: 100%;">
                                     <td align="left" style="height: 150px; vertical-align: top;">
                                         <table height="100%" style="width: 330px; border-collapse: collapse;">
                                             <tr>
@@ -129,17 +131,17 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                         </td>
                     </tr>
 
-                    <tr class="mobile-only">
+                    <tr class="mobile-only" style="display: none; width: 100%; max-width: 100%;">
                         <td style="width: 330px; padding-left: 125px;" align="left">
                             <p>❌ Dados divergentes ou incorretos<br> ❌ Documento ilegível ou cortado<br> ❌ Tipo de documento inválido para cadastro</p>
                         </td>
                     </tr>
-                    <tr class="mobile-only">
+                    <tr class="mobile-only" style="display: none; width: 100%; max-width: 100%;">
                         <td style="width: 330px; padding-left: 125px;" align="left">
                             <p>Mas não se preocupe! Você pode regularizar sua situação e tentar novamente.</p>
                         </td>
                     </tr>
-                    <tr class="mobile-only">
+                    <tr class="mobile-only" style="display: none; width: 100%; max-width: 100%;">
                         <td style="width: 330px; padding-left: 125px;" align="left">
                             <p>Siga o passo a passo para reenviar seu documento:</p>
                         </td>
@@ -209,7 +211,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                         </td>
                     </tr>
 
-                    <tr class="mobile-only">
+                    <tr class="mobile-only" style="display: none; width: 100%; max-width: 100%;">
                         <td style="padding-top: 30px">
                             <table>
                                 <tr style="padding-top: 20px">
@@ -301,7 +303,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 
         <tr style="background-color: #ffffff">
 			<td>
-				<table align="center" width="700" cellpadding="0" cellspacing="0" style="background-color: #ffffff; overflow: hidden;">
+				<table align="center" width="100%" style="max-width: 700px;" cellpadding="0" cellspacing="0" style="background-color: #ffffff; overflow: hidden;">
 					<!-- Seção de Logos e Links -->
 					<tr>
 						<td align="center" style="padding: 10px;">
@@ -372,7 +374,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 									</td>
 								</tr>
 
-								<tr class="mobile-only" align="center">
+								<tr class="mobile-only" align="center" style="display: none; width: 100%; max-width: 100%;">
 									<td align="center" style="padding: 10px; white-space: nowrap;">
                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/LOGO_VD_REVENDA-OFF_WHITE_2_3.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=Dr7AjTR7fcx2HIFr9ZjlpeLp%2B8dsRQrRcou9XjvZh%2B0%3D" 
                                             alt="Logo" width="90" style="display: inline-block; vertical-align: middle;">
@@ -382,7 +384,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                             style="display: inline-block; padding-left: 3px; vertical-align: middle;">
                                     </td>
 								</tr>
-								<tr class="mobile-only" align="center">
+								<tr class="mobile-only" align="center" style="display: none; width: 100%; max-width: 100%;">
 									<td>
 										<table>
 											<tr>

@@ -13,6 +13,8 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="x-apple-disable-message-reformatting">
     <title>Validação de Cadastro</title>
     <style>
         @media only screen and (max-width: 600px) {
@@ -42,7 +44,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
     <table style="width: 100%">
         <tr style="background-color: #FFF4F2;">
             <td>
-                <table align="center" width="700" cellpadding="0" cellspacing="0" style="background-color: #FFF4F2; overflow: hidden;">
+                <table align="center" width="100%" style="max-width: 700px;" cellpadding="0" cellspacing="0" style="background-color: #FFF4F2; overflow: hidden;">
                     <!-- Banner -->
                     <tr>
                         <td align="center" style="padding-top:20px">
@@ -94,7 +96,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                     </td>
                                 </tr>
 
-                                <tr class="mobile-only">
+                                <tr class="mobile-only" style="display: none; width: 100%; max-width: 100%;">
                                     <td align="left" style="padding-left: 10px; padding-right: 50px;">
                                         <p style="width: 246px">Verifiquei alguma inconsistência no documento enviado. Para garantir a aprovação, peço que você o reenvie  de forma legível.</p>
                                         <a href="${process.env.NEXT_LINK_PORTAL_TSHIELD}" target="_blank"
@@ -117,7 +119,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                         </td>
                     </tr>
 
-                    <tr class="mobile-only" style="background-color: #FFF4F2">
+                    <tr class="mobile-only" style="display: none; width: 100%; max-width: 100%;" style="background-color: #FFF4F2">
                         <td align="center">
                             <p style="font-size: 16px; padding-left: 40px; padding-right: 50px; line-height: 1.2;"><strong>Dica:</strong> Certifique-se de que a imagem está nítida, sem cortes ou reflexos para que o processo seja aprovado rapidamente.</p>
                         </td>
@@ -135,7 +137,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 
         <tr style="background-color: #ffffff">
 			<td>
-				<table align="center" width="700" cellpadding="0" cellspacing="0" style="background-color: #ffffff; overflow: hidden;">
+				<table align="center" width="100%" style="max-width: 700px;" cellpadding="0" cellspacing="0" style="background-color: #ffffff; overflow: hidden;">
 					<!-- Seção de Logos e Links -->
 					<tr>
 						<td align="center" style="padding: 10px;">
@@ -206,7 +208,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 									</td>
 								</tr>
 
-								<tr class="mobile-only" align="center">
+								<tr class="mobile-only" align="center" style="display: none; width: 100%; max-width: 100%;">
 									<td align="center" style="padding: 10px; white-space: nowrap;">
                                         <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/LOGO_VD_REVENDA-OFF_WHITE_2_3.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=Dr7AjTR7fcx2HIFr9ZjlpeLp%2B8dsRQrRcou9XjvZh%2B0%3D" 
                                             alt="Logo" width="90" style="display: inline-block; vertical-align: middle;">
@@ -216,7 +218,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                             style="display: inline-block; padding-left: 3px; vertical-align: middle;">
                                     </td>
 								</tr>
-								<tr class="mobile-only" align="center">
+								<tr class="mobile-only" align="center" style="display: none; width: 100%; max-width: 100%;">
 									<td>
 										<table>
 											<tr>
