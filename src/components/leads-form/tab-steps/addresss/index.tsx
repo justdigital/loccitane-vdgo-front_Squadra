@@ -69,9 +69,15 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
         onError();
         throw new Error('CEP não encontrado');
       }
+      
       const fullAddress = data.logradouro;
-      setValue('address', fullAddress);
-      setValue('neighborhood', data.bairro);
+      if (fullAddress !== '') {
+        setValue('address', fullAddress);
+      }
+
+      if (data.bairro !== '') {
+        setValue('neighborhood', data.bairro);
+      }
 
       const foundState = stateList.find(state => state.label === data.uf);
       setValue('state', (foundState as any).value);
