@@ -105,7 +105,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
         rules={{
           required: 'Digite o nome completo.',
           pattern: {
-            value: /^(?=.*\b[a-zA-Z]{2,}\b.*\b[a-zA-Z]{2,}\b)[a-zA-Z\s]+$/,
+            value: /^(?=.*\b[\p{L}]{2,}\b.*\b[\p{L}]{2,}\b)[\p{L}\s]+$/u,
             message: 'Digite seu nome completo'
           },
         }}

@@ -40,6 +40,7 @@ const FormAutoComplete: React.FC<FormAutoCompleteProps & TextFieldProps & Partia
   return (
     <Autocomplete
       disablePortal
+      className={`${css['autocomplete']}`} 
       size='small'
       {...props}
       {...field}
