@@ -107,8 +107,10 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     }
     const file = e.target.files[0];
 
-    if (!file.type.includes('image/') && !file.type.includes('application/pdf')) {
-      setFormError('Tipo de arquivo não suportado. Por favor, envie um arquivo de imagem ou PDF.');
+    // if (!file.type.includes('image/') && !file.type.includes('application/pdf')) {
+    const fileExtension = file.name.split('.').reverse()[0].toLowerCase();
+    if (!documentTypeInfo.acceptedFileTypes.split(', ').includes(`.${fileExtension}`)) {
+      setFormError(documentTypeInfo.invalidFileTypeAlert as string);
       removeSelectedFile();
     }
 
