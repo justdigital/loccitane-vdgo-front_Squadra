@@ -100,7 +100,8 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
     try {
       setFormButtonProps({loading: true})
       await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
-      if (validateStep('address', getFieldState)) {
+
+      if (validateStep('address', getFieldState, false, !cep || cep === '' ? [] : ['cep'])) {
         await sendDataToServer();
         sendDataLayerFormEvent('endereco', 'success');
         gotoNextStep();
@@ -111,7 +112,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       sendDataLayerFormEvent('endereco', 'error'); 
       showDefaultFormError();
     }
-  }, [getFieldState, userFormId, gotoNextStep]);
+  }, [getFieldState, userFormId, gotoNextStep, cep]);
 
   const fetchCityList = async (cityFilter: any, stateId?: number) => {
     stateId = stateId || (state as any);
@@ -134,7 +135,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       action: clickButton
     });
     setValue('headerTitle', 'Está quase lá! Só 2 passos e essa oportunidade vira realidade!');
-  }, [isTabActive]);
+  }, [isTabActive, cep]);
 
   useEffect(() => {
     if (!cep || !cep.match(cepPattern))
@@ -171,7 +172,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
         name="cep"
         control={control}
         rules={{
-          required: false,
+          required: 'O CEP é obrigatório.',
           pattern: {value: cepPattern, message: 'CEP inválido'},
           validate: {
             fetchAddressDataByCep: async (cep) => {
