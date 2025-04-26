@@ -37,7 +37,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
       authorizeExposeCellNumbers: true,
       acceptReceiveInfo: true,
 
-      ...(searchParams.get('test') && {
+      ...(searchParams.get('teste') && {
         submitButtonAction: () => {},
         submitButtonLoading: false,
         fullName: 'Fulano da Silva',
@@ -99,7 +99,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   useEffect(() => {
     gotoNextStep();
 
-    if (searchParams.get('test')) {
+    if (searchParams.get('teste')) {
       gotoNextStep(4);
     }
   }, []);
