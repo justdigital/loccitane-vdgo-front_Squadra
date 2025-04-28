@@ -12,7 +12,7 @@ const LandingPage1 = async ({searchParams}: { searchParams: { [key: string]: str
   const { sections } = await drupalService.fetchData();
   const footerSection = sections.find((s) => s.type === 'section_footer');
 
-  if (!((await searchParams)?.teste)) {
+  if (!(await searchParams)?.teste && process.env.NEXT_ENV === 'homologation') {
     return <Custom500 footerSectionData={footerSection} />;
   }
 
