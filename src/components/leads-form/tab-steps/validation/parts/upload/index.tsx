@@ -54,7 +54,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
   const sendDocumentsToServer =  useCallback(async () => {
     setFormButtonProps({ loading: true });
     try {
-      await finishRegisterAndSendDocuments(getUserFormId() as UUID, documentType, documentsUpload);
+      await finishRegisterAndSendDocuments(getUserFormId() as UUID, documentType, documentsUpload, searchParams.get('utm_medium'), searchParams.get('utm_campaign'));
 
       sendDataLayerEvent({
         event: 'generate_lead',
@@ -68,7 +68,7 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     } finally {
       setFormButtonProps({ loading: false });
     }
-  }, [documentType, documentsUpload, getUserFormId]);
+  }, [documentType, documentsUpload, getUserFormId, searchParams]);
 
   const clickButton = useCallback(async () => {
     if (documentTypeInfo.hasDocumentBack && !isTakingDocumentBack) {
@@ -107,7 +107,6 @@ const Upload: React.FC<UploadProps> = ({isTabActive, backToSelectDocumentType, g
     }
     const file = e.target.files[0];
 
-    // if (!file.type.includes('image/') && !file.type.includes('application/pdf')) {
     const fileExtension = file.name.split('.').reverse()[0].toLowerCase();
     if (!documentTypeInfo.acceptedFileTypes.split(', ').includes(`.${fileExtension}`)) {
       setFormError(documentTypeInfo.invalidFileTypeAlert as string);

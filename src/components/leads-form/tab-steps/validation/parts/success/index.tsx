@@ -41,7 +41,7 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
     setFormButtonProps({
       label: undefined,
     });
-    setValue('headerTitle', <div className="sm:text-center grow">Você conseguiu!<br />Etapa concluída com sucesso.</div>);
+    setValue('headerTitle', <div className="sm:text-center grow">Última etapa! Viu como é simples? <br/> Finalize agora e comece sua jornada!</div>);
     setTimeout(() => router.push(pagesUrls.lp2), (20 * 1000));
   }, [isTabActive]);
 
@@ -57,8 +57,8 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
       <h1 className={`${css['success-text']} text-center mt-5`}>Parabéns! Estávamos esperando por você.</h1>
       <div className={`${css['sent-time-text']} mt-2`}>Enviado em {sentAtDate} ás {sentAtTime}</div>
 
-      <p>Seus dados de login e senha foram enviados para seu e-mail cadastrado.</p>
-      <p>Basta conferir o e-mail e acessar o seu Escritório Virtual.</p>
+      <p>Seus documentos foram enviados para análise. Fique de olho em seu e-mail e acompanhe o status do seu cadastro.</p>
+      <p>Mas antes, vamos descobrir tudo o que Escritório Virtual tem a oferecer?</p>
 
       <div className={`${css['redirect-alert-box']} flex items-center justify-center w-full mt-10`}>
         <CircularProgress
@@ -67,7 +67,7 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
           }}
         />
         <div className="ml-5 w-3/5">
-          Aguarde, você avançará para próxima etapa, voilà!
+          Conheça mais em poucos segundos. Voilà!
         </div>
       </div>
     </div>

@@ -6,7 +6,7 @@ import FormTextField from '@/components/commons/form-inputs/text-field';
 import { IFormInputs, sendDataLayerFormEvent, validateStep } from '@/utils/form.util';
 import { useAppContext } from '@/contexts/app.context';
 import _ from 'lodash';
-import { getStateCityList, getStateList, putAddressData } from '@/services/backend-comunication.service';
+import { checkCepIsValid, getStateCityList, getStateList, putAddressData } from '@/services/backend-comunication.service';
 import { UUID } from 'crypto';
 import FormAutoComplete from '@/components/commons/form-inputs/autocomplete';
 import css from './style.module.scss';
@@ -69,7 +69,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
         onError();
         throw new Error('CEP não encontrado');
       }
-      
+
       const fullAddress = data.logradouro;
       if (fullAddress !== '') {
         setValue('address', fullAddress);
@@ -107,7 +107,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       setFormButtonProps({loading: true})
       await handleSubmit(() => {}, () => setFormButtonProps({loading: false}))();
 
-      if (validateStep('address', getFieldState, false, !cep || cep === '' ? [] : ['cep'])) {
+      if (validateStep('address', getFieldState)) {
         await sendDataToServer();
         sendDataLayerFormEvent('endereco', 'success');
         gotoNextStep();
@@ -181,6 +181,14 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
           required: 'O CEP é obrigatório.',
           pattern: {value: cepPattern, message: 'CEP inválido'},
           validate: {
+            checkCepIsValid: async (cep) => {
+              try {
+                return (await checkCepIsValid(cep)) || 'CEP inválido ou não aceito. Por favor, revise ou utilize outro CEP.';
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              } catch (e) {
+                return 'Houve um erro ao verificar se o CEP é válido. Tente novamente.'
+              }
+            },
             fetchAddressDataByCep: async (cep) => {
               const result = await fetchAddressDataByCep(cep, false);
               return result || 'Não foi possível encontrar o endereço para o CEP informado.';
@@ -239,12 +247,6 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
                 items={stateList as any}
                 label="Estado"
               />
-              // <FormAutoComplete
-              //   field={field}
-              //   fieldState={fieldState}
-              //   options={stateList}
-              //   label="Estado"
-              // />
             }
           />
         </div>

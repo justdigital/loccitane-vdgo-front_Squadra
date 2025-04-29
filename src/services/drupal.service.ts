@@ -31,7 +31,7 @@ export default class DrupalService {
     })
 
     //const data = await response.json();
-    const data = JSON.parse((await response.text()).replace(/loccitane-origin.squadra.com.br/g, 'reve.loccitaneaubresil.com'));
+    const data = JSON.parse((await response.text()).replace(/loccitane-origin.squadra.com.br/g, process.env.NEXT_IMAGE_DOMAIN as string));
     // console.log('await response.json(2)', data)
     
     return {

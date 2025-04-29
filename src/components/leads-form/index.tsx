@@ -37,7 +37,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
       authorizeExposeCellNumbers: true,
       acceptReceiveInfo: true,
 
-      ...(searchParams.get('test') && {
+      ...(searchParams.get('preenchido') && {
         submitButtonAction: () => {},
         submitButtonLoading: false,
         fullName: 'Fulano da Silva',
@@ -71,7 +71,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
 
   const [majorTabAvailable, setMajorTabAvailable] = useState(1);
   const [tab, setTab] = useState(0);
-  const [mobileFormVisible, setMobileFormVisible] = useState(false);
+  const [mobileFormVisible, setMobileFormVisible] = useState(true);
 
   const {
     headerTitle,
@@ -99,7 +99,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   useEffect(() => {
     gotoNextStep();
 
-    if (searchParams.get('test')) {
+    if (searchParams.get('preenchido')) {
       gotoNextStep(4);
     }
   }, []);
@@ -120,7 +120,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
       <div className={`${css['form-box']} relative flex flex-col flex-1 bg-white`}>
         <header className="flex items-center text-left md:text-center">
           {headerTitle || defaultHeader}
-          <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block md:hidden'><CloseIcon /></a>
+          <a onClick={(e) => changeMobileFormVisibility(e, false)} className='block md:hidden' style={{cursor:'pointer'}}><CloseIcon /></a>
         </header>
         <FormProvider {...methods}>
 

@@ -15,6 +15,11 @@ export async function checkCpfIsUnavailable(cpf: string): Promise<boolean> {
   return (await axios.get(url.toString()))?.data
 }
 
+export async function checkCepIsValid(cep: string): Promise<boolean> {
+  const url = new URL(API_URL + '/Cadastro/CepExiste/' + encodeURIComponent(cep))
+  return (await axios.get(url.toString()))?.data
+}
+
 export async function checkCpfIsValid(cpf: string): Promise<string> {
   const urlParams = new URLSearchParams({cpf})
   const url = new URL(API_URL + '/Cadastro/ValidarCpf/?' + urlParams)
@@ -88,10 +93,16 @@ export async function putAddressData(id: UUID, data: IStepAddress): Promise<any>
   return (await axios.post(url.toString(), body))?.data
 }
 
-export async function finishRegisterAndSendDocuments(id: UUID, documentType: DocumentType, documents: UploadFile[]): Promise<any> {
+export async function finishRegisterAndSendDocuments(id: UUID, documentType: DocumentType, documents: UploadFile[], utmMedium?: any, utmCampaign?: any): Promise<any> {
   const body = documents;
-  
-  const urlParams = new URLSearchParams({id, tipoDocumento: documentType})
+  const params = {
+    id,
+    tipoDocumento: documentType,
+    utmMidia: utmMedium || null,
+    utmCampanha: utmCampaign || null
+  };
+
+  const urlParams = new URLSearchParams(params);
   const url = new URL(API_URL + '/Cadastro/ConcluirCadastro?'+urlParams)
   return (await axios.post(url.toString(), body))?.data
 }
