@@ -84,11 +84,11 @@ const StepFieldsToValidate = {
   ]
 };
 
-export const validateStep = (step: 'personalData' | 'contactData' | 'address' | 'validationCodeAndDocumentType', getFieldState: (key: keyof IFormInputs) => any, needToBeDrity = false, ignoreFields: string[] = []) => {
+export const validateStep = (step: 'personalData' | 'contactData' | 'address' | 'validationCodeAndDocumentType', getFieldState: (key: keyof IFormInputs) => any, needToBeDirty = false, ignoreFields: string[] = []) => {
   return StepFieldsToValidate[step].filter(field => !ignoreFields.includes(field)).every(field =>  {
     const _fieldState = getFieldState(field as keyof IFormInputs);
     // console.log(field, _fieldState);
-    return !_fieldState.error && ((needToBeDrity && _fieldState.isDirty) || !needToBeDrity);
+    return !_fieldState.error && ((needToBeDirty && _fieldState.isDirty) || !needToBeDirty);
   });
 }
 
