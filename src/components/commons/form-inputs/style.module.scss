@@ -118,6 +118,11 @@
   }
 }
 
+.checkbox-error {
+  position: relative;
+  bottom: 2px;
+}
+
 a.checkbox-label, a.radio-label {
   text-decoration: underline;
 }
