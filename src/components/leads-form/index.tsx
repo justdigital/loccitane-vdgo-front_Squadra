@@ -150,7 +150,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
                 <Tab label="Endereço" value={3} disabled={majorTabAvailable < 3} />
                 <Tab label="Validação" value={4} disabled={majorTabAvailable < 4} />
               </Tabs>
-              <main className='grow'>
+              <main className='grow pb-[15px]'>
               
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <div className={`mt-5 sm:mt-10 pt-2 sm:pt-0`}>
