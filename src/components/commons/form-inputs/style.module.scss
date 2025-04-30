@@ -89,7 +89,9 @@
 
   :global(p.Mui-error) {
     text-align: right;
-    @include label-error
+    @include label-error;
+    position: relative;
+    bottom: -1px;
   }
 }
 
@@ -116,6 +118,11 @@
   @media (screen(sm)) {
     margin-left: 42px;
   }
+}
+
+.checkbox-error { 
+  position: relative;
+  bottom: -1px;
 }
 
 a.checkbox-label, a.radio-label {
