@@ -23,8 +23,8 @@
   &:global([data-visible="1"]) {
     visibility: visible;
     z-index: 1000 !important;
-    top: 6%;
-    background-color: rgba(70, 69, 69, 0.7);
+    top: 8%;
+    //background-color: rgba(70, 69, 69, 0.7);
 
     .form-box {
       top: 0;
