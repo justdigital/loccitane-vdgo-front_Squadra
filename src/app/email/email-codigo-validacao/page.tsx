@@ -49,7 +49,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 					<!-- Banner -->
 					<tr>
 						<td align="center">
-							<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/BannerEmail.jpg?sv=2025-05-05&se=2125-03-28T14%3A27%3A07Z&sr=b&sp=r&sig=shysaZWKsWc5e%2F0M5LP8ChOs6ceKZsez6R8eJR6XWkw%3D" alt="Banner" width="600" style="display: block; max-width: 100%;">
+							<img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/BannerEmail.jpg?sv=2025-05-05&se=2125-05-06T14%3A28%3A53Z&sr=b&sp=r&sig=Pppuxq5lQNsqP5nbypPBaPq%2B6oq8CHavq59iYZjgyA0%3D" alt="Banner" width="600" style="display: block; max-width: 100%;">
 
 						</td>
 					</tr>
@@ -95,10 +95,10 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 							<table width="100%" cellpadding="0" cellspacing="0">
 								<tr class="desktop-only">
 									<td align="center" style="padding: 10px; white-space: nowrap;">
-                                        <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/LOGO_VD_REVENDA-OFF_WHITE_2_3.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=Dr7AjTR7fcx2HIFr9ZjlpeLp%2B8dsRQrRcou9XjvZh%2B0%3D" 
+                                        <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/LOGO_VD_REVENDA-OFF_WHITE_2_3.png?sv=2025-05-05&se=2125-05-06T14%3A12%3A08Z&sr=b&sp=r&sig=yKbUfmKUx%2Fbicph3352cAUDmBbbQUxR%2BkYaKkZaQ4%2FI%3D" 
                                             alt="Logo" width="90" style="display: inline-block; vertical-align: middle;">
                                         
-                                        <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/empressacertificadalogo.png?sv=2025-05-05&se=2125-03-27T14%3A21%3A02Z&sr=b&sp=r&sig=Hub%2BOgYR1%2BCgS2tvtvUvgy%2FL6ReFCF7LWUsdK70whoQ%3D" 
+                                        <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/empressacertificadalogo.png?sv=2025-05-05&se=2125-05-06T14%3A07%3A09Z&sr=b&sp=r&sig=25qnJ6CLX66iCll0vskFTJwbDhtb5suoSwE9JuUEHf0%3D" 
                                             alt="Certificado" width="43" height="71" 
                                             style="display: inline-block; padding-left: 3px; vertical-align: middle;">
                                     </td>
@@ -112,15 +112,15 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                             <td align="center">
 																															<a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block; text-decoration: none;">
                                                                 <div style="display: flex; align-items: center;">      
-                                                                  <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
+                                                                  <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/portalReve.png?sv=2025-05-05&se=2125-05-06T14%3A08%3A07Z&sr=b&sp=r&sig=6P4rDjBG2g4FPtOR4RbATA4EDFGOS6EuCgb8CZFZGsw%3D" width="26">
 																																	<span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">ESCRITÓRIO<BR>VIRTUAL</span>
                                                                 </div>
 																																</a>
                                                             </td>
                                                             <td align="center" style="padding-left: 30px;">
-																															<a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-05-25/" style="display: inline-block; text-decoration: none;">
+																															<a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-06-25/" style="display: inline-block; text-decoration: none;">
                                                               	<div style="display: flex; align-items: center;">    
-																																	<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/revistaDigital.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=1X7ZQKEhxhITVw3cXRS6uK%2F1Dcyn9m3nsvkIiZdCU10%3D" width="26">
+																																	<img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/revistaDigital.png?sv=2025-05-05&se=2125-05-06T14%3A09%3A01Z&sr=b&sp=r&sig=UEP2PVrB7jUoG7gxCVnp10VaHpo0orhIYFXi6zberO4%3D" width="26">
                                                                   <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">REVISTA<BR>DIGITAL</span>
                                                                 </div>
 																															</a>
@@ -128,7 +128,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
                                                             <td align="center" style="padding-left: 30px;">
 																															<a href="https://api.whatsapp.com/send?phone=5511975743863" style="display: inline-block; text-decoration: none;">
                                                                 <div style="display: flex; align-items: center;">      
-                                                                  <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/whatsapp.png?sv=2025-05-05&se=2125-03-27T14%3A23%3A53Z&sr=b&sp=r&sig=0ay2iUshuemzFG0XH7%2Bg1hvYAskRX9N8TTZzesxFP7k%3D" width="24">
+                                                                  <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/whatsapp.png?sv=2025-05-05&se=2125-05-06T14%3A09%3A51Z&sr=b&sp=r&sig=IrJCyngz13wGC1W0jBcbPzSdE6%2F3BmeIaCSNqUIYsOc%3D" width="24">
                                                                     <span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">FALE<BR>CONOSCO</span>
                                                                 </div>
 																															</a>
@@ -147,10 +147,10 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 											<tr>
                                                 <td align="center" style="padding-top: 0px; white-space: nowrap;">
                                                     <a href="https://www.tiktok.com/@revendaloccitaneaubresil" style="display: inline-block;">
-                                                        <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/ICON_TIKTOK.png?sv=2025-05-05&se=2125-03-27T14%3A27%3A50Z&sr=b&sp=r&sig=Ke7YWB%2BJmhLoL%2BGsRbhPGw7q6k60UZBMvbcN8Hwzb1Q%3D" width="24">
+                                                        <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/ICON_TIKTOK.png?sv=2025-05-05&se=2125-05-06T14%3A10%3A44Z&sr=b&sp=r&sig=ycHgNgY0%2FbJ9oUvl2v7eSCCBY245tfMz1dSbbjrucF0%3D" width="24">
                                                     </a>
                                                     <a href="https://www.instagram.com/loccitaneaubresil/" style="display: inline-block; padding-left: 10px;">
-                                                        <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/ICON_INSTAGRAM.png?sv=2025-05-05&se=2125-03-27T14%3A28%3A13Z&sr=b&sp=r&sig=oYI5Eb3vUtAt%2F6cDgXD34T02ev%2BA%2BFzVGqoY%2FvAsggg%3D" width="24">
+                                                        <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/ICON_INSTAGRAM.png?sv=2025-05-05&se=2125-05-06T14%3A11%3A26Z&sr=b&sp=r&sig=O3Ndf2wxOw8zzkeIP%2BAInWgYhqWRqAw6j6dxN3LDFhE%3D" width="24">
                                                     </a>
                                                 </td>
                                             </tr>
@@ -161,10 +161,10 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 
 								<tr class="mobile-only" align="center" style="display: none; width: 100%; max-width: 100%;">
 									<td align="center" style="padding: 10px; white-space: nowrap;">
-                                        <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/LOGO_VD_REVENDA-OFF_WHITE_2_3.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=Dr7AjTR7fcx2HIFr9ZjlpeLp%2B8dsRQrRcou9XjvZh%2B0%3D" 
+                                        <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/LOGO_VD_REVENDA-OFF_WHITE_2_3.png?sv=2025-05-05&se=2125-05-06T14%3A12%3A08Z&sr=b&sp=r&sig=yKbUfmKUx%2Fbicph3352cAUDmBbbQUxR%2BkYaKkZaQ4%2FI%3D" 
                                             alt="Logo" width="90" style="display: inline-block; vertical-align: middle;">
                                         
-                                        <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/empressacertificadalogo.png?sv=2025-05-05&se=2125-03-27T14%3A21%3A02Z&sr=b&sp=r&sig=Hub%2BOgYR1%2BCgS2tvtvUvgy%2FL6ReFCF7LWUsdK70whoQ%3D" 
+                                        <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/empressacertificadalogo.png?sv=2025-05-05&se=2125-05-06T14%3A07%3A09Z&sr=b&sp=r&sig=25qnJ6CLX66iCll0vskFTJwbDhtb5suoSwE9JuUEHf0%3D" 
                                             alt="Certificado" width="43" height="71" 
                                             style="display: inline-block; padding-left: 3px; vertical-align: middle;">
                                     </td>
@@ -179,15 +179,15 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 															<td align="center">
 																<a href="https://revendedor.loccitaneaubresil.com" style="display: inline-block; text-decoration: none;">
 																	<div style="display: flex; align-items: center;">
-																		<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/portalReve.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=3joXVZogSKiQtBQ0NfCKZygjIZG4Ts1pYEJUqxbxnVw%3D" width="26">
+																		<img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/portalReve.png?sv=2025-05-05&se=2125-05-06T14%3A08%3A07Z&sr=b&sp=r&sig=6P4rDjBG2g4FPtOR4RbATA4EDFGOS6EuCgb8CZFZGsw%3D" width="26">
 																		<span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">ESCRITÓRIO<BR>VIRTUAL</span>                                                                    
 																	</div>
 																</a>
 															</td>
 															<td align="center" style="padding-left: 30px;">
-																<a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-05-25/" style="display: inline-block; text-decoration: none;">
+																<a href="https://viewer.ipaper.io/loccitane-en-provence/au-bresil-2425/vd/revista-digital/receitas-de-beleza-loccitane-au-bresil-ciclo-06-25/" style="display: inline-block; text-decoration: none;">
 																	<div style="display: flex; align-items: center;">
-																		<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/revistaDigital.png?sv=2025-05-05&se=2125-03-27T18%3A45%3A16Z&sr=b&sp=r&sig=1X7ZQKEhxhITVw3cXRS6uK%2F1Dcyn9m3nsvkIiZdCU10%3D" width="26">
+																		<img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/revistaDigital.png?sv=2025-05-05&se=2125-05-06T14%3A09%3A01Z&sr=b&sp=r&sig=UEP2PVrB7jUoG7gxCVnp10VaHpo0orhIYFXi6zberO4%3D" width="26">
 																		<span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">REVISTA<BR>DIGITAL</span>                                                                    
 																	</div>
 																</a>
@@ -195,7 +195,7 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 															<td align="center" style="padding-left: 30px;">
 																<a href="https://api.whatsapp.com/send?phone=5511975743863" style="display: inline-block; text-decoration: none;">
 																	<div style="display: flex; align-items: center;">
-																		<img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/whatsapp.png?sv=2025-05-05&se=2125-03-27T14%3A23%3A53Z&sr=b&sp=r&sig=0ay2iUshuemzFG0XH7%2Bg1hvYAskRX9N8TTZzesxFP7k%3D" width="24">
+																		<img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/whatsapp.png?sv=2025-05-05&se=2125-05-06T14%3A09%3A51Z&sr=b&sp=r&sig=IrJCyngz13wGC1W0jBcbPzSdE6%2F3BmeIaCSNqUIYsOc%3D" width="24">
 																		<span style="font-size: 11px; text-align: left; font-weight: bold; color: #C02031; margin-left: 5px;">FALE<BR>CONOSCO</span>
 																	</div>
 																</a>
@@ -213,10 +213,10 @@ const EmailCodigoValidacao = ({ searchParams }: { searchParams: { [key: string]:
 											<tr>
 												<td align="center" style="padding-top: 0px; white-space: nowrap;">
                                                     <a href="https://www.tiktok.com/@revendaloccitaneaubresil" style="display: inline-block;">
-                                                        <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/ICON_TIKTOK.png?sv=2025-05-05&se=2125-03-27T14%3A27%3A50Z&sr=b&sp=r&sig=Ke7YWB%2BJmhLoL%2BGsRbhPGw7q6k60UZBMvbcN8Hwzb1Q%3D" width="24">
+                                                        <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/ICON_TIKTOK.png?sv=2025-05-05&se=2125-05-06T14%3A10%3A44Z&sr=b&sp=r&sig=ycHgNgY0%2FbJ9oUvl2v7eSCCBY245tfMz1dSbbjrucF0%3D" width="24">
                                                     </a>
                                                     <a href="https://www.instagram.com/loccitaneaubresil/" style="display: inline-block; padding-left: 10px;">
-                                                        <img src="https://bsnonprodvdgobrsa.blob.core.windows.net/uploads/Imagens/ICON_INSTAGRAM.png?sv=2025-05-05&se=2125-03-27T14%3A28%3A13Z&sr=b&sp=r&sig=oYI5Eb3vUtAt%2F6cDgXD34T02ev%2BA%2BFzVGqoY%2FvAsggg%3D" width="24">
+                                                        <img src="https://stbrazilsouthloccitane.blob.core.windows.net/images/ICON_INSTAGRAM.png?sv=2025-05-05&se=2125-05-06T14%3A11%3A26Z&sr=b&sp=r&sig=O3Ndf2wxOw8zzkeIP%2BAInWgYhqWRqAw6j6dxN3LDFhE%3D" width="24">
                                                     </a>
                                                 </td>
 											</tr>
