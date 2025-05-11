@@ -54,11 +54,11 @@ const StepSuccess: React.FC<StepSuccessProps> = ({isTabActive}) => {
     <div className={`${css['success-box']} flex flex-col justify-center items-center`}>
       
       <Image src="/assets/images/icons/round-check-ok.svg" alt="Validação OK" width={81} height={81} />
-      <h1 className={`${css['success-text']} text-center mt-5`}>Parabéns! Estávamos esperando por você.</h1>
+      <h1 className={`${css['success-text']} text-center mt-5`}>Parabéns! Estava esperando por você.</h1>
       <div className={`${css['sent-time-text']} mt-2`}>Enviado em {sentAtDate} ás {sentAtTime}</div>
 
       <p>Seus documentos foram enviados para análise. Fique de olho em seu e-mail e acompanhe o status do seu cadastro.</p>
-      <p>Mas antes, vamos descobrir tudo o que Escritório Virtual tem a oferecer?</p>
+      <p>Mas antes, vamos descobrir tudo o que o Escritório Virtual tem a oferecer?</p>
 
       <div className={`${css['redirect-alert-box']} flex items-center justify-center w-full mt-10`}>
         <CircularProgress
