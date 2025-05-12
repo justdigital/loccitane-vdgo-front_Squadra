@@ -110,7 +110,7 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
                   age--;
                 }
                 
-                return age >= 18 || 'Você deve ter 18 anos ou mais para se cadastrar';
+                return age >= 18 || 'Este processo é exclusivo para maiores de 18 anos.';
               }
             }
           }}
