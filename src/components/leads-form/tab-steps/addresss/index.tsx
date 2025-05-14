@@ -83,7 +83,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       setValue('state', (foundState as any).value);
 
       const cities = await fetchCityList(data.localidade, foundState?.value as number);
-      const foundCity = cities?.find(city => city.label === data.localidade);
+      const foundCity = cities?.find(city => city.label.toLocaleLowerCase() === data.localidade.toLocaleLowerCase());
       setValue('city', foundCity as any);
 
       trigger(['state', 'city', 'neighborhood', 'address']);
