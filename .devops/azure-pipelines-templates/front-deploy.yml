@@ -11,6 +11,7 @@ steps:
     cat > $(System.DefaultWorkingDirectory)/environment-values.yaml <<EOT
     env:
       NEXT_PUBLIC_DRUPAL_BASE_URL: $(env_NEXT_PUBLIC_DRUPAL_BASE_URL)
+      NEXT_PUBLIC_DRUPAL_BASE_URL_CSS: $(env_NEXT_PUBLIC_DRUPAL_BASE_URL_CSS)
       NEXT_IMAGE_DOMAIN: $(env_NEXT_IMAGE_DOMAIN)
       NEXT_GTM_CODE: $(env_NEXT_GTM_CODE)
       NEXT_API_BASE_URL: $(env_NEXT_API_BASE_URL)
