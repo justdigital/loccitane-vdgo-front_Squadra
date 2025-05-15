@@ -11,6 +11,7 @@ steps:
     buildContext: '.'
     arguments: >-
       --build-arg NEXT_PUBLIC_DRUPAL_BASE_URL=$(env_NEXT_PUBLIC_DRUPAL_BASE_URL)
+      --build-arg NEXT_PUBLIC_DRUPAL_BASE_URL_CSS=$(env_NEXT_PUBLIC_DRUPAL_BASE_URL_CSS)
       --build-arg NEXT_IMAGE_DOMAIN=$(env_NEXT_IMAGE_DOMAIN)
       --build-arg NEXT_GTM_CODE=$(env_NEXT_GTM_CODE)
       --build-arg NEXT_API_BASE_URL=$(env_NEXT_API_BASE_URL)
