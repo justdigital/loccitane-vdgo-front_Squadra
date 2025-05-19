@@ -77,7 +77,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
     headerTitle,
   } = watch();
 
-  const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 5 minutos!';
+  const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 3 minutos!';
 
   const gotoNextStep = useCallback((step?: number) => {
     const newTab = step ? step : tab + 1;
