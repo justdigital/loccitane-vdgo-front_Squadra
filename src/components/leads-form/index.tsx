@@ -73,25 +73,16 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   const [tab, setTab] = useState(0);
   const [mobileFormVisible, setMobileFormVisible] = useState(true);
 
-  // Bloqueia/libera o scroll da página quando o modal abre/fecha
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      if (mobileFormVisible) {
-        document.body.style.overflow = 'hidden';
-        document.body.style.touchAction = 'none'; // Para dispositivos móveis
+      const isMobile = window.innerWidth < 765;
+
+      if (isMobile) {
+        document.body.style.overflow = mobileFormVisible ? 'hidden' : 'auto';
       } else {
         document.body.style.overflow = 'auto';
-        document.body.style.touchAction = 'auto';
       }
     }
-
-    return () => {
-      // Limpeza: garante que o scroll seja reativado se o componente for desmontado
-      if (typeof window !== 'undefined') {
-        document.body.style.overflow = 'auto';
-        document.body.style.touchAction = 'auto';
-      }
-    };
   }, [mobileFormVisible]);
 
   const {
