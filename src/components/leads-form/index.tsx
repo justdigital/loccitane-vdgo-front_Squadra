@@ -73,11 +73,23 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   const [tab, setTab] = useState(0);
   const [mobileFormVisible, setMobileFormVisible] = useState(true);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth < 765;
+
+      if (isMobile) {
+        document.body.style.overflow = mobileFormVisible ? 'hidden' : 'auto';
+      } else {
+        document.body.style.overflow = 'auto';
+      }
+    }
+  }, [mobileFormVisible]);
+
   const {
     headerTitle,
   } = watch();
 
-  const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 5 minutos!';
+  const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 3 minutos!';
 
   const gotoNextStep = useCallback((step?: number) => {
     const newTab = step ? step : tab + 1;
@@ -89,7 +101,6 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
       keepTouched: true
     })
     
-    // console.log('newTab', newTab, '-< foi para essa tab', 'tab atual', tab);
     if (newTab > majorTabAvailable) {
       setMajorTabAvailable(newTab);
     }
@@ -106,6 +117,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
 
 
   const changeMobileFormVisibility = (e: React.MouseEvent, visible: boolean) => {
+    e.stopPropagation();
     setMobileFormVisible(visible);
   }
 
