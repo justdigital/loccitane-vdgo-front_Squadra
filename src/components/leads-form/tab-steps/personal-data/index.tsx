@@ -93,7 +93,7 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
         action: clickButton
       });
     }
-    setValue('headerTitle', 'O cadastro é rápido e fácil, levando menos de 5 minutos!');
+    setValue('headerTitle', 'O cadastro é rápido e fácil, levando menos de 3 minutos!');
   }, [isTabActive, disableFormFields]);
   
   return (

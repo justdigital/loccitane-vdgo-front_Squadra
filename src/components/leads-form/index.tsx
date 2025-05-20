@@ -73,11 +73,32 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
   const [tab, setTab] = useState(0);
   const [mobileFormVisible, setMobileFormVisible] = useState(true);
 
+  // Bloqueia/libera o scroll da página quando o modal abre/fecha
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (mobileFormVisible) {
+        document.body.style.overflow = 'hidden';
+        document.body.style.touchAction = 'none'; // Para dispositivos móveis
+      } else {
+        document.body.style.overflow = 'auto';
+        document.body.style.touchAction = 'auto';
+      }
+    }
+
+    return () => {
+      // Limpeza: garante que o scroll seja reativado se o componente for desmontado
+      if (typeof window !== 'undefined') {
+        document.body.style.overflow = 'auto';
+        document.body.style.touchAction = 'auto';
+      }
+    };
+  }, [mobileFormVisible]);
+
   const {
     headerTitle,
   } = watch();
 
-  const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 5 minutos!';
+  const defaultHeader = 'O cadastro é rápido e fácil, levando menos de 3 minutos!';
 
   const gotoNextStep = useCallback((step?: number) => {
     const newTab = step ? step : tab + 1;
@@ -89,7 +110,6 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
       keepTouched: true
     })
     
-    // console.log('newTab', newTab, '-< foi para essa tab', 'tab atual', tab);
     if (newTab > majorTabAvailable) {
       setMajorTabAvailable(newTab);
     }
@@ -106,6 +126,7 @@ const LeadsForm: React.FC<LeadsFormProps & RefAttributes<any>> = forwardRef(({},
 
 
   const changeMobileFormVisibility = (e: React.MouseEvent, visible: boolean) => {
+    e.stopPropagation();
     setMobileFormVisible(visible);
   }
 
