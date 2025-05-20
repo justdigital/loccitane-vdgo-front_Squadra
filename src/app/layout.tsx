@@ -33,8 +33,8 @@ export async function generateMetadata(): Promise<Metadata> {
     const data = await response.json();
     
     return {
-      title: data.site_name || "L'Occitane Brasil",
-      description: "L'Occitane Brasil",
+      title: data.site_name || "L'Occitane au Brésil",
+      description: "L'Occitane au Brésil",
       icons: {
         icon: data.favicon || '/default-favicon.ico',
       },
@@ -42,8 +42,8 @@ export async function generateMetadata(): Promise<Metadata> {
   } catch (error) {
     console.error('Failed to fetch metadata:', error);
     return {
-      title: "L'Occitane Brasil",
-      description: "L'Occitane Brasil",
+      title: "L'Occitane au Brésil",
+      description: "L'Occitane au Brésil",
       icons: {
         icon: '/default-favicon.ico',
       },
