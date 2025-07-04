@@ -72,11 +72,11 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
 
       const fullAddress = data.logradouro;
       if (fullAddress !== '') {
-        setValue('address', fullAddress);
+        setValue('address', sanitizeCookies(fullAddress));
       }
 
       if (data.bairro !== '') {
-        setValue('neighborhood', data.bairro);
+        setValue('neighborhood', sanitizeCookies(data.bairro));
       }
 
       const foundState = stateList.find(state => state.label === data.uf);
@@ -84,7 +84,7 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
 
       const cities = await fetchCityList(data.localidade, foundState?.value as number);
       const foundCity = cities?.find(city => city.label.toLocaleLowerCase() === data.localidade.toLocaleLowerCase());
-      setValue('city', foundCity as any);
+      setValue('city', sanitizeCity(foundCity) as any);
 
       trigger(['state', 'city', 'neighborhood', 'address']);
       return true;
@@ -94,6 +94,22 @@ const StepAddress: React.FC<StepAddressProps> = ({gotoNextStep, isTabActive}) =>
       return false;
     }
   };
+
+  const sanitizeCity = (city: any) => {
+    return {
+      value: city.value,
+      label: sanitizeCookies(city.label),
+    }
+  }
+
+  const sanitizeCookies = (str: string) => {
+    return str.normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-zA-Z0-9\s]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
 
   const sendDataToServer = async () => {
     const data = _.pick(getValues(), ['cep', 'address', 'addressNumber', 'addressAdditionalInfo', 'addressReference', 'neighborhood', 'city', 'state']);
