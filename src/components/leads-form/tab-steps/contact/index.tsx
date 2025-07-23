@@ -182,7 +182,7 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
         />
 
         <Box className="mt-3">
-          <Controller
+          {/* <Controller
             name="isIndication"
             control={control}
             render={({ field }) =>
@@ -191,7 +191,7 @@ const StepContact: React.FC<StepContactProps> = ({gotoNextStep, isTabActive}) =>
                 label="É uma indicação?"
               />
             }
-          />
+          /> */}
 
           {isIndication && (
             <Box className="mt-1">
