@@ -174,14 +174,18 @@ const StepPersonalData: React.FC<StepPersonalDataProps> = ({gotoNextStep, isTabA
         control={control}
         disabled={disableFormFields}
         rules={{ required: 'Digite um número de celular válido', pattern: {value: /^\(\d{2}\) 9\d{4}-\d{4}$/, message: 'Número de celular inválido. Utilize o formato (DDD) 9XXXX-XXXX.'} }}
-        render={({ field, fieldState }) =>
-          <FormTextField
-            field={field}
-            fieldState={fieldState}
-            label="Celular"
-            mask="(00) 90000-0000"
-          />
-        }
+        render={({ field, fieldState }) => (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ margin: '2.3em 0.5em 0 0.5em', fontFamily: 'Arial, sans-serif', fontSize: '1.1em', fontWeight: 'bold', }}>+55</span>
+            <FormTextField
+              field={field}
+              fieldState={fieldState}
+              label="Celular"
+              mask="(00) 90000-0000"
+              style={{ flex: 1 }}
+            />
+          </div>
+        )}
       />
 
       <Box className={`mt-5 ${css['checkboxes-box']}`}>
