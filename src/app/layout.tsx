@@ -73,7 +73,7 @@ export default function RootLayout({
             script-src 'self' 'unsafe-eval' *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.metaffiliation.com *.doubleclick.net;
             worker-src 'self' blob:;
             child-src 'self' blob:;
-            frame-src 'self' blob: https://www.googletagmanager.com https://td.doubleclick.net https://www.google.com https://gsdbr-reve.loccitaneaubresil.com;
+            frame-src 'self' blob: about: https://www.googletagmanager.com https://td.doubleclick.net https://www.google.com https://gsdbr-reve.loccitaneaubresil.com https://www.facebook.com;
             style-src 'self' 'unsafe-inline' ${sourcesAllowed} *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app;
             font-src 'self' data: https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
             img-src 'self' data: blob: ${sourcesAllowed} https://kvn.br.loccitane.com *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app bsnonprodvdgobrsa.blob.core.windows.net bsprodvdgobrsa.blob.core.windows.net stbrazilsouthloccitane.blob.core.windows.net *.pdf *.google-analytics.com https://analytics.google.com *.doubleclick.net *.google.com *.google.com.br;
