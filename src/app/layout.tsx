@@ -70,15 +70,16 @@ export default function RootLayout({
         <meta
           httpEquiv="Content-Security-Policy"
           content={`
-          script-src 'self' 'unsafe-eval' *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.metaffiliation.com; 
-          worker-src 'self' blob:; 
-          child-src 'self' blob:;
-          style-src 'self' 'unsafe-inline' ${sourcesAllowed} *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app;
-          font-src 'self' data: https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
-          img-src 'self' data: blob: ${sourcesAllowed} https://kvn.br.loccitane.com *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app bsnonprodvdgobrsa.blob.core.windows.net bsprodvdgobrsa.blob.core.windows.net stbrazilsouthloccitane.blob.core.windows.net *.pdf *.google-analytics.com https://analytics.google.com *.doubleclick.net *.google.com.br;
-          media-src 'self' data: ${sourcesAllowed} *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.pdf;
-          object-src 'self' blob: data: *.pdf;
-          script-src-elem 'self' 'unsafe-inline' blob: ${sourcesAllowed} *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.metaffiliation.com;
+            script-src 'self' 'unsafe-eval' *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.metaffiliation.com *.doubleclick.net;
+            worker-src 'self' blob:;
+            child-src 'self' blob:;
+            frame-src 'self' https://www.googletagmanager.com https://td.doubleclick.net https://www.google.com https://gsdbr-reve.loccitaneaubresil.com;
+            style-src 'self' 'unsafe-inline' ${sourcesAllowed} *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app;
+            font-src 'self' data: https://fonts.gstatic.com *.acesso.io *.unico.run *.unico.io *.unico.app;
+            img-src 'self' data: blob: ${sourcesAllowed} https://kvn.br.loccitane.com *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app bsnonprodvdgobrsa.blob.core.windows.net bsprodvdgobrsa.blob.core.windows.net stbrazilsouthloccitane.blob.core.windows.net *.pdf *.google-analytics.com https://analytics.google.com *.doubleclick.net *.google.com *.google.com.br;
+            media-src 'self' data: ${sourcesAllowed} *.acesso.io *.unico.run *.unico.io *.unico.app vdgo-cms-dev.squadra.com.br *.pdf;
+            object-src 'self' blob: data: *.pdf;
+            script-src-elem 'self' 'unsafe-inline' blob: ${sourcesAllowed} *.googletagmanager.com *.googleapis.com *.acesso.io *.unico.run *.unico.io *.unico.app *.metaffiliation.com *.doubleclick.net;
         `}
         />
       </head>
